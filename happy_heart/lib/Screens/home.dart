@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            Image.asset('assets/lev-hedva.png'),
             VerticalSpacer(50),
             const Text('Your equipment:'),
             VerticalSpacer(50),

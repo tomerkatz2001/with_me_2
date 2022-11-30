@@ -99,8 +99,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             spacing: 20,
             runSpacing: 20,
             children: <Widget>[
-              Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "Log in to HappyHeart" : "Sign up to OptiGym",
+              Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "התחברות ללב חדוֿה" : "הרשמה ללב חדוה",
               )),
+              VerticalSpacer(5),
+              Image.asset('assets/lev-hedva.png'),
               VerticalSpacer(5),
               widget.loginSignupFlag
                   ? const SizedBox()

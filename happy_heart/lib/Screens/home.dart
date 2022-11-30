@@ -1,4 +1,3 @@
-import 'package:happy_heart/Utilities/database.dart';
 
 import '../header.dart';
 
@@ -47,6 +46,14 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Happy Heart"),
         elevation: 0,
+        actions: [
+          GestureDetector(
+            child: const Icon(Icons.logout, color: Colors.white),
+            onTap: () {
+              context.read<FirebaseAuthMethods>().signOut(context);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(

@@ -12,13 +12,13 @@ class Application extends StatelessWidget {
         primarySwatch: Colors.red,
         fontFamily: 'RaleWay',
       ),
-      home: const LoginWrapper(),
-      routes:  {
-        '/home' : (context) => const HomePage(),
+      initialRoute: '/' ,
+      routes: {
+        '/': (context) => const LoginWrapper(),
+        '/home': (context) => const HomePage(),
         '/login': (context) => const LoginSignupPage(true),
         '/signup': (context) => const LoginSignupPage(false),
-      }
-      ,
+      },
     );
   }
 }

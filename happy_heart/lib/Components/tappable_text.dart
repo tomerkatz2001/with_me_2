@@ -12,7 +12,7 @@ class TappableText extends StatelessWidget {
     return RichText(
       text: TextSpan(
           text: text,
-          style: style ?? const TextStyle(color: Colors.white),
+          style: style ?? const TextStyle(color: Colors.blue),
           recognizer: TapGestureRecognizer()
             ..onTap = contextFlag != null
                 ? () => onTapFunc(context)

@@ -14,7 +14,7 @@ Widget Input(controller, text,
             ),
             errorText: validFlag ? null : errorText,
             filled: true,
-            hintStyle: const TextStyle(color: Colors.white),
+            hintStyle: const TextStyle(color: Colors.black),
             hintText: text ?? "Type in your text",
             fillColor: Colors.transparent),
       )

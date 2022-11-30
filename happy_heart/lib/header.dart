@@ -16,6 +16,8 @@ export 'package:provider/provider.dart';
 
 
 export 'Utilities/authentication.dart';
+export 'Utilities/snackbar.dart';
+export 'Utilities/database.dart';
 
 export 'Wrappers/login.dart';
 export 'Wrappers/firebase.dart';

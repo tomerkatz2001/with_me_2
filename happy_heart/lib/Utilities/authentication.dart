@@ -18,16 +18,20 @@ class FirebaseAuthMethods {
         email: email,
         password: password,
       );
+      Navigator.of(context).popUntil((route) => route == '/');
+      Navigator.pushNamed(context,'/');
     } on FirebaseAuthException catch (e) {
       // if you want to display your own custom error message
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        displaySnackbar('The password provided is too weak.',context);
+        print("weak pass");
       } else if (e.code == 'email-already-in-use') {
-       print('The account already exists for that email.');
+        displaySnackbar('The account already exists for that email.',context);
+        print('already used');
       }
-      print(e.message!); // Displaying the usual firebase error message
+      displaySnackbar(e.message!,context); // Displaying the usual firebase error message
     }
-    Navigator.of(context).popUntil(ModalRoute.withName('/'));
+    
 
   }
 

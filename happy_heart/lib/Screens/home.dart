@@ -11,7 +11,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget equipmentListBuilder(context, snapshot) {
     if (snapshot.hasData) {
-      final List equipment=snapshot.data;
+      final List equipment=snapshot.data!.docs;
       return ListView.builder(
           itemCount: equipment.length,
           shrinkWrap: true,
@@ -26,15 +26,15 @@ class _HomePageState extends State<HomePage> {
     return const Center(child: CircularProgressIndicator());
   }
 
-  final Future equipmentFuture = getAllEquipment();
+  final Stream equipmentStream = getEquipmentStream();
 
-  late FutureBuilder equipmentListFutureBuilder;
+  late StreamBuilder equipmentListStreamBuilder;
 
   @override
   void initState() {
     super.initState();
-    equipmentListFutureBuilder=FutureBuilder(
-        future: equipmentFuture,
+    equipmentListStreamBuilder=StreamBuilder(
+        stream: equipmentStream,
         builder: equipmentListBuilder
     );
   }
@@ -63,9 +63,16 @@ class _HomePageState extends State<HomePage> {
             VerticalSpacer(50),
             const Text('Your equipment:'),
             VerticalSpacer(50),
-            equipmentListFutureBuilder
+            Expanded(child: equipmentListStreamBuilder)
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed("/add_equipment");
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.add),
       ),
     );
   }

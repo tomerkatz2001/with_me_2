@@ -6,3 +6,11 @@ getAllEquipment() async{
   data.forEach((element) {equipment.add(element.data());});
   return equipment;
 }
+
+Stream getEquipmentStream(){
+  return FirebaseFirestore.instance.collection("equipment").snapshots();
+}
+
+insertEquipment(data) async{
+  await FirebaseFirestore.instance.collection("equipment").add(data);
+}

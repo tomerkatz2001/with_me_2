@@ -8,3 +8,11 @@ Future<List<MedicalProduct>> getAllEquipment() async{
   data.forEach((element) {equipment.add(MedicalProduct(element.data()['name'], false, 'maalot tarshiha'));});
   return equipment;
 }
+
+Stream getEquipmentStream(){
+  return FirebaseFirestore.instance.collection("equipment").snapshots();
+}
+
+insertEquipment(data) async{
+  await FirebaseFirestore.instance.collection("equipment").add(data);
+}

@@ -1,4 +1,4 @@
-
+import '../Components/product_data.dart';
 import '../header.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,8 +17,20 @@ class _HomePageState extends State<HomePage> {
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
             return Center(child:ListTile(
-                title:Text(equipment[index]['name']),
-                subtitle:Text(equipment[index]['state'])
+                leading: equipment[index].isFree ?
+                const Icon(
+                  Icons.accessibility_new_outlined,
+                  color: Colors.green,
+                  size: 24.0,
+                ):
+                const Icon(
+                  Icons.accessible,
+                  color: Colors.red,
+                  size: 24.0,
+                ),
+                title:Text(equipment[index].type),
+                subtitle:Text(equipment[index].isFree ? 'פנוי' : 'תפוס' ),
+                onTap: ()=>{}
             ));
           }
       );

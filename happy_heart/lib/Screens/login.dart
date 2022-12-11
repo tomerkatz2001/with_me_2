@@ -92,34 +92,43 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text("Login")),
+      appBar: StyledAppBar(context, "התחברות", leading:  !widget.loginSignupFlag?
+        GestureDetector(
+            child: Icon(Icons.arrow_back),
+            onTap: (){
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/login');
+            }
+        ):Container(),
+      ),
       body: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Wrap(
             spacing: 20,
             runSpacing: 20,
             children: <Widget>[
-              Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "התחברות ללב חדוֿה" : "הרשמה ללב חדוה",
-              )),
+              Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "התחברות ללב חדוֿה" : "הרשמה ללב חדוה")),
               VerticalSpacer(5),
-              Image.asset('assets/lev-hedva.png'),
+              Center(child:Image.asset('assets/lev-hedva.png')),
               VerticalSpacer(5),
               widget.loginSignupFlag
                   ? const SizedBox()
-                  : Input(userController, "Gym/User Name",
+                  : Input(userController, "שם",
                   validFlag:
                   widget.loginSignupFlag ? null : _validFields[0],
                   errorText: emptyFieldMessage),
-              Input(emailController, "Email",
+              Input(emailController, "כתובת אימייל",
                   validFlag: widget.loginSignupFlag
                       ? _validFields[0]
                       : _validFields[1],
+                  rtl: false,
                   errorText: emptyFieldMessage),
-              Input(passwordController, "Password",
+              Input(passwordController, "סיסמא",
                   hideFlag: true,
                   validFlag: widget.loginSignupFlag
                       ? _validFields[1]
                       : _validFields[2],
+                  rtl: false,
                   errorText: emptyFieldMessage),
               VerticalSpacer(5),
               Center(
@@ -127,14 +136,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         widget.loginSignupFlag ?
-                        MaterialButton( onPressed:loginUser, child: Text("Log in"))
+                        Button( loginUser, "התחברות")
                             :
-                        MaterialButton( onPressed:signUpUser, child: Text("Sign Up"))
+                        Button( signUpUser, "הרשמה")
                       ]
                   )
               ),
               Center(
-                  child: widget.loginSignupFlag ? TappableText("Don't have a user? sign up here", (){
+                  child: widget.loginSignupFlag ? TappableText("אין לך משתמש? לחץ כאן על מנת להרשם", (){
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/signup');
                   }): const SizedBox()

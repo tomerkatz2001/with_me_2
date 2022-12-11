@@ -1,4 +1,4 @@
-import '../Components/product_data.dart';
+
 import '../header.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,25 +12,27 @@ class _HomePageState extends State<HomePage> {
   Widget equipmentListBuilder(context, snapshot) {
     if (snapshot.hasData) {
       final List equipment=snapshot.data!.docs;
+      Map dict = getTypesMapFromEquipmentList(equipment);
       return ListView.builder(
-          itemCount: equipment.length,
+          itemCount: dict.entries.length,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
+            var current=dict.keys.elementAt(index);
             return Center(child:ListTile(
-                leading: equipment[index].isFree ?
-                const Icon(
-                  Icons.accessibility_new_outlined,
-                  color: Colors.green,
-                  size: 24.0,
-                ):
-                const Icon(
-                  Icons.accessible,
-                  color: Colors.red,
+                leading:
+                    //TODO: add option to make an item taken
+                GestureDetector(
+                  child:const Icon(
+                  Icons.arrow_back_ios,
                   size: 24.0,
                 ),
-                title:Text(equipment[index].type),
-                subtitle:Text(equipment[index].isFree ? 'פנוי' : 'תפוס' ),
-                onTap: ()=>{}
+                    onTap: (){},
+                ),
+                title:Text(current, textDirection: TextDirection.rtl),
+                subtitle:Text(dict[current].length.toString(), textDirection: TextDirection.rtl),
+                onTap: ()=>{
+                  Navigator.of(context).pushNamed('/equipment_type',arguments:EquipmentTypeArguments(current))
+                }
             ));
           }
       );
@@ -38,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     return const Center(child: CircularProgressIndicator());
   }
 
-  final Stream equipmentStream = getEquipmentStream();
+  final Stream equipmentStream = DB.getEquipmentStream();
 
   late StreamBuilder equipmentListStreamBuilder;
 
@@ -55,9 +57,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Happy Heart"),
-        elevation: 0,
+      appBar: StyledAppBar(context, "לב חדווה",
         actions: [
           GestureDetector(
             child: const Icon(Icons.logout, color: Colors.white),
@@ -71,9 +71,9 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Image.asset('assets/lev-hedva.png'),
+            Center(child:Image.asset('assets/lev-hedva.png')),
             VerticalSpacer(50),
-            const Text('Your equipment:'),
+            const Text('הציוד שנמצא כרגע במלאי:' , textDirection: TextDirection.rtl),
             VerticalSpacer(50),
             Expanded(child: equipmentListStreamBuilder)
           ],

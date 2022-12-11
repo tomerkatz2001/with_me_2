@@ -1,4 +1,6 @@
 
+import 'package:happy_heart/Components/appbar.dart';
+
 import '../header.dart';
 
 class AddEquipmentPage extends StatefulWidget {
@@ -11,6 +13,7 @@ class AddEquipmentPage extends StatefulWidget {
 class _AddEquipmentPageState extends State<AddEquipmentPage> {
   final nameController = TextEditingController();
   final stateController = TextEditingController();
+  EquipmentState state = EquipmentState.NEW;
   @override
   void dispose() {
     nameController.dispose();
@@ -24,34 +27,43 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("Insert equipment")),
+      appBar: StyledAppBar(context,"ציוד חדש" , leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back))),
       body: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Wrap(
             spacing: 20,
             runSpacing: 20,
+            alignment: WrapAlignment.end,
             children: <Widget>[
-              Align(alignment: Alignment.center,child:Text("Insert equipment")),
+              Center(child:Image.asset('assets/lev-hedva.png')),
               VerticalSpacer(5),
-              Image.asset('assets/lev-hedva.png'),
-              VerticalSpacer(5),
-          Input(nameController, "Equipment name",
+              Input(nameController, "סוג הציוד",
                   errorText: emptyFieldMessage),
-              Input(stateController, "State",
-                  errorText: emptyFieldMessage),
+
               VerticalSpacer(5),
+              DropdownButton<EquipmentState>(
+          value: state,
+              onChanged: (EquipmentState? newValue) {
+            if(newValue!=null) {
+              state = newValue;
+            } else{
+              state = EquipmentState.NEW;
+            }
+          },
+          items: EquipmentState.values.map((EquipmentState state) {
+          return DropdownMenuItem<EquipmentState>(
+          value: state,
+          child: Text(state.name));
+          }).toList()),
               Center(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        MaterialButton( onPressed: () async {
-                            await insertEquipment({
-                            "name":nameController.text,
-                            "state":stateController.text
-                            });
+                        Button( () async {
+                            MedicalEquipment new_equipment = MedicalEquipment(nameController.text,"new",state: stateFromTitle(stateController.text));
+                            await DB.insertEquipment(new_equipment);
                             Navigator.of(context).pop();
-                            setState(() {});
-                          }, child: Text("Add item"))
+                          }, "הוסף")
                       ]
                   )
               ),

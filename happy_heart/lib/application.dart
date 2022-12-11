@@ -1,4 +1,5 @@
 import 'package:happy_heart/Screens/add_equipment.dart';
+import 'package:happy_heart/Screens/equipment_type.dart';
 
 import 'header.dart';
 
@@ -20,7 +21,8 @@ class Application extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/login': (context) => const LoginSignupPage(true),
         '/signup': (context) => const LoginSignupPage(false),
-        '/add_equipment': (context) => const AddEquipmentPage()
+        '/add_equipment': (context) => const AddEquipmentPage(),
+        '/equipment_type': (context) => const EquipmentTypePage()
       },
     );
   }

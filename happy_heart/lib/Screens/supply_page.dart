@@ -9,7 +9,6 @@ class SupplyPage extends StatefulWidget {
 
 class _SupplyPageState extends State<SupplyPage> {
 
-
   Widget equipmentListBuilder(context, snapshot) {
     if (snapshot.hasData) {
       final List equipment=snapshot.data!.docs;

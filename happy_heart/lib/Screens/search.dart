@@ -10,50 +10,83 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController editingController = TextEditingController();
+  final ValueNotifier<List> _equipment = ValueNotifier<List>([]);
+  List duplicateItems = [];
 
-  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
-  var items = [];
-
-  @override
-  void initState() {
-    items.addAll(duplicateItems);
-    super.initState();
-  }
 
   void filterSearchResults(String query) {
-    List<String> dummySearchList = [];
-    dummySearchList.addAll(duplicateItems);
-    if(query.isNotEmpty) {
-      List<String> dummyListData = [];
+    List dummySearchList = [];
+    dummySearchList.addAll(_equipment.value);
+    if (query.isNotEmpty) {
+      List dummyListData = [];
       dummySearchList.forEach((item) {
-        if(item.contains(query)) {
+        Map dict = getTypesMapFromEquipmentList([item]);
+        if (dict.keys.elementAt(0).toString().contains(query)) {
           dummyListData.add(item);
         }
       });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
+      _equipment.value = dummyListData;
       return;
     } else {
-      setState(() {
-        items.clear();
-        items.addAll(duplicateItems);
-      });
+      _equipment.value = duplicateItems; // restore the full list
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar:  AppBar(
-        title:  Text(widget.title),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
       ),
-      //body:,
+      body: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) {
+                  filterSearchResults(value);
+                },
+                controller: editingController,
+                decoration: const InputDecoration(
+                    labelText: "Search",
+                    hintText: "Search",
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+              ),
+            ),
+            StreamBuilder(
+              stream: DB.getEquipmentStream(),
+              builder: (context, snapshot) {
+                if(snapshot.hasData) {
+                  _equipment.value = snapshot.data!.docs;
+                  duplicateItems = snapshot.data!.docs;
+                  return ValueListenableBuilder(
+                      valueListenable: _equipment,
+                      builder: (BuildContext context, List equipment, Widget? child){
+                        Map dict = getTypesMapFromEquipmentList(equipment);
+                        return ListView.builder(
+                            itemCount: dict.entries.length,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              var current=dict.keys.elementAt(index);
+                              return Center(child:buildEquipmentRow(context, current, dict[current].length));
+                            }
+                        );
+                      });
+                }
+                else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
-  }
+}
 
 //  Container(
 // child: Column(

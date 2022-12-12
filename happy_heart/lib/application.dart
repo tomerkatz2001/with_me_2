@@ -1,6 +1,8 @@
 import 'package:happy_heart/Screens/add_equipment.dart';
 import 'package:happy_heart/Screens/equipment_type.dart';
 
+
+import 'Screens/search.dart';
 import 'header.dart';
 
 class Application extends StatelessWidget {
@@ -22,7 +24,8 @@ class Application extends StatelessWidget {
         '/login': (context) => const LoginSignupPage(true),
         '/signup': (context) => const LoginSignupPage(false),
         '/add_equipment': (context) => const AddEquipmentPage(),
-        '/equipment_type': (context) => const EquipmentTypePage()
+        '/equipment_type': (context) => const EquipmentTypePage(),
+        '/search_page' : (context) => const SearchPage()
       },
     );
   }

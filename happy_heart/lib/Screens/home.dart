@@ -72,6 +72,16 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Center(child:Image.asset('assets/lev-hedva.png')),
+            // TODO: remove this button!
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ManageVolunteers()),
+                );
+              },
+              child: Text('Volunteers'),
+            ),
             VerticalSpacer(50),
             const Text('הציוד שנמצא כרגע במלאי:' , textDirection: TextDirection.rtl),
             VerticalSpacer(50),

@@ -22,7 +22,9 @@ class Application extends StatelessWidget {
         '/login': (context) => const LoginSignupPage(true),
         '/signup': (context) => const LoginSignupPage(false),
         '/add_equipment': (context) => const AddEquipmentPage(),
-        '/equipment_type': (context) => const EquipmentTypePage()
+        '/equipment_type': (context) => const EquipmentTypePage(),
+        '/manage_volunteers': (context) => const ManageVolunteers(),
+        '/volunteer_page': (context) => const VolunteerPage(),
       },
     );
   }

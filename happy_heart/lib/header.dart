@@ -27,6 +27,8 @@ export 'Screens/login.dart';
 export 'Screens/home.dart';
 export 'Screens/add_equipment.dart';
 export 'Screens/equipment_type.dart';
+export 'Screens/manage_volunteers.dart';
+export 'Screens/volunteer_page.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -37,6 +39,7 @@ export 'Components/state_picker.dart';
 
 export 'Objects/equipment_state.dart';
 export 'Objects/medical_equipment.dart';
+export 'Objects/volunteer.dart';
 
 export 'application.dart';
 export 'firebase_options.dart';

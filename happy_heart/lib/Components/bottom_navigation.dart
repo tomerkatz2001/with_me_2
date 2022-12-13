@@ -6,8 +6,9 @@ import 'package:happy_heart/header.dart';
 * If you want to add more pages add the name of the page here and also add a case in
 * the getPage function below.*/
 enum Pages{
- supply,
- search,
+  supply,
+  search,
+  verify
 }
 
 /*Add more case if you want to add a new page to the bottom_navigation
@@ -23,6 +24,8 @@ Widget getPage(Pages page){
       return const SupplyPage();
     case Pages.search:
       return const SearchPage();
+    case Pages.verify:
+      return const VerifyUsersPage();
   }
 }
 
@@ -38,6 +41,11 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
         icon: Icon(Icons.search),
         label: 'חיפוש',
       ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.admin_panel_settings_outlined),
+        label: 'אישור משתמשים',
+      ),
+
     ],
     currentIndex: page.index,
     selectedItemColor: Colors.amber[800],

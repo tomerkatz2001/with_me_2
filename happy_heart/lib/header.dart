@@ -26,6 +26,7 @@ export 'Wrappers/firebase.dart';
 export 'Screens/login.dart';
 export 'Screens/home.dart';
 export 'Screens/add_equipment.dart';
+export 'Screens/verify_users.dart';
 export 'Screens/equipment_type.dart';
 
 export 'Components/tappable_text.dart';
@@ -39,6 +40,7 @@ export 'Components/equipment_row.dart';
 
 export 'Objects/equipment_state.dart';
 export 'Objects/medical_equipment.dart';
+export 'Objects/permissions.dart';
 
 export 'application.dart';
 export 'firebase_options.dart';

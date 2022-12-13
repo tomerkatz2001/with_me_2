@@ -46,7 +46,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         });
       }
       if (_validFields.any((e) => !e)) {
-        print("field is false");
         return false;
       }
       return true;
@@ -66,7 +65,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         });
       }
       if (_validFields.any((e) => !e)) {
-        print("field is false");
         return false;
       }
       return true;
@@ -83,7 +81,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
     void signUpUser() async {
       if (!checknullSignup()) return;
-      print("owner is signing up");
       context.read<FirebaseAuthMethods>().signUpWithEmail(
           email: emailController.text,
           password: passwordController.text,

@@ -19,6 +19,7 @@ export 'Utilities/authentication.dart';
 export 'Utilities/snackbar.dart';
 export 'Utilities/database.dart';
 export 'Utilities/data_operations.dart';
+export 'Utilities/argument_types.dart';
 
 export 'Wrappers/login.dart';
 export 'Wrappers/firebase.dart';
@@ -33,9 +34,10 @@ export 'Components/input.dart';
 export 'Components/spacer.dart';
 export 'Components/appbar.dart';
 export 'Components/button.dart';
-export 'Components/state_picker.dart';
+export 'Components/addable_list.dart';
 
 export 'Objects/equipment_state.dart';
+export 'Objects/type.dart';
 export 'Objects/medical_equipment.dart';
 
 export 'application.dart';

@@ -27,7 +27,10 @@ export 'Wrappers/firebase.dart';
 export 'Screens/login.dart';
 export 'Screens/home.dart';
 export 'Screens/add_equipment.dart';
+export 'Screens/verify_users.dart';
 export 'Screens/equipment_type.dart';
+export 'Screens/manage_volunteers.dart';
+export 'Screens/volunteer_page.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -35,10 +38,14 @@ export 'Components/spacer.dart';
 export 'Components/appbar.dart';
 export 'Components/button.dart';
 export 'Components/addable_list.dart';
+export 'Components/bottom_navigation.dart';
+export 'Components/equipment_row.dart';
 
 export 'Objects/equipment_state.dart';
 export 'Objects/type.dart';
 export 'Objects/medical_equipment.dart';
+export 'Objects/volunteer.dart';
+export 'Objects/permissions.dart';
 
 export 'application.dart';
 export 'firebase_options.dart';

@@ -81,11 +81,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
     void signUpUser() async {
       if (!checknullSignup()) return;
-      context.read<FirebaseAuthMethods>().signUpWithEmail(
+      await context.read<FirebaseAuthMethods>().signUpWithEmail(
           email: emailController.text,
           password: passwordController.text,
           context: context,
           name: userController.text);
+      DB.insertUser(context.read<FirebaseAuthMethods>().user.uid, userController.text);
     }
 
     return Scaffold(

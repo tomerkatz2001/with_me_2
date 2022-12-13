@@ -62,10 +62,6 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
   @override
   void initState() {
     super.initState();
-
-    fieldsFuture = DB.getTypeFuture(type: typeName);
-    fieldsFutureBuilder = FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        future: fieldsFuture, builder: fieldsBuilder);
   }
 
   @override
@@ -73,6 +69,11 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EquipmentTypeArguments;
     typeName = arguments.name;
+    print("typename:");
+    print(typeName);
+    fieldsFuture = DB.getTypeFuture(type: typeName);
+    fieldsFutureBuilder = FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        future: fieldsFuture, builder: fieldsBuilder);
     return Scaffold(
         appBar: StyledAppBar(context, typeName + " חדש",
             leading: IconButton(

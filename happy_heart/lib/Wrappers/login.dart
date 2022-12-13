@@ -3,7 +3,7 @@ import '../header.dart';
 class LoginWrapper extends StatelessWidget {
   const LoginWrapper({Key? key}) : super(key: key);
 
-  getFirstPage(firebaseUser){
+  getFirstPage(firebaseUser, context){
     if (firebaseUser == null) {
       print("user is not logged in");
       return const LoginSignupPage(true);
@@ -15,6 +15,6 @@ class LoginWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
-    return getFirstPage(firebaseUser);
+    return getFirstPage(firebaseUser, context);
   }
 }

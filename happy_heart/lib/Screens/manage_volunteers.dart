@@ -18,7 +18,7 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
         "לב חדווה",
         actions: [
           GestureDetector(
-            child: const Icon(Icons.logout, color: Colors.white),
+            child: const Icon(Icons.logout),
             onTap: () {
               context.read<FirebaseAuthMethods>().signOut(context);
             },

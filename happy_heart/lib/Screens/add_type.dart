@@ -62,7 +62,7 @@ class _AddTypePageState extends State<AddTypePage> {
           VerticalSpacer(20),
           Input(_textController, "שדה חדש לציוד"),
           VerticalSpacer(20),
-          Button(addField,'הוזף שדה'),
+          Button(addField,'הוסף שדה'),
           Expanded(
             child: ListView.builder(
               itemCount: fields.length,

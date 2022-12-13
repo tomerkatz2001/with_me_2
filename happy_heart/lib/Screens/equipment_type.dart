@@ -43,18 +43,12 @@ class _EquipmentTypePageState extends State<EquipmentTypePage> {
         stream: equipmentStream, builder: equipmentListBuilder);
 
     return Scaffold(
-      appBar: StyledAppBar(
-        context,
-        arguments.name,
-        actions: [
-          GestureDetector(
-            child: const Icon(Icons.logout, color: Colors.white),
-            onTap: () {
-              context.read<FirebaseAuthMethods>().signOut(context);
-            },
-          ),
-        ],
-      ),
+      appBar: StyledAppBar(context, arguments.name,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back))),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

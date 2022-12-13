@@ -7,6 +7,7 @@ Widget Input(controller,   String text,
       child: TextField(
         textDirection: TextDirection.rtl,
         controller: controller,
+        
         decoration:  InputDecoration(
             labelText: text,
             hintText: text,

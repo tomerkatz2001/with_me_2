@@ -39,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
         widget.title,
         actions: [
           GestureDetector(
-            child: const Icon(Icons.logout, color: Colors.white),
+            child: const Icon(Icons.logout),
             onTap: () {
               context.read<FirebaseAuthMethods>().signOut(context);
             },

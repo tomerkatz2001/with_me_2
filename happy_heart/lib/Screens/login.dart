@@ -90,6 +90,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: StyledAppBar(context, "התחברות", leading:  !widget.loginSignupFlag?
         GestureDetector(
             child: Icon(Icons.arrow_back),
@@ -101,9 +102,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       ),
       body: Padding(
           padding: const EdgeInsets.all(30.0),
-          child: Wrap(
-            spacing: 20,
-            runSpacing: 20,
+          child: Column(
             children: <Widget>[
               Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "התחברות ללב חדוֿה" : "הרשמה ללב חדוה")),
               VerticalSpacer(5),
@@ -121,6 +120,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                       : _validFields[1],
                   rtl: false,
                   errorText: emptyFieldMessage),
+              VerticalSpacer(20),
               Input(passwordController, "סיסמא",
                   hideFlag: true,
                   validFlag: widget.loginSignupFlag
@@ -128,7 +128,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                       : _validFields[2],
                   rtl: false,
                   errorText: emptyFieldMessage),
-              VerticalSpacer(5),
+              VerticalSpacer(20),
               Center(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -140,6 +140,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                       ]
                   )
               ),
+              VerticalSpacer(10),
               Center(
                   child: widget.loginSignupFlag ? TappableText("אין לך משתמש? לחץ כאן על מנת להרשם", (){
                     Navigator.pop(context);

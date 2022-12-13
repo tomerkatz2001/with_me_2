@@ -31,7 +31,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
           itemCount: volunteerData.length,
           itemBuilder: (context, index){
             return ListTile(
-              title: Text("${volunteerData.keys.elementAt(index)}: ${volunteerData.values.elementAt(index)}"),
+              title: Text("${volunteerData.keys.elementAt(index)}: ${volunteerData.values.elementAt(index)}", textDirection: TextDirection.rtl,),
             );
         },)
     );

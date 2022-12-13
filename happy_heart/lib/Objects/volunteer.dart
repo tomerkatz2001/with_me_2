@@ -17,9 +17,9 @@ class Volunteer {
 
   getVolunteerData() {
     return {
-      "name": name,
-      "email": email,
-      "role": role,
+      "שם": name,
+      "אימייל": email,
+      "תפקיד": role,
     };
   }
 

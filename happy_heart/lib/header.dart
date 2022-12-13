@@ -34,6 +34,8 @@ export 'Components/spacer.dart';
 export 'Components/appbar.dart';
 export 'Components/button.dart';
 export 'Components/state_picker.dart';
+export 'Components/bottom_navigation.dart';
+export 'Components/equipment_row.dart';
 
 export 'Objects/equipment_state.dart';
 export 'Objects/medical_equipment.dart';

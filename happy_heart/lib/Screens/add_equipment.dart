@@ -1,4 +1,3 @@
-
 import 'package:happy_heart/Components/appbar.dart';
 
 import '../header.dart';
@@ -11,65 +10,87 @@ class AddEquipmentPage extends StatefulWidget {
 }
 
 class _AddEquipmentPageState extends State<AddEquipmentPage> {
-  final nameController = TextEditingController();
-  final stateController = TextEditingController();
-  EquipmentState state = EquipmentState.NEW;
+
+  onSendPressed() async {
+    Map<String, dynamic> fieldsMap = {};
+
+    for (int i = 0; i < fields.length; i++) {
+      fieldsMap[fields[i]] = fieldsControllers[i].text;
+    }
+
+    MedicalEquipment new_equipment =
+        MedicalEquipment(typeName, "new", fields: fieldsMap);
+    await DB.insertEquipment(new_equipment);
+    Navigator.of(context).pop();
+  }
+
+  Widget fieldsBuilder(BuildContext context,
+      AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> document) {
+    if (document.hasData) {
+      fields = document.data?.data()?["fields"];
+      fieldsControllers = [];
+      fields.forEach((element) {
+        fieldsControllers.add(TextEditingController());
+      });
+      return ListView.builder(
+        itemCount: fields.length,
+        itemBuilder: (context, index) {
+          return Input(fieldsControllers[index], fields[index]);
+        },
+      );
+    } else {
+      return CircularProgressIndicator();
+    }
+  }
+
+  String typeName = "";
+  late List<dynamic> fields;
+  Future<List<String>> typesFuture = DB.getTypes();
+  late Future<DocumentSnapshot<Map<String, dynamic>>> fieldsFuture;
+  List<TextEditingController> fieldsControllers = [];
+  late FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>
+      fieldsFutureBuilder;
+
   @override
   void dispose() {
-    nameController.dispose();
-    stateController.dispose();
+    fieldsControllers.forEach((element) {
+      element.dispose();
+    });
     super.dispose();
   }
 
-  String emptyFieldMessage = "please fill in this field";
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as EquipmentTypeArguments;
+    typeName = arguments.name;
+    print("typename:");
+    print(typeName);
+    fieldsFuture = DB.getTypeFuture(type: typeName);
+    fieldsFutureBuilder = FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        future: fieldsFuture, builder: fieldsBuilder);
     return Scaffold(
-      appBar: StyledAppBar(context,"ציוד חדש" , leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back))),
-      body: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            alignment: WrapAlignment.end,
-            children: <Widget>[
-              Center(child:Image.asset('assets/lev-hedva.png')),
-              VerticalSpacer(5),
-              Input(nameController, "סוג הציוד",
-                  errorText: emptyFieldMessage),
-
-              VerticalSpacer(5),
-              DropdownButton<EquipmentState>(
-          value: state,
-              onChanged: (EquipmentState? newValue) {
-            if(newValue!=null) {
-              state = newValue;
-            } else{
-              state = EquipmentState.NEW;
-            }
-          },
-          items: EquipmentState.values.map((EquipmentState state) {
-          return DropdownMenuItem<EquipmentState>(
-          value: state,
-          child: Text(state.name));
-          }).toList()),
-              Center(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Button( () async {
-                            MedicalEquipment new_equipment = MedicalEquipment(nameController.text,"new",state: stateFromTitle(stateController.text));
-                            await DB.insertEquipment(new_equipment);
-                            Navigator.of(context).pop();
-                          }, "הוסף")
-                      ]
-                  )
-              ),
-            ],
-          )
-      ),
-    );
+        appBar: StyledAppBar(context, typeName + " חדש",
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back))),
+        body: Column(
+          children: <Widget>[
+            Center(child: Image.asset('assets/lev-hedva.png')),
+            VerticalSpacer(5),
+            Expanded(child: fieldsFutureBuilder),
+            Center(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[Button(onSendPressed, "הוסף")])),
+          ],
+        ));
   }
 }

@@ -23,7 +23,6 @@ Widget EquipmentTypeList(List<MedicalEquipment> equipment){
                 },
             ),
             title:Text(current.type, textDirection: TextDirection.rtl),
-            subtitle:Text(current.state.name, textDirection: TextDirection.rtl),
             onTap: ()=>{}
         ));
       }

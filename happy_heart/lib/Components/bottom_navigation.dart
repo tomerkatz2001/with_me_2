@@ -8,7 +8,8 @@ import 'package:happy_heart/header.dart';
 enum Pages{
   supply,
   search,
-  verify
+  verify,
+  listOfVolunteers,
 }
 
 /*Add more case if you want to add a new page to the bottom_navigation
@@ -26,6 +27,8 @@ Widget getPage(Pages page){
       return const SearchPage();
     case Pages.verify:
       return const VerifyUsersPage();
+    case Pages.listOfVolunteers:
+      return const ManageVolunteers();
   }
 }
 
@@ -45,10 +48,15 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
         icon: Icon(Icons.admin_panel_settings_outlined),
         label: 'אישור משתמשים',
       ),
-
+      BottomNavigationBarItem(
+        icon: Icon(Icons.people),
+        label: 'רשימת מתנדבים',
+      ),
     ],
     currentIndex: page.index,
     selectedItemColor: Colors.amber[800],
+    unselectedItemColor: Colors.grey,
+    showUnselectedLabels: true,
     onTap: OnClickCallback ,
   );
 }

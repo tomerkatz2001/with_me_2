@@ -1,58 +1,20 @@
-
 import '../header.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  Pages _currentPage = Pages.supply;
 
-  Widget equipmentListBuilder(context, snapshot) {
-    if (snapshot.hasData) {
-      final List equipment=snapshot.data!.docs;
-      Map dict = getTypesMapFromEquipmentList(equipment);
-      return ListView.builder(
-          itemCount: dict.entries.length,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            var current=dict.keys.elementAt(index);
-            return Center(child:ListTile(
-                leading:
-                    //TODO: add option to make an item taken
-                GestureDetector(
-                  child:const Icon(
-                  Icons.arrow_back_ios,
-                  size: 24.0,
-                ),
-                    onTap: (){},
-                ),
-                title:Text(current, textDirection: TextDirection.rtl),
-                subtitle:Text(dict[current].length.toString(), textDirection: TextDirection.rtl),
-                onTap: ()=>{
-                  Navigator.of(context).pushNamed('/equipment_type',arguments:EquipmentTypeArguments(current))
-                }
-            ));
-          }
-      );
-    }
-    return const Center(child: CircularProgressIndicator());
+  void changePageCallback(int index) {
+    setState(() {
+      _currentPage = Pages.values[index];
+    });
   }
-
-  final Stream equipmentStream = DB.getEquipmentStream();
-
-  late StreamBuilder equipmentListStreamBuilder;
-
-  @override
-  void initState() {
-    super.initState();
-    equipmentListStreamBuilder=StreamBuilder(
-        stream: equipmentStream,
-        builder: equipmentListBuilder
-    );
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -97,5 +59,27 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(Icons.add),
       ),
     );
+    var perm_ = Permissions.getFirstUserPermissions(context);
+    return FutureBuilder<int>(
+        future: perm_,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            int perm = snapshot.data as int;
+            print('user permissions are $perm');
+            if(perm<0){
+              return Center(child: Column(children: [
+                CircularProgressIndicator(),
+                Center(child: Text('חכה לאישור ממנהל ותפתח מחדש', textDirection: TextDirection.rtl,),)
+              ],));
+            }
+            return Scaffold(
+              bottomNavigationBar:
+                  bottomNavigation(_currentPage, changePageCallback),
+              body: getPage(_currentPage),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        }
+     );
   }
 }

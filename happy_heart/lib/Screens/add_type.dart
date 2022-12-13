@@ -52,27 +52,27 @@ class _AddTypePageState extends State<AddTypePage> {
                 Navigator.pop(context);
               },
               icon: Icon(Icons.arrow_back))),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Center(child: Image.asset('assets/lev-hedva.png')),
-          VerticalSpacer(5),
-          Input(nameController, "שם סוג הציוד", errorText: emptyFieldMessage),
-          VerticalSpacer(5),
+          VerticalSpacer(20),
+          Input(nameController, "שם סוג הציוד", errorText: emptyFieldMessage, width:300),
+          VerticalSpacer(20),
           Input(_textController, "שדה חדש לציוד"),
-          MaterialButton(
-            child: Text('הוזף שדה'),
-            onPressed: addField,
-          ),
+          VerticalSpacer(20),
+          Button(addField,'הוזף שדה'),
           Expanded(
             child: ListView.builder(
               itemCount: fields.length,
               itemBuilder: fieldsListBuilder,
             ),
           ),
-          Center(
+          Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[Button(onSendClicked, "שלח")])),
         ],
       )),

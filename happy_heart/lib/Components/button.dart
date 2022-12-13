@@ -1,4 +1,11 @@
 import 'package:happy_heart/header.dart';
-MaterialButton Button(void Function() onPressed, String text){
-  return MaterialButton( onPressed:onPressed, child: Text(text));
+ElevatedButton Button(void Function() onPressed, String text){
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      foregroundColor: Colors.white,
+      backgroundColor: Colors.amber[900]?.withOpacity(0.5),
+    ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+    onPressed: onPressed,
+    child: Text(text),
+  );
 }

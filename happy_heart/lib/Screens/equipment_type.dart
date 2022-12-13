@@ -1,3 +1,4 @@
+import 'package:happy_heart/Components/floating_action_button.dart';
 import 'package:happy_heart/Components/type_list.dart';
 
 import '../header.dart';
@@ -65,13 +66,11 @@ class _EquipmentTypePageState extends State<EquipmentTypePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
+      floatingActionButton: FloatingButton(
+        () {
           Navigator.of(context).pushNamed("/add_equipment",
               arguments: EquipmentTypeArguments(name));
         },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
       ),
     );
   }

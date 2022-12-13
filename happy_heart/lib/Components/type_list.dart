@@ -10,12 +10,12 @@ Widget EquipmentTypeList(List<MedicalEquipment> equipment){
             GestureDetector(
                 child:
                 current.available?const Icon(
-                  Icons.accessibility_new_outlined,
-                  color: Colors.green,
+                  Icons.check_box_outline_blank,
+                  color: Colors.amber,
                   size: 24.0,
                 ):const Icon(
-                  Icons.accessibility_new_outlined,
-                  color: Colors.red,
+                  Icons.check_box,
+                  color: Colors.amber,
                   size: 24.0,
                 ),
                 onTap: (){

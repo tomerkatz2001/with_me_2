@@ -1,8 +1,9 @@
 import '../header.dart';
 
 Widget Input(controller, text,
-    {hideFlag = false, numericFlag = false, errorText, validFlag = true, rtl=true}) {
+    {hideFlag = false, numericFlag = false, errorText, validFlag = true, rtl=true,double width=300}) {
   return Container(
+      width: width,
       child: TextFormField(
         obscureText: hideFlag,
         keyboardType: numericFlag ? TextInputType.number : TextInputType.text,

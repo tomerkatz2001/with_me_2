@@ -15,8 +15,9 @@ class Application extends StatelessWidget {
     return MaterialApp(
       title: 'Happy Heart',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange),
         fontFamily: 'RaleWay',
+        useMaterial3: true
       ),
       initialRoute: '/' ,
       routes: {

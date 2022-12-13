@@ -30,11 +30,8 @@ class _VolunteerPageState extends State<VolunteerPage> {
         body: ListView.builder(
           itemCount: volunteerData.length,
           itemBuilder: (context, index){
-            return Card(
-              shadowColor: Colors.black,
-              child: ListTile(
-                title: Text("${volunteerData.keys.elementAt(index)}: ${volunteerData.values.elementAt(index)}"),
-              ),
+            return ListTile(
+              title: Text("${volunteerData.keys.elementAt(index)}: ${volunteerData.values.elementAt(index)}"),
             );
         },)
     );

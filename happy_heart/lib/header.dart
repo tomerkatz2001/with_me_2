@@ -40,6 +40,7 @@ export 'Components/button.dart';
 export 'Components/addable_list.dart';
 export 'Components/bottom_navigation.dart';
 export 'Components/equipment_row.dart';
+export 'Components/floating_action_button.dart';
 
 export 'Objects/equipment_state.dart';
 export 'Objects/type.dart';

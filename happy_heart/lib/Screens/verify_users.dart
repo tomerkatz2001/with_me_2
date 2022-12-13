@@ -63,7 +63,7 @@ class _VerifyUsersPageState extends State<VerifyUsersPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: StyledAppBar(context, 'אישור משתמשים',
+      appBar: StyledAppBar(context, 'לב חדווה',
         actions: [
           GestureDetector(
             child: const Icon(Icons.logout, color: Colors.white),

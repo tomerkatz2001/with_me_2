@@ -2,7 +2,7 @@ import 'package:happy_heart/header.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
-  final String title = 'search page';
+  final String title = 'לב חדווה';
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -12,7 +12,6 @@ class _SearchPageState extends State<SearchPage> {
   TextEditingController editingController = TextEditingController();
   final ValueNotifier<List> _equipment = ValueNotifier<List>([]);
   List duplicateItems = [];
-
 
   void filterSearchResults(String query) {
     List dummySearchList = [];
@@ -35,8 +34,17 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: StyledAppBar(
+        context,
+        widget.title,
+        actions: [
+          GestureDetector(
+            child: const Icon(Icons.logout, color: Colors.white),
+            onTap: () {
+              context.read<FirebaseAuthMethods>().signOut(context);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -59,24 +67,25 @@ class _SearchPageState extends State<SearchPage> {
             StreamBuilder(
               stream: DB.getEquipmentStream(),
               builder: (context, snapshot) {
-                if(snapshot.hasData) {
+                if (snapshot.hasData) {
                   _equipment.value = snapshot.data!.docs;
                   duplicateItems = snapshot.data!.docs;
                   return ValueListenableBuilder(
                       valueListenable: _equipment,
-                      builder: (BuildContext context, List equipment, Widget? child){
+                      builder: (BuildContext context, List equipment,
+                          Widget? child) {
                         Map dict = getTypesMapFromEquipmentList(equipment);
                         return ListView.builder(
                             itemCount: dict.entries.length,
                             shrinkWrap: true,
                             itemBuilder: (BuildContext context, int index) {
-                              var current=dict.keys.elementAt(index);
-                              return Center(child:buildEquipmentRow(context, current, dict[current].length));
-                            }
-                        );
+                              var current = dict.keys.elementAt(index);
+                              return Center(
+                                  child: buildEquipmentRow(
+                                      context, current, dict[current].length));
+                            });
                       });
-                }
-                else {
+                } else {
                   return const Center(child: CircularProgressIndicator());
                 }
               },

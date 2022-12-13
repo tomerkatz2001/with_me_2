@@ -54,7 +54,7 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
       ),
     ],
     currentIndex: page.index,
-    selectedItemColor: Colors.amber[800],
+    selectedItemColor: Colors.amber[600],
     unselectedItemColor: Colors.grey,
     showUnselectedLabels: true,
     onTap: OnClickCallback ,

@@ -90,12 +90,9 @@ class _SupplyPageState extends State<SupplyPage> {
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FloatingActionButton(
-              onPressed: () {
+            FloatingButton(() {
                 Navigator.of(context).pushNamed("/add_type");
-              },
-              backgroundColor: Colors.green,
-              child: const Icon(Icons.add),
+              }
             ),
           ],
         )

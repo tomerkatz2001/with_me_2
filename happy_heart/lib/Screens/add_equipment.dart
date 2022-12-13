@@ -35,7 +35,7 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
       return ListView.builder(
         itemCount: fields.length,
         itemBuilder: (context, index) {
-          return Input(fieldsControllers[index], fields[index]);
+          return Column(children:[Input(fieldsControllers[index], fields[index]),VerticalSpacer(20)]);
         },
       );
     } else {
@@ -83,10 +83,10 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
                 icon: Icon(Icons.arrow_back))),
         body: Column(
           children: <Widget>[
-            Center(child: Image.asset('assets/lev-hedva.png')),
-            VerticalSpacer(5),
+            VerticalSpacer(20),
             Expanded(child: fieldsFutureBuilder),
-            Center(
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[Button(onSendPressed, "הוסף")])),

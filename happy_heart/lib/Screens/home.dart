@@ -71,7 +71,37 @@ class _HomePageState extends State<HomePage> {
             if(perm<0){
               return Center(child: Column(children: const [
                 CircularProgressIndicator(),
-                Center(child: Text('חכה לאישור ממנהל ותפתח מחדש', textDirection: TextDirection.rtl,),)
+                Text(
+                  '\n\n\nאנו מודים לכם על הצטרפותכם למשפחת לב חדווה! \nאנא המתינו לאישור מהמנהל ולאחר מכן פתחו מחדש את האפליקציה.\n\n',
+                  textDirection: TextDirection.rtl, 
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.amber, 
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  'קצת עלינו:\n',
+                  textDirection: TextDirection.rtl, 
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.amber, 
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  'עמותת לב חדווה הוקמה בשנת 2021 על ידי אליהו אליוביץ \n מטרתה העיקרית היא סיוע באספקת תרופות וציוד רפואי לציבור.',
+                  textDirection: TextDirection.rtl, 
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.amber, 
+                    fontSize: 20,
+                  ),
+                )
+                
               ],));
             }
             return Scaffold(

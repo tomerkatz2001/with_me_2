@@ -15,6 +15,8 @@ export 'package:flutter/material.dart';
 export 'package:provider/provider.dart';
 
 
+
+
 export 'Utilities/authentication.dart';
 export 'Utilities/snackbar.dart';
 export 'Utilities/database.dart';
@@ -31,6 +33,7 @@ export 'Screens/verify_users.dart';
 export 'Screens/equipment_type.dart';
 export 'Screens/manage_volunteers.dart';
 export 'Screens/volunteer_page.dart';
+export 'Screens/deliveries.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -47,6 +50,8 @@ export 'Objects/type.dart';
 export 'Objects/medical_equipment.dart';
 export 'Objects/volunteer.dart';
 export 'Objects/permissions.dart';
+export 'Objects/location.dart';
+export 'Objects/delivery.dart';
 
 export 'application.dart';
 export 'firebase_options.dart';

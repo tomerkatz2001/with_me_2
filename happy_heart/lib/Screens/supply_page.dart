@@ -8,7 +8,6 @@ class SupplyPage extends StatefulWidget {
 }
 
 class _SupplyPageState extends State<SupplyPage> {
-  Pages _currentPage = Pages.supply;
 
   Widget typeListBuilder(context, snapshot) {
     if (snapshot.hasData) {
@@ -52,11 +51,6 @@ class _SupplyPageState extends State<SupplyPage> {
     super.initState();
     typeListStreamBuilder =
         StreamBuilder(stream: typesStream, builder: typeListBuilder);
-  }
-  void changePageCallback(int index) {
-    setState(() {
-      _currentPage = Pages.values[index];
-    });
   }
 
   @override

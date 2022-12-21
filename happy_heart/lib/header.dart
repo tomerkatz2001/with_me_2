@@ -34,6 +34,7 @@ export 'Screens/equipment_type.dart';
 export 'Screens/manage_volunteers.dart';
 export 'Screens/volunteer_page.dart';
 export 'Screens/deliveries.dart';
+export 'Screens/delivery_sub_page.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -44,6 +45,7 @@ export 'Components/addable_list.dart';
 export 'Components/bottom_navigation.dart';
 export 'Components/equipment_row.dart';
 export 'Components/floating_action_button.dart';
+export 'Components/delivery_list_tile.dart';
 
 export 'Objects/equipment_state.dart';
 export 'Objects/type.dart';

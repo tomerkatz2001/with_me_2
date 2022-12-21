@@ -79,11 +79,14 @@ class DB {
     );
   }
 
-  static Stream<QuerySnapshot<Delivery>>getDeliveriesSteam(){
+  static Stream<QuerySnapshot<Delivery>>getDeliveriesSteam({filter=""}){
     var ref = FirebaseFirestore.instance.collection("deliveries").withConverter(
         fromFirestore: (snapshot, _) => Delivery.fromJson(snapshot.data()!),
         toFirestore: (delivery, _) => delivery.toJson(),);
-    return ref.snapshots();
+    if(filter=="") {
+      return ref.snapshots();
+    }
+    return ref.where("status", isEqualTo: filter).snapshots();
   }
   
 

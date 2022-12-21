@@ -1,3 +1,5 @@
+
+
 import '../header.dart';
 class DB {
 
@@ -70,4 +72,21 @@ class DB {
     await FirebaseFirestore.instance.collection("types").doc(type.name).set(
         type.toMap());
   }
+
+  static insertDelivery(Delivery delivery) async{
+    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+        delivery.toJson()
+    );
+  }
+
+  static Stream<QuerySnapshot<Delivery>>getDeliveriesSteam(){
+    var ref = FirebaseFirestore.instance.collection("deliveries").withConverter(
+        fromFirestore: (snapshot, _) => Delivery.fromJson(snapshot.data()!),
+        toFirestore: (delivery, _) => delivery.toJson(),);
+    return ref.snapshots();
+  }
+  
+
+  
+  
 }

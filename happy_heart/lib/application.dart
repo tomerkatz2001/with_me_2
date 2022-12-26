@@ -31,7 +31,8 @@ class Application extends StatelessWidget {
         '/manage_volunteers': (context) => const ManageVolunteers(),
         '/volunteer_page': (context) => const VolunteerPage(),
         '/search_page' : (context) => const SearchPage(),
-        '/verify_user': (context) => const VerifyUsersPage()
+        '/verify_user': (context) => const VerifyUsersPage(),
+        '/deliveries': (context) => const DeliveriesPage()
       },
     );
   }

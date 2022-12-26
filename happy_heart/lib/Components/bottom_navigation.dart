@@ -10,6 +10,7 @@ enum Pages{
   search,
   verify,
   listOfVolunteers,
+  deliveries,
 }
 
 /*Add more case if you want to add a new page to the bottom_navigation
@@ -29,6 +30,8 @@ Widget getPage(Pages page){
       return const VerifyUsersPage();
     case Pages.listOfVolunteers:
       return const ManageVolunteers();
+    case Pages.deliveries:
+      return const DeliveriesPage();
   }
 }
 
@@ -51,6 +54,10 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
       BottomNavigationBarItem(
         icon: Icon(Icons.people),
         label: 'רשימת מתנדבים',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.local_shipping),
+        label: 'שינועים',
       ),
     ],
     currentIndex: page.index,

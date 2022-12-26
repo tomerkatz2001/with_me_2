@@ -46,6 +46,7 @@ export 'Components/bottom_navigation.dart';
 export 'Components/equipment_row.dart';
 export 'Components/floating_action_button.dart';
 export 'Components/delivery_list_tile.dart';
+export 'Components/location_search.dart';
 
 export 'Objects/equipment_state.dart';
 export 'Objects/type.dart';

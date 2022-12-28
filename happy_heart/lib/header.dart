@@ -35,6 +35,7 @@ export 'Screens/manage_volunteers.dart';
 export 'Screens/volunteer_page.dart';
 export 'Screens/deliveries.dart';
 export 'Screens/delivery_sub_page.dart';
+export 'Screens/add_delivery.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';

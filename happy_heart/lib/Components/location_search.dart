@@ -51,6 +51,7 @@ class _GMapsSearch extends State<GMapsSearch> {
                   widget.onTap!(AddressLocation(locs[index].fullText,
                       latLng?.lat ?? 0, latLng?.lng ?? 0));
                   setState(() {
+                    possibleLocations = null;
                     searchController.text = locs[index].fullText;
                   });
                 },

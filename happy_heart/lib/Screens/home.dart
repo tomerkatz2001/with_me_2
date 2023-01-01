@@ -74,6 +74,11 @@ class _HomePageState extends State<HomePage> {
                 Center(child: Text('חכה לאישור ממנהל ותפתח מחדש', textDirection: TextDirection.rtl,),)
               ],));
             }
+            if(perm==1){
+              return Scaffold(
+                body: DeliveryMap(),
+              );
+            }
             return Scaffold(
               bottomNavigationBar:
                   bottomNavigation(_currentPage, changePageCallback),

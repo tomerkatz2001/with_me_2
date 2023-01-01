@@ -1,8 +1,8 @@
 import 'package:happy_heart/header.dart';
 
 class Delivery {
-  late Location srcLocation;
-  late Location dstLocation;
+  late AddressLocation srcLocation;
+  late AddressLocation dstLocation;
   late String productId;
   late String productName;
   late String status;
@@ -12,8 +12,8 @@ class Delivery {
     timeStamp = DateTime.now().millisecondsSinceEpoch;
   }
   Delivery.fromJson(Map json) {
-    srcLocation = Location(json['srcAddress'], json['srcLat'].toDouble(), json['srcLng'].toDouble());
-    dstLocation = Location(json['dstAddress'], json['dstLat'].toDouble(), json['dstLng'].toDouble());
+    srcLocation = AddressLocation(json['srcAddress'], json['srcLat'].toDouble(), json['srcLng'].toDouble());
+    dstLocation = AddressLocation(json['dstAddress'], json['dstLat'].toDouble(), json['dstLng'].toDouble());
     productId = json['productId'];
     productName = json['productName'];
     status = json['status'];

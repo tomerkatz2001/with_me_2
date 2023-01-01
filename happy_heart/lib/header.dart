@@ -13,8 +13,7 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter/material.dart';
 export 'package:provider/provider.dart';
-
-
+export 'package:flutter_map/flutter_map.dart';
 
 
 export 'Utilities/authentication.dart';
@@ -35,6 +34,7 @@ export 'Screens/manage_volunteers.dart';
 export 'Screens/volunteer_page.dart';
 export 'Screens/deliveries.dart';
 export 'Screens/delivery_sub_page.dart';
+export 'Screens/delivery_map.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -54,7 +54,9 @@ export 'Objects/volunteer.dart';
 export 'Objects/permissions.dart';
 export 'Objects/location.dart';
 export 'Objects/delivery.dart';
+export 'Objects/delivery_sub_types.dart';
 
 export 'application.dart';
 export 'firebase_options.dart';
 export 'constants.dart';
+

@@ -1,6 +1,5 @@
 import 'package:happy_heart/header.dart';
 
- enum DeliverySubPages {toBeDelivered, onDeliver, delivered;}
 
 class DeliverySubPage extends StatelessWidget {
   DeliverySubPages subPagesType;

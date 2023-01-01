@@ -88,6 +88,13 @@ class DB {
     }
     return ref.where("status", isEqualTo: filter).snapshots();
   }
+
+  static void setDeliveryStarted(Delivery delivery) async{
+    delivery.status= "onDelivery";
+    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+        delivery.toJson()
+    );
+  }
   
 
   

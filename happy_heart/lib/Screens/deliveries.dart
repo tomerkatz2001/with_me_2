@@ -28,11 +28,9 @@ class DeliveriesPage extends StatelessWidget {
             DeliverySubPage(DeliverySubPages.toBeDelivered, null),
           ],
         ),
-        floatingActionButton: FloatingButton(() => DB.insertDelivery(Delivery(
-            Location("קפלן 42, פתח תקווה", 5, 6),
-            Location("המכבים 29, הוד השרון", 7, 8),
-            "productId",
-            "אלונקה"))),
+        floatingActionButton: FloatingButton((){
+          Navigator.of(context).pushNamed("/add_delivery");
+        })  ,
       ),
     );
   }

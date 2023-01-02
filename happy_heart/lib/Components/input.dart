@@ -1,12 +1,13 @@
 import '../header.dart';
 
 Widget Input(controller,   String text,
-    {hideFlag = false, numericFlag = false, errorText, validFlag = true, rtl=true,double width=300}) {
+    {hideFlag = false, numericFlag = false, errorText, validFlag = true, rtl=true,double width=300, onChanged}) {
   return Container(
       width: width,
       child: TextField(
         textDirection: TextDirection.rtl,
         controller: controller,
+        onChanged: onChanged,
         
         decoration:  InputDecoration(
             labelText: text,

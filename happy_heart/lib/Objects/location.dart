@@ -1,6 +1,6 @@
-class Location{
+class AddressLocation{
   String address;
   double lat;
   double lng;
-  Location(this.address, this.lat, this.lng);
+  AddressLocation(this.address, this.lat, this.lng);
 }

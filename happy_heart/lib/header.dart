@@ -48,6 +48,10 @@ export 'Components/equipment_row.dart';
 export 'Components/floating_action_button.dart';
 export 'Components/delivery_list_tile.dart';
 export 'Components/location_search.dart';
+export 'Components/type_tile.dart';
+export 'Components/equipment_tile.dart';
+export 'Components/equipment_search.dart';
+
 
 export 'Objects/equipment_state.dart';
 export 'Objects/type.dart';

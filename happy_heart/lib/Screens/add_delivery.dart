@@ -10,7 +10,7 @@ class AddDeliveryPage extends StatefulWidget {
 class _AddDeliveryPageState extends State<AddDeliveryPage> {
   AddressLocation? src;
   AddressLocation? dst;
-  TextEditingController nameController = TextEditingController();
+  MedicalEquipment? sent_obj;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class _AddDeliveryPageState extends State<AddDeliveryPage> {
                   Navigator.pop(context);
                 },
                 icon: Icon(Icons.arrow_back))),
-        body: Column(
+        body: SingleChildScrollView(child: Column(
           children: <Widget>[
             VerticalSpacer(20),
             GMapsSearch(
@@ -38,18 +38,27 @@ class _AddDeliveryPageState extends State<AddDeliveryPage> {
               },
             ),
             VerticalSpacer(20),
-            Input(nameController, 'סוג'),
+            EquipmentSearch(
+              text: 'מוצר',
+              onTap: (x) {
+                sent_obj = x;
+              },
+            ),
             VerticalSpacer(20),
             ElevatedButton(
-                onPressed: () { if(src==null || dst==null){return;}
-                  DB.insertDelivery(Delivery(
-                      src!,
-                      dst!,
-                      "productId",
-                      nameController.text));
+                onPressed: () {
+                  if (src == null || dst == null || sent_obj == null) {
+                    return;
+                  }
+                  DB.insertDelivery(
+                      Delivery(src!, dst!, sent_obj!.id, sent_obj!.type));
+                  Navigator.pop(context);
                 },
                 child: Text('שלח'))
           ],
-        ));
+        )
+          ,)
+
+        );
   }
 }

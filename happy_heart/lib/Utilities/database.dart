@@ -1,3 +1,5 @@
+
+
 import '../header.dart';
 class DB {
 
@@ -70,4 +72,39 @@ class DB {
     await FirebaseFirestore.instance.collection("types").doc(type.name).set(
         type.toMap());
   }
+
+  static insertDelivery(Delivery delivery) async{
+    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+        delivery.toJson()
+    );
+  }
+
+  static Stream<QuerySnapshot<Delivery>>getDeliveriesSteam({filter=""}){
+    var ref = FirebaseFirestore.instance.collection("deliveries").withConverter(
+        fromFirestore: (snapshot, _) => Delivery.fromJson(snapshot.data()!),
+        toFirestore: (delivery, _) => delivery.toJson(),);
+
+    if(filter=="") {
+      return ref.snapshots();
+    }
+    return ref.where("status", isEqualTo: filter).snapshots();
+  }
+
+
+
+  static void updateDeliveryStatusAndOwner(Delivery delivery, String uid, String newStatus ) async{
+    delivery.status= newStatus;
+    delivery.ownerId=uid;
+    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+        delivery.toJson()
+    );
+  }
+
+  static void setDeliveryFinished(Delivery delivery, String uid ) async{
+    updateDeliveryStatusAndOwner(delivery, uid, "delivered");
+  }
+  static void setDeliveryStarted(Delivery delivery, String uid ) async{
+    updateDeliveryStatusAndOwner(delivery, uid, "onDelivery");
+  }
+
 }

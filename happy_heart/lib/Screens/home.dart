@@ -111,9 +111,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],));
             }
+            if(perm==1){
+              return Scaffold(
+                  bottomNavigationBar:
+                bottomNavigation(_currentPage, changePageCallback,false),
+                body: getPageUser(_currentPage),
+              );
+            }
             return Scaffold(
               bottomNavigationBar:
-                  bottomNavigation(_currentPage, changePageCallback),
+                  bottomNavigation(_currentPage, changePageCallback,true),
               body: getPage(_currentPage),
             );
           }

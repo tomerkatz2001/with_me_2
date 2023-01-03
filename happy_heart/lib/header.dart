@@ -36,6 +36,7 @@ export 'Screens/deliveries.dart';
 export 'Screens/delivery_sub_page.dart';
 export 'Screens/delivery_map.dart';
 export 'Screens/my_deliveries.dart';
+export 'Screens/add_delivery.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -48,6 +49,11 @@ export 'Components/equipment_row.dart';
 export 'Components/floating_action_button.dart';
 export 'Components/delivery_list_tile.dart';
 export 'Components/delivery_dialog.dart';
+export 'Components/location_search.dart';
+export 'Components/type_tile.dart';
+export 'Components/equipment_tile.dart';
+export 'Components/equipment_search.dart';
+
 
 export 'Objects/equipment_state.dart';
 export 'Objects/type.dart';

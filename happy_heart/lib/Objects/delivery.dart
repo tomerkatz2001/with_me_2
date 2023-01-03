@@ -10,6 +10,7 @@ class Delivery {
   String ownerId="";
 
   Delivery(this.srcLocation, this.dstLocation, this.productId, this.productName, {this.status="toBeDelivered", this.ownerId=""}){
+
     timeStamp = DateTime.now().millisecondsSinceEpoch;
   }
   Delivery.fromJson(Map json) {

@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import '../header.dart';
+
 class DB {
 
   static Future<int> getPermissions(String uid) async{
@@ -69,5 +72,32 @@ class DB {
   static insertType(EquipmentType type) async {
     await FirebaseFirestore.instance.collection("types").doc(type.name).set(
         type.toMap());
+  }
+
+
+
+  static uploadImage(Uint8List? file) async {
+
+    if(file == null){
+      return "images/no_image_available.jpg";
+    }
+
+    print("uploading image");
+    final storageRef = FirebaseStorage.instance.ref();
+
+    // Create a reference to "item.jpg"
+    final path = "images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
+    final itemRef = storageRef.child(path);
+    print("image ref created: $storageRef");
+    // if(kIsWeb){
+    //   print("web");
+    //   await itemRef.putData(web_file!);
+    // } else {
+    //   await itemRef.putFile(file!);
+    //
+    // }
+    await itemRef.putData(file!);
+    print("uploaded image");
+    return path;
   }
 }

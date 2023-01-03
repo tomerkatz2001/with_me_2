@@ -11,12 +11,19 @@ class AddEquipmentPage extends StatefulWidget {
 
 class _AddEquipmentPageState extends State<AddEquipmentPage> {
 
+  var _image = null;
+
   onSendPressed() async {
     Map<String, dynamic> fieldsMap = {};
 
     for (int i = 0; i < fields.length; i++) {
       fieldsMap[fields[i]] = fieldsControllers[i].text;
     }
+
+    // upload image to firebase storage
+    final path = await DB.uploadImage(_image);
+
+    fieldsMap["image"] = path;
 
     MedicalEquipment new_equipment =
         MedicalEquipment(typeName, "new", fields: fieldsMap);
@@ -33,6 +40,7 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
         fieldsControllers.add(TextEditingController());
       });
       return ListView.builder(
+        shrinkWrap: true,
         itemCount: fields.length,
         itemBuilder: (context, index) {
           return Column(children:[Input(fieldsControllers[index], fields[index]),VerticalSpacer(20)]);
@@ -69,6 +77,7 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EquipmentTypeArguments;
     typeName = arguments.name;
+
     print("typename:");
     print(typeName);
     fieldsFuture = DB.getTypeFuture(type: typeName);
@@ -84,7 +93,26 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
         body: Column(
           children: <Widget>[
             VerticalSpacer(20),
-            Expanded(child: fieldsFutureBuilder),
+            Expanded(
+                child: Column(
+                  children: [
+                    fieldsFutureBuilder,
+                    IconButton(onPressed: () async {
+                      ImagePicker _picker = ImagePicker();
+                      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                      if (image != null) {
+                        _image = await image.readAsBytes();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("No image selected"))
+                        );
+                      }
+                    }, icon: Icon(Icons.image),
+                      tooltip: "הוסף תמונה",
+                      ),
+                  ],
+                )
+            ),
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: Row(

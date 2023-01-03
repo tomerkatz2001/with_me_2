@@ -11,9 +11,12 @@ export 'package:provider/provider.dart';
 export 'package:flutter/gestures.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_auth/firebase_auth.dart';
+export 'package:firebase_storage/firebase_storage.dart';
 export 'package:flutter/material.dart';
 export 'package:provider/provider.dart';
-
+export 'package:image_picker/image_picker.dart';
+export 'dart:io';
+export 'dart:typed_data';
 
 export 'Utilities/authentication.dart';
 export 'Utilities/snackbar.dart';

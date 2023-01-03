@@ -6,9 +6,16 @@ Widget EquipmentTypeList(List<MedicalEquipment> equipment) {
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         var current = equipment[index];
-        return Center(
-            child: equipmentListTile(current, onTap: () {
-          current.setAvailable();
-        }));
+        return GestureDetector(
+            child:Center(
+              child: equipmentListTile(current, onTap: () {current.setAvailable();})),
+            onTap: (){
+              print("ADSAFSAFAS");
+              Navigator.of(context).pushNamed('/equipment',
+                  arguments: EquipmentArguments(
+                    equipment[index]
+                  ));
+            },
+        );
       });
 }

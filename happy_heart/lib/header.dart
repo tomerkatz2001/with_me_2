@@ -37,6 +37,7 @@ export 'Screens/delivery_sub_page.dart';
 export 'Screens/delivery_map.dart';
 export 'Screens/my_deliveries.dart';
 export 'Screens/add_delivery.dart';
+export 'Screens/equipment.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -53,6 +54,7 @@ export 'Components/location_search.dart';
 export 'Components/type_tile.dart';
 export 'Components/equipment_tile.dart';
 export 'Components/equipment_search.dart';
+export 'Components/field_tile.dart';
 
 
 export 'Objects/equipment_state.dart';

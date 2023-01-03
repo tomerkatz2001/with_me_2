@@ -1,3 +1,5 @@
+
+
 import '../header.dart';
 
 class DB {
@@ -72,30 +74,54 @@ class DB {
         type.toMap());
   }
 
-
-
   static uploadImage(Uint8List? file) async {
 
     if(file == null){
       return "images/no_image_available.jpg";
     }
 
-    print("uploading image");
     final storageRef = FirebaseStorage.instance.ref();
 
     // Create a reference to "item.jpg"
     final path = "images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
     final itemRef = storageRef.child(path);
-    print("image ref created: $storageRef");
-    // if(kIsWeb){
-    //   print("web");
-    //   await itemRef.putData(web_file!);
-    // } else {
-    //   await itemRef.putFile(file!);
-    //
-    // }
+    
     await itemRef.putData(file!);
-    print("uploaded image");
     return path;
   }
+
+  static insertDelivery(Delivery delivery) async{
+    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+        delivery.toJson()
+    );
+  }
+
+  static Stream<QuerySnapshot<Delivery>>getDeliveriesSteam({filter=""}){
+    var ref = FirebaseFirestore.instance.collection("deliveries").withConverter(
+        fromFirestore: (snapshot, _) => Delivery.fromJson(snapshot.data()!),
+        toFirestore: (delivery, _) => delivery.toJson(),);
+
+    if(filter=="") {
+      return ref.snapshots();
+    }
+    return ref.where("status", isEqualTo: filter).snapshots();
+  }
+
+
+
+  static void updateDeliveryStatusAndOwner(Delivery delivery, String uid, String newStatus ) async{
+    delivery.status= newStatus;
+    delivery.ownerId=uid;
+    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+        delivery.toJson()
+    );
+  }
+
+  static void setDeliveryFinished(Delivery delivery, String uid ) async{
+    updateDeliveryStatusAndOwner(delivery, uid, "delivered");
+  }
+  static void setDeliveryStarted(Delivery delivery, String uid ) async{
+    updateDeliveryStatusAndOwner(delivery, uid, "onDelivery");
+  }
+
 }

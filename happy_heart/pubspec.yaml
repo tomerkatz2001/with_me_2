@@ -41,6 +41,9 @@ dependencies:
   cloud_firestore: ^4.1.0
   firebase_auth: ^4.1.4
   provider: ^6.0.4
+  flutter_map: ^3.1.0
+  latlng: any
+  location: any
 
   google_maps_flutter_web: ^0.4.0+3
   google_maps_flutter: ^2.2.2
@@ -80,6 +83,8 @@ flutter:
      - assets/delivery_address.png
      - assets/humanitarian_help_2.png
      - assets/Relaxing.png
+     - assets/marker.png
+     - assets/marker_red.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

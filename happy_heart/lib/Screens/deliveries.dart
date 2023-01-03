@@ -30,7 +30,7 @@ class DeliveriesPage extends StatelessWidget {
         ),
         floatingActionButton: FloatingButton((){
           Navigator.of(context).pushNamed("/add_delivery");
-        })  ,
+        })
       ),
     );
   }

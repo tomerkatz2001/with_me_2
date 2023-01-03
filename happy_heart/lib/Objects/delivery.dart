@@ -7,9 +7,10 @@ class Delivery {
   late String productName;
   late String status;
   late int timeStamp;
+  String ownerId="";
 
+  Delivery(this.srcLocation, this.dstLocation, this.productId, this.productName, {this.status="toBeDelivered", this.ownerId=""}){
 
-  Delivery(this.srcLocation, this.dstLocation, this.productId, this.productName, {this.status="toBeDelivered"}){
     timeStamp = DateTime.now().millisecondsSinceEpoch;
   }
   Delivery.fromJson(Map json) {
@@ -19,6 +20,9 @@ class Delivery {
     productName = json['productName'];
     status = json['status'];
     timeStamp = json['timeStamp'];
+    if(json['ownerId']!=null){
+      ownerId=json['ownerId'];
+    }
 
   }
 
@@ -33,6 +37,7 @@ class Delivery {
         'productName' : productName,
         'status' : status,
         'timeStamp' : timeStamp,
+        'ownerId' : ownerId
       };
 
   String getDescription(){

@@ -10,7 +10,7 @@ enum Pages{
   search,
   verify,
   listOfVolunteers,
-  deliveries,
+  deliveries
 }
 
 /*Add more case if you want to add a new page to the bottom_navigation
@@ -34,11 +34,20 @@ Widget getPage(Pages page){
       return const DeliveriesPage();
   }
 }
+Widget getPageUser(Pages page){
+  switch(page){
+    case Pages.supply:
+      return const DeliveryMap();
+    case Pages.search:
+      return MyDeliveriesPage();
+  }
+  return const DeliveryMap();
+}
 
 /* Also add the Icon and name in case you want to add more pages*/
-BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallback){
+BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallback, bool isManager ){
   return BottomNavigationBar(
-    items: const <BottomNavigationBarItem>[
+    items: isManager? const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: Icon(Icons.healing),
         label: 'ציוד',
@@ -59,7 +68,16 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
         icon: Icon(Icons.local_shipping),
         label: 'שינועים',
       ),
-    ],
+    ] :const <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+      icon: Icon(Icons.local_shipping),
+      label: 'שינועים',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.run_circle_outlined),
+        label: 'שינועים שלי',
+      ),
+    ] ,
     currentIndex: page.index,
     selectedItemColor: Colors.amber[600],
     unselectedItemColor: Colors.grey,

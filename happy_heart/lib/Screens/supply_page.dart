@@ -1,14 +1,13 @@
 import 'package:happy_heart/header.dart';
 
-
 class SupplyPage extends StatefulWidget {
   const SupplyPage({super.key});
+
   @override
   State<SupplyPage> createState() => _SupplyPageState();
 }
 
 class _SupplyPageState extends State<SupplyPage> {
-
   Widget typeListBuilder(context, snapshot) {
     if (snapshot.hasData) {
       List types = snapshot.data!.docs;
@@ -22,21 +21,12 @@ class _SupplyPageState extends State<SupplyPage> {
           itemBuilder: (BuildContext context, int index) {
             var current = types[index];
             return Center(
-                child: ListTile(
-                    leading: GestureDetector(
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 24.0,
-                      ),
-                      onTap: () {},
-                    ),
-                    title: Text(current.data()["name"],
-                        textDirection: TextDirection.rtl),
+                child: typeListTile(current.data()["name"],
                     onTap: () => {
-                      Navigator.of(context).pushNamed('/equipment_type',
-                          arguments: EquipmentTypeArguments(
-                              current.data()["name"]))
-                    }));
+                          Navigator.of(context).pushNamed('/equipment_type',
+                              arguments: EquipmentTypeArguments(
+                                  current.data()["name"]))
+                        }));
           });
     }
     return const Center(child: CircularProgressIndicator());
@@ -85,11 +75,9 @@ class _SupplyPageState extends State<SupplyPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FloatingButton(() {
-                Navigator.of(context).pushNamed("/add_type");
-              }
-            ),
+              Navigator.of(context).pushNamed("/add_type");
+            }),
           ],
-        )
-    );
+        ));
   }
 }

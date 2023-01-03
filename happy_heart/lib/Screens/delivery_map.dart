@@ -14,34 +14,34 @@ class _DeliveryMapState extends State<DeliveryMap> {
   late Stream<QuerySnapshot<Delivery>> deliveriesStream;
   List<Delivery> deliveries = [];
 
-  Future<void> showDeliveryDialog(context, Delivery delivery) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title:
-          Text(delivery.getDescription(),
-            textDirection: TextDirection.rtl
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(delivery.getLocationDescription(),
-                  textDirection: TextDirection.rtl),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            Button(() {
-              DB.setDeliveryStarted(delivery);
-              Navigator.of(context).pop();
-            }, "שנע!"),
-          ],
-        );
-      },
-    );
-  }
+  // Future<void> showDeliveryDialog(context, Delivery delivery) async {
+  //   return showDialog<void>(
+  //     context: context,
+  //     barrierDismissible: true,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title:
+  //         Text(delivery.getDescription(),
+  //           textDirection: TextDirection.rtl
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(delivery.getLocationDescription(),
+  //                 textDirection: TextDirection.rtl),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           Button(() {
+  //             DB.setDeliveryStarted(delivery,context.read<FirebaseAuthMethods>().user.uid);
+  //             Navigator.of(context).pop();
+  //           }, "שנע!"),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   Widget mapBuilder(
       BuildContext context, AsyncSnapshot<LocationData> location) {
@@ -60,7 +60,9 @@ class _DeliveryMapState extends State<DeliveryMap> {
                         height: 50,
                         child: Image.asset('assets/marker_red.png')),
             onTap: () {
-          showDeliveryDialog(context, delivery);
+          showDeliveryDialog(context, delivery,() {
+            DB.setDeliveryStarted(delivery,context.read<FirebaseAuthMethods>().user.uid);
+          }, "שנע!");
         })));
       }
       markers.add(Marker(
@@ -105,7 +107,10 @@ class _DeliveryMapState extends State<DeliveryMap> {
       QuerySnapshot<Delivery>? data = deliveriesSnapshot.data;
       if (data != null) {
         for (var delivery in data.docs) {
-          deliveries.add(delivery.data());
+          print(delivery.data().status);
+          if(delivery.data().status == "toBeDelivered") {
+            deliveries.add(delivery.data());
+          }
         }
       }
       return FutureBuilder(future: locationFuture, builder: mapBuilder);

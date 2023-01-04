@@ -34,8 +34,7 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
 
               for (var doc in snapshot.data!.docs) {
                 var data = doc.data() as Map;
-                volunteers[index] = Volunteer(data["name"],
-                    "${data["name"]}@gmail.com"); // TODO: add email: data["email"]
+                volunteers[index] = Volunteer(data["name"],data["permission"]==Permissions.volunteer?"מתנדב":"מנהל"); // TODO: add email: data["email"]
                 index++;
               }
 

@@ -22,8 +22,14 @@ class _EquipmentPageState extends State<EquipmentPage> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EquipmentArguments;
     MedicalEquipment equipment = arguments.equipment;
+
+    if(!equipment.fields.keys.contains("image")){
+      equipment.fields["image"] = "/images/no_image_available.jpg";
+    }
+
     List<MapEntry<String,dynamic>> fieldsList = equipment.fields.entries.toList();
     fieldsList.sort((a, b) => a.key == "image" ? -1 : b.key == "image" ? 1 : 0);
+
     return Scaffold(
       appBar: StyledAppBar(context, equipment.type,
           leading: IconButton(
@@ -57,9 +63,9 @@ class _EquipmentPageState extends State<EquipmentPage> {
                                       ImagePicker picker = ImagePicker();
                                       XFile? image = await picker.pickImage(source: ImageSource.gallery);
                                       if (image != null) {
-                                        // _image = await image.readAsBytes();
                                         await DB.uploadImage(await image.readAsBytes(), currentPath : current.value);
                                         setState(() {});
+                                        arguments.setStateParent();
                                       } else {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                             const SnackBar(content: Text("No image selected"))

@@ -1,6 +1,6 @@
 import 'package:happy_heart/header.dart';
 
-Widget EquipmentTypeList(List<MedicalEquipment> equipment) {
+Widget EquipmentTypeList(List<MedicalEquipment> equipment, Function setStateParent) {
   return ListView.builder(
       itemCount: equipment.length,
       shrinkWrap: true,
@@ -13,7 +13,8 @@ Widget EquipmentTypeList(List<MedicalEquipment> equipment) {
               print("ADSAFSAFAS");
               Navigator.of(context).pushNamed('/equipment',
                   arguments: EquipmentArguments(
-                    equipment[index]
+                    equipment[index],
+                    setStateParent,
                   ));
             },
         );

@@ -96,7 +96,10 @@ class DB {
     return path;
   }
 
-  static Future<String> downloadImage(String path) async {
+  static Future<String> downloadImage(String? path) async {
+
+    path ??= "images/no_image_available.jpg";
+
     final storageRef = FirebaseStorage.instance.ref();
     final itemRef = storageRef.child(path);
     return await itemRef.getDownloadURL();

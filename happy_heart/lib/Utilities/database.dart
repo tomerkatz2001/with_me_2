@@ -4,7 +4,12 @@ import '../header.dart';
 class DB {
   static Future<int> getPermissions(String uid) async{
     DocumentSnapshot perm = await FirebaseFirestore.instance.collection("users"+ENV).doc(uid).get();
+    if(!perm.exists){
+      print("A");
+      return -2;
+    }
     Map data = perm.data() as Map;
+    print(data);
     return data['permission'];
   }
 

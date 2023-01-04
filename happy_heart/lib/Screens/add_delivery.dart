@@ -48,6 +48,7 @@ class _AddDeliveryPageState extends State<AddDeliveryPage> {
             ElevatedButton(
                 onPressed: () {
                   if (src == null || dst == null || sent_obj == null) {
+                    displaySnackbar("אנא מלאו את כל השדות", context);
                     return;
                   }
                   DB.insertDelivery(

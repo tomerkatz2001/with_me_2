@@ -107,7 +107,6 @@ class _DeliveryMapState extends State<DeliveryMap> {
       QuerySnapshot<Delivery>? data = deliveriesSnapshot.data;
       if (data != null) {
         for (var delivery in data.docs) {
-          print(delivery.data().status);
           if(delivery.data().status == "toBeDelivered") {
             deliveries.add(delivery.data());
           }

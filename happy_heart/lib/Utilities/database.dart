@@ -3,50 +3,49 @@
 import '../header.dart';
 
 class DB {
-
   static Future<int> getPermissions(String uid) async{
-    DocumentSnapshot perm = await FirebaseFirestore.instance.collection("users").doc(uid).get();
+    DocumentSnapshot perm = await FirebaseFirestore.instance.collection("users"+ENV).doc(uid).get();
     Map data = perm.data() as Map;
     return data['permission'];
   }
 
   static insertUser(String uid, String name) async{
-    await FirebaseFirestore.instance.collection("users").doc(uid).set(
+    await FirebaseFirestore.instance.collection("users"+ENV).doc(uid).set(
       {'name': name, 'permission':-1}
     );
   }
 
   static setUserPermissions(String uid, int perm){
     if(perm<0){
-      FirebaseFirestore.instance.collection("users").doc(uid).delete();
+      FirebaseFirestore.instance.collection("users"+ENV).doc(uid).delete();
     }
     else{
-      FirebaseFirestore.instance.collection("users").doc(uid).update({'permission': perm});
+      FirebaseFirestore.instance.collection("users"+ENV).doc(uid).update({'permission': perm});
     }
   }
 
   static Stream<QuerySnapshot> getUsersByPermissions(int permissions) {
 
-    return FirebaseFirestore.instance.collection("users").where(
+    return FirebaseFirestore.instance.collection("users"+ENV).where(
           "permission", isEqualTo: permissions).snapshots();
   }
 
 
   static Stream<QuerySnapshot> getEquipmentStream({type = ""}) {
     if (type == "") {
-      return FirebaseFirestore.instance.collection("equipment").snapshots();
+      return FirebaseFirestore.instance.collection("equipment"+ENV).snapshots();
     } else {
-      return FirebaseFirestore.instance.collection("equipment").where(
+      return FirebaseFirestore.instance.collection("equipment"+ENV).where(
           "name", isEqualTo: type).snapshots();
     }
   }
 
   static Stream<QuerySnapshot> getTypesStream({type = ""}) {
-      return FirebaseFirestore.instance.collection("types").snapshots();
+      return FirebaseFirestore.instance.collection("types"+ENV).snapshots();
   }
 
   static Future<List<String>> getTypes() async {
-    QuerySnapshot<Map<String, dynamic>> allTypesDocs = await FirebaseFirestore.instance.collection("types").get();
+    QuerySnapshot<Map<String, dynamic>> allTypesDocs = await FirebaseFirestore.instance.collection("types"+ENV).get();
     List<String> typeList=[];
     allTypesDocs.docs.forEach((element) {
       if(element.data().containsKey("name")){
@@ -56,21 +55,21 @@ class DB {
     return typeList;
   }
   static Future<DocumentSnapshot<Map<String,dynamic>>> getTypeFuture({type = " "}) {
-    return FirebaseFirestore.instance.collection("types").doc(type).get();
+    return FirebaseFirestore.instance.collection("types"+ENV).doc(type).get();
   }
 
   static insertEquipment(MedicalEquipment equipment) async {
-    await FirebaseFirestore.instance.collection("equipment").add(equipment.toMap());
+    await FirebaseFirestore.instance.collection("equipment"+ENV).add(equipment.toMap());
   }
 
   static setAvailable(MedicalEquipment equipment) async {
-    await FirebaseFirestore.instance.collection("equipment")
+    await FirebaseFirestore.instance.collection("equipment"+ENV)
         .doc(equipment.id)
         .update({"available": !equipment.available});
   }
 
   static insertType(EquipmentType type) async {
-    await FirebaseFirestore.instance.collection("types").doc(type.name).set(
+    await FirebaseFirestore.instance.collection("types"+ENV).doc(type.name).set(
         type.toMap());
   }
 
@@ -106,13 +105,13 @@ class DB {
   }
 
   static insertDelivery(Delivery delivery) async{
-    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+    await FirebaseFirestore.instance.collection("deliveries"+ENV).doc("${delivery.productId}.del").set(
         delivery.toJson()
     );
   }
 
   static Stream<QuerySnapshot<Delivery>>getDeliveriesSteam({filter=""}){
-    var ref = FirebaseFirestore.instance.collection("deliveries").withConverter(
+    var ref = FirebaseFirestore.instance.collection("deliveries"+ENV).withConverter(
         fromFirestore: (snapshot, _) => Delivery.fromJson(snapshot.data()!),
         toFirestore: (delivery, _) => delivery.toJson(),);
 
@@ -127,7 +126,7 @@ class DB {
   static void updateDeliveryStatusAndOwner(Delivery delivery, String uid, String newStatus ) async{
     delivery.status= newStatus;
     delivery.ownerId=uid;
-    await FirebaseFirestore.instance.collection("deliveries").doc("${delivery.productId}.del").set(
+    await FirebaseFirestore.instance.collection("deliveries"+ENV).doc("${delivery.productId}.del").set(
         delivery.toJson()
     );
   }

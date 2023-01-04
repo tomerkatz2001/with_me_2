@@ -1,9 +1,10 @@
 import 'package:happy_heart/header.dart';
 
-ListTile equipmentListTile(MedicalEquipment equipment ,{ GestureTapCallback? onTap}) {
-  // StringBuffer data = StringBuffer();
-  // equipment.fields.forEach((key, value) {data..write(key)..write(' : ')..write(value)..write('\n'); });
-  // print(data);
+ListTile equipmentListTile(MedicalEquipment equipment ,{ GestureTapCallback? onTap, bool showAccess = true , showDatainDesc = false }) {
+  StringBuffer data = StringBuffer();
+  if(showDatainDesc){
+    equipment.fields.forEach((key, value) { if(key!="available"){data..write(key)..write(' : ')..write(value)..write('\n'); }});
+  }
   return ListTile(
       trailing:
         Container(
@@ -24,8 +25,7 @@ ListTile equipmentListTile(MedicalEquipment equipment ,{ GestureTapCallback? onT
           ),
         ),
       leading:
-      GestureDetector(
-        onTap: onTap,
+      showAccess?GestureDetector(
         child:
         equipment.available?const Icon(
           Icons.check_box_outline_blank,
@@ -35,10 +35,14 @@ ListTile equipmentListTile(MedicalEquipment equipment ,{ GestureTapCallback? onT
           Icons.check_box,
           color: Colors.amber,
           size: 24.0,
-        )
+        ),
+          onTap: onTap
+      ):Container(
+        width: 24.0,
+        height: 24.0,
       ),
       title:Text(equipment.type, textDirection: TextDirection.rtl),
-      subtitle: Text(equipment.available? "פנוי" : "תפוס", textDirection: TextDirection.rtl) ,
+      subtitle: Text(showDatainDesc?data.toString():equipment.available? "פנוי" : "תפוס", textDirection: TextDirection.rtl) ,
 
   );
 }

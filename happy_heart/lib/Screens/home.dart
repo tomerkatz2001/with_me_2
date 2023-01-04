@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],));
             }
-            if(perm==1){
+            if(perm==Permissions.volunteer){
               return Scaffold(
                   bottomNavigationBar:
                 bottomNavigation(_currentPage, changePageCallback,false),

@@ -10,7 +10,6 @@ Widget EquipmentTypeList(List<MedicalEquipment> equipment, Function setStatePare
             child:Center(
               child: equipmentListTile(current, onTap: () {current.setAvailable();})),
             onTap: (){
-              print("ADSAFSAFAS");
               Navigator.of(context).pushNamed('/equipment',
                   arguments: EquipmentArguments(
                     equipment[index],

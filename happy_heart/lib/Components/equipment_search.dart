@@ -42,35 +42,33 @@ class _EquipmentSearch extends State<EquipmentSearch> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            (chosenEquipment==null)
-                ?Input(editingController, widget.text, onChanged: (value) {
-              filterSearchResults(value);
-              chosenType = null;
-            }, onTap: () {
-              filterSearchResults(editingController.text);
-            })
-            : Container(),
-            StreamBuilder(
-              stream: DB.getEquipmentStream(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  _equipment.value = snapshot.data!.docs;
-                  duplicateItems = snapshot.data!.docs;
-                  return ValueListenableBuilder(
-                      valueListenable: _equipment,
-                      builder:
-                          (BuildContext context, List equipment,
-                          Widget? child) {
-                        Map dict = getTypesMapFromEquipmentList(equipment);
-                        return (chosenType == null)
-                            ? ListView.separated(
-                            separatorBuilder: (context, index) =>
-                            const Divider(
-                              color: Colors.grey,
-                            ),
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        (chosenEquipment == null)
+            ? Input(editingController, widget.text, onChanged: (value) {
+                filterSearchResults(value);
+                chosenType = null;
+              }, onTap: () {
+                filterSearchResults(editingController.text);
+              })
+            : Text("המוצר הנבחר:",textDirection: TextDirection.rtl,),
+        StreamBuilder(
+          stream: DB.getEquipmentStream(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              _equipment.value = snapshot.data!.docs;
+              duplicateItems = snapshot.data!.docs;
+              return ValueListenableBuilder(
+                  valueListenable: _equipment,
+                  builder:
+                      (BuildContext context, List equipment, Widget? child) {
+                    Map dict = getTypesMapFromEquipmentList(equipment);
+                    return (chosenType == null)
+                        ? ListView.separated(
+                            separatorBuilder: (context, index) => const Divider(
+                                  color: Colors.grey,
+                                ),
                             itemCount: dict.entries.length,
                             shrinkWrap: true,
                             itemBuilder: (BuildContext context, int index) {
@@ -78,56 +76,64 @@ class _EquipmentSearch extends State<EquipmentSearch> {
                               return Center(
                                   child: typeListTile(current,
                                       itemsCount: dict[current].length,
+                                      showAccess: false,
                                       onTap: () {
-                                        editingController.text = current;
-                                        chosenType = current;
-                                        filterSearchResults(current);
-                                      }));
+                                editingController.text = current;
+                                chosenType = current;
+                                filterSearchResults(current);
+                              }));
                             })
-                            : (chosenEquipment == null)
+                        : (chosenEquipment == null)
                             ? ListView.separated(
-                            separatorBuilder: (context, index) =>
-                            const Divider(
-                              color: Colors.grey,
-                            ),
-                            itemCount: dict[chosenType].length,
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Center(
-                                  child: equipmentListTile(
-                                      dict[chosenType][index],
+                                separatorBuilder: (context, index) =>
+                                    const Divider(
+                                      color: Colors.grey,
+                                    ),
+                                itemCount: dict[chosenType].length,
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                      child: equipmentListTile(
+                                          dict[chosenType][index],
+                                          showAccess:false,
+                                        showDatainDesc:true),
                                       onTap: () {
-                                        if(widget.onTap!=null) widget.onTap!(dict[chosenType][index]);
-                                        chosenEquipment = dict[chosenType][index];
-                                        setState((){});
-
-                                      }));
-                            })
+                                        if (widget.onTap != null)
+                                          widget
+                                              .onTap!(dict[chosenType][index]);
+                                        chosenEquipment =
+                                            dict[chosenType][index];
+                                        setState(() {});
+                                      });
+                                })
                             : ListView.separated(
-                            separatorBuilder: (context, index) =>
-                            const Divider(
-                              color: Colors.grey,
-                            ),
-                            itemCount: 1,
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Center(
-                                  child:
-                                  equipmentListTile(chosenEquipment!,
-                                      onTap: (){setState(() {
+                                separatorBuilder: (context, index) =>
+                                    const Divider(
+                                      color: Colors.grey,
+                                    ),
+                                itemCount: 1,
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+
+                                  return GestureDetector(child:Center(
+                                      child: equipmentListTile(chosenEquipment!,
+                                          showDatainDesc:true,
+                                        showAccess: false
+                                   )),
+                                    onTap: (){
+                                      setState(() {
                                         chosenEquipment=null;
                                       });
-                                      filterSearchResults(editingController.text);}
-
-                                  ));
-                            });
-                      });
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
-          ],
-        ));
+                                    },
+                                  );
+                                });
+                  });
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+      ],
+    ));
   }
 }

@@ -23,6 +23,7 @@ class _EquipmentPageState extends State<EquipmentPage> {
         ModalRoute.of(context)!.settings.arguments as EquipmentArguments;
     MedicalEquipment equipment = arguments.equipment;
     List<MapEntry<String,dynamic>> fieldsList = equipment.fields.entries.toList();
+    fieldsList.sort((a, b) => a.key == "image" ? -1 : b.key == "image" ? 1 : 0);
     return Scaffold(
       appBar: StyledAppBar(context, equipment.type,
           leading: IconButton(
@@ -42,7 +43,38 @@ class _EquipmentPageState extends State<EquipmentPage> {
                   var current = fieldsList[index];
                   if(current.key!="available") {
                     return Center(
-                        child: fieldsListTile(current));
+                        child: current.key == "image" ? FutureBuilder(
+                          future: DB.downloadImage(current.value),
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            if(snapshot.hasData){
+                                return Stack(children:
+                                [
+                                  SizedBox(width: 200, height: 200,child: Image.network(snapshot.data!),),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: IconButton(onPressed: () async {
+                                      ImagePicker picker = ImagePicker();
+                                      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                                      if (image != null) {
+                                        // _image = await image.readAsBytes();
+                                        await DB.uploadImage(await image.readAsBytes(), currentPath : current.value);
+                                        setState(() {});
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text("No image selected"))
+                                        );
+                                      }
+                                    }, icon: const Icon(Icons.camera_alt, color: Colors.amber,),
+                                      tooltip: "שנה תמונה",
+                                    ),
+                                  ),
+                            ]);
+                              }else{
+                                return const CircularProgressIndicator();
+                              }
+                            })
+                            : fieldsListTile(current));
                   }else{
                     return Container();
                   }

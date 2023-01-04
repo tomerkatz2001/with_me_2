@@ -74,20 +74,32 @@ class DB {
         type.toMap());
   }
 
-  static uploadImage(Uint8List? file) async {
+  static uploadImage(Uint8List? file, {String currentPath = ""}) async {
 
     if(file == null){
       return "images/no_image_available.jpg";
     }
 
+    var path;
+    if(currentPath != "") {
+      path = currentPath;
+    } else {
+      path = "images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
+    }
+
     final storageRef = FirebaseStorage.instance.ref();
 
     // Create a reference to "item.jpg"
-    final path = "images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
     final itemRef = storageRef.child(path);
     
     await itemRef.putData(file!);
     return path;
+  }
+
+  static Future<String> downloadImage(String path) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final itemRef = storageRef.child(path);
+    return await itemRef.getDownloadURL();
   }
 
   static insertDelivery(Delivery delivery) async{

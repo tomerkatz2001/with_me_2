@@ -13,17 +13,21 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
 
   var _image = null;
 
+  void updateImage(var newImage){
+    _image = newImage;
+  }
+
   onSendPressed() async {
     Map<String, dynamic> fieldsMap = {};
-
-    for (int i = 0; i < fields.length; i++) {
-      fieldsMap[fields[i]] = fieldsControllers[i].text;
-    }
 
     // upload image to firebase storage
     final path = await DB.uploadImage(_image);
 
     fieldsMap["image"] = path;
+
+    for (int i = 0; i < fields.length; i++) {
+      fieldsMap[fields[i]] = fieldsControllers[i].text;
+    }
 
     MedicalEquipment new_equipment =
         MedicalEquipment(typeName, "new", fields: fieldsMap);
@@ -47,7 +51,7 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
         },
       );
     } else {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     }
   }
 
@@ -89,32 +93,21 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back))),
+                icon: const Icon(Icons.arrow_back))),
         body: Column(
           children: <Widget>[
             VerticalSpacer(20),
             Expanded(
                 child: Column(
                   children: [
+                    AddImageComponent(updateImage: updateImage,),
+                    VerticalSpacer(20),
                     fieldsFutureBuilder,
-                    IconButton(onPressed: () async {
-                      ImagePicker _picker = ImagePicker();
-                      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-                      if (image != null) {
-                        _image = await image.readAsBytes();
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("No image selected"))
-                        );
-                      }
-                    }, icon: Icon(Icons.image),
-                      tooltip: "הוסף תמונה",
-                      ),
                   ],
                 )
             ),
             Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[Button(onSendPressed, "הוסף")])),

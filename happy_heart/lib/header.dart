@@ -59,6 +59,7 @@ export 'Components/type_tile.dart';
 export 'Components/equipment_tile.dart';
 export 'Components/equipment_search.dart';
 export 'Components/field_tile.dart';
+export 'Components/add_image.dart';
 
 
 export 'Objects/equipment_state.dart';

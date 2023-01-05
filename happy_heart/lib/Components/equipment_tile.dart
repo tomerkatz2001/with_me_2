@@ -6,6 +6,24 @@ ListTile equipmentListTile(MedicalEquipment equipment ,{ GestureTapCallback? onT
     equipment.fields.forEach((key, value) { if(key!="available"){data..write(key)..write(' : ')..write(value)..write('\n'); }});
   }
   return ListTile(
+      trailing:
+        Container(
+          width: 30,
+          height: 30,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          child: FutureBuilder(
+            future: DB.downloadImage(equipment.fields["image"]),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                return Image.network(snapshot.data!);
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
+        ),
       leading:
       showAccess?GestureDetector(
         child:

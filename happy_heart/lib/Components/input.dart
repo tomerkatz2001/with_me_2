@@ -5,6 +5,7 @@ Widget Input(controller,   String text,
   return Container(
       width: width,
       child: TextField(
+        obscureText: hideFlag,
         textDirection: TextDirection.rtl,
         controller: controller,
         onChanged: onChanged,

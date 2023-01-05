@@ -1,6 +1,7 @@
 
 
 import '../header.dart';
+
 class DB {
   static Future<int> getPermissions(String uid) async{
     DocumentSnapshot perm = await FirebaseFirestore.instance.collection("users"+ENV).doc(uid).get();
@@ -75,6 +76,37 @@ class DB {
   static insertType(EquipmentType type) async {
     await FirebaseFirestore.instance.collection("types"+ENV).doc(type.name).set(
         type.toMap());
+  }
+
+  static uploadImage(Uint8List? file, {String currentPath = ""}) async {
+
+    if(file == null){
+      return "images/no_image_available.jpg";
+    }
+
+    var path;
+    if(currentPath != "") {
+      path = currentPath;
+    } else {
+      path = "images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
+    }
+
+    final storageRef = FirebaseStorage.instance.ref();
+
+    // Create a reference to "item.jpg"
+    final itemRef = storageRef.child(path);
+    
+    await itemRef.putData(file!);
+    return path;
+  }
+
+  static Future<String> downloadImage(String? path) async {
+
+    path ??= "images/no_image_available.jpg";
+
+    final storageRef = FirebaseStorage.instance.ref();
+    final itemRef = storageRef.child(path);
+    return await itemRef.getDownloadURL();
   }
 
   static insertDelivery(Delivery delivery) async{

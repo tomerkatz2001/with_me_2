@@ -5,5 +5,6 @@ class EquipmentTypeArguments {
 }
 class EquipmentArguments {
   final MedicalEquipment equipment;
-  EquipmentArguments(this.equipment);
+  final Function setStateParent;
+  EquipmentArguments(this.equipment, this.setStateParent);
 }

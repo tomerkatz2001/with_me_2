@@ -13,7 +13,7 @@ class Permissions{
     _user = await DB.getPermissions(uid);
     if(_user<-1){
       context.read<FirebaseAuthMethods>().signOut(context);
-      displaySnackbar("אתה מחובר לשרת הלא נכון, אנא צור משתמש חדש בשרת הזה", context);
+      // displaySnackbar("אתה מחובר לשרת הלא נכון, אנא צור משתמש חדש בשרת הזה", context);
     }
     return _user;
   }

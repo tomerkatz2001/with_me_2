@@ -3,9 +3,7 @@ import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:happy_heart/header.dart';
 
 final places1 =
-FlutterGooglePlacesSdk('AIzaSyABzVlQNCagC61ZcCeIp5r8TJsqbezOmF8');
-
-
+    FlutterGooglePlacesSdk('AIzaSyABzVlQNCagC61ZcCeIp5r8TJsqbezOmF8');
 
 class GMapsSearch extends StatefulWidget {
   const GMapsSearch({Key? key, this.text = '', this.onTap}) : super(key: key);
@@ -31,13 +29,17 @@ class _GMapsSearch extends State<GMapsSearch> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Input(searchController, widget.text, onChanged: (x) async {
-          possibleLocations = await places1.findAutocompletePredictions(x);
+          if (x != '') {
+            possibleLocations = await places1.findAutocompletePredictions(x);
+          } else {
+            possibleLocations = null;
+          }
           setState(() {});
         }),
         ListView.separated(
             separatorBuilder: (context, index) => Divider(
-              color: Colors.grey,
-            ),
+                  color: Colors.grey,
+                ),
             shrinkWrap: true,
             itemCount: locs.length,
             itemBuilder: (BuildContext context, int index) {
@@ -45,7 +47,7 @@ class _GMapsSearch extends State<GMapsSearch> {
                 title: Text(locs[index].fullText),
                 onTap: () async {
                   var latLng = (await places1.fetchPlace(locs[index].placeId,
-                      fields: [PlaceField.Location]))
+                          fields: [PlaceField.Location]))
                       .place
                       ?.latLng;
                   widget.onTap!(AddressLocation(locs[index].fullText,

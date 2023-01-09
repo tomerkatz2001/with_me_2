@@ -1,5 +1,3 @@
-import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
-
 import 'package:happy_heart/header.dart';
 
 class EquipmentSearch extends StatefulWidget {

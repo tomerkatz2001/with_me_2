@@ -13,6 +13,7 @@ class EquipmentPage extends StatefulWidget {
 class _EquipmentPageState extends State<EquipmentPage> {
 
   late int editableFieldIdx;
+  TextEditingController textController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -20,10 +21,18 @@ class _EquipmentPageState extends State<EquipmentPage> {
   }
 
   @override
+  void dispose(){
+    textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     MedicalEquipment equipment = widget.arguments.equipment;
 
+    // function that returns a function that updates the equipment in DB
+    updateField(fieldName) => (String newValue){equipment.fields[fieldName]=newValue; DB.updateEqupment(equipment);setState(() {editableFieldIdx=-1;});};
     if(!equipment.fields.keys.contains("image")){
       equipment.fields["image"] = "/images/no_image_available.jpg";
     }
@@ -56,7 +65,7 @@ class _EquipmentPageState extends State<EquipmentPage> {
                                 if(current.key!="available") {
                                   return Center(
                                       child: current.key == "image" ? _buildImageWidget(current)
-                                          :index == editableFieldIdx ? editInputField(TextEditingController(), current.key, current.value)
+                                          :index == editableFieldIdx ? editInputField(textController, current.key, current.value, onSubmit: updateField(current.key))
                                           : fieldsListTile(current, onTap: ()=>setState(() {
                                             editableFieldIdx = index;
                                           })));

@@ -67,6 +67,10 @@ class DB {
     await FirebaseFirestore.instance.collection("equipment"+ENV).add(equipment.toMap());
   }
 
+  static updateEqupment(MedicalEquipment equipment) async{
+    await FirebaseFirestore.instance.collection("equipment"+ENV).doc(equipment.id).update(equipment.toMap());
+  }
+
   static setAvailable(MedicalEquipment equipment) async {
     await FirebaseFirestore.instance.collection("equipment"+ENV)
         .doc(equipment.id)

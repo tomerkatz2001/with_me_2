@@ -39,7 +39,7 @@ Widget Input(controller,   String text,
   );
 }
 
-Widget editInputField(TextEditingController controller, fieldName, prevValue, {onChange, onSubmit}){
+Widget editInputField(TextEditingController controller, fieldName, prevValue, {onChange, onSubmit, doneButton=true}){
   return Directionality(
     textDirection: TextDirection.rtl,
     child: TextField(
@@ -49,7 +49,10 @@ Widget editInputField(TextEditingController controller, fieldName, prevValue, {o
       onSubmitted: onSubmit,
       textDirection: TextDirection.rtl,
       decoration: InputDecoration(
-
+        suffixIcon: doneButton?IconButton(
+          icon: Icon(Icons.check,),
+          onPressed: ()=>onSubmit(controller.text),
+        ):null,
         labelText: fieldName,
       ),
     ),

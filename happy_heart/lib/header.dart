@@ -42,6 +42,7 @@ export 'Screens/delivery_map.dart';
 export 'Screens/my_deliveries.dart';
 export 'Screens/add_delivery.dart';
 export 'Screens/equipment.dart';
+export 'Screens/edit_popup_card.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';
@@ -70,6 +71,8 @@ export 'Objects/permissions.dart';
 export 'Objects/location.dart';
 export 'Objects/delivery.dart';
 export 'Objects/delivery_sub_types.dart';
+
+export 'Others/hero_dialog_route.dart';
 
 export 'application.dart';
 export 'firebase_options.dart';

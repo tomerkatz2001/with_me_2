@@ -38,3 +38,20 @@ Widget Input(controller,   String text,
       // )
   );
 }
+
+Widget editInputField(TextEditingController controller, fieldName, prevValue, {onChange, onSubmit}){
+  return Directionality(
+    textDirection: TextDirection.rtl,
+    child: TextField(
+      controller: controller..text = prevValue,
+      autofocus: true,
+      onChanged: onChange,
+      onSubmitted: onSubmit,
+      textDirection: TextDirection.rtl,
+      decoration: InputDecoration(
+
+        labelText: fieldName,
+      ),
+    ),
+  );
+}

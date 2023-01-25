@@ -11,19 +11,8 @@ class AddEquipmentPage extends StatefulWidget {
 
 class _AddEquipmentPageState extends State<AddEquipmentPage> {
 
-  var _image = null;
-
-  void updateImage(var newImage){
-    _image = newImage;
-  }
-
   onSendPressed() async {
     Map<String, dynamic> fieldsMap = {};
-
-    // upload image to firebase storage
-    final path = await DB.uploadImage(_image);
-
-    fieldsMap["image"] = path;
 
     for (int i = 0; i < fields.length; i++) {
       fieldsMap[fields[i]] = fieldsControllers[i].text;
@@ -44,14 +33,13 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
         fieldsControllers.add(TextEditingController());
       });
       return ListView.builder(
-        shrinkWrap: true,
         itemCount: fields.length,
         itemBuilder: (context, index) {
           return Column(children:[Input(fieldsControllers[index], fields[index]),VerticalSpacer(20)]);
         },
       );
     } else {
-      return const CircularProgressIndicator();
+      return CircularProgressIndicator();
     }
   }
 
@@ -81,7 +69,6 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as EquipmentTypeArguments;
     typeName = arguments.name;
-
     print("typename:");
     print(typeName);
     fieldsFuture = DB.getTypeFuture(type: typeName);
@@ -93,21 +80,13 @@ class _AddEquipmentPageState extends State<AddEquipmentPage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(Icons.arrow_back))),
+                icon: Icon(Icons.arrow_back))),
         body: Column(
           children: <Widget>[
             VerticalSpacer(20),
-            Expanded(
-                child: Column(
-                  children: [
-                    AddImageComponent(updateImage: updateImage,),
-                    VerticalSpacer(20),
-                    fieldsFutureBuilder,
-                  ],
-                )
-            ),
+            Expanded(child: fieldsFutureBuilder),
             Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[Button(onSendPressed, "הוסף")])),

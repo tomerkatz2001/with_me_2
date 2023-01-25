@@ -4,9 +4,9 @@ Map getTypesMapFromEquipmentList(List equipment){
   Map dict={};
   for(var item in equipment){
     if(dict.containsKey(item['name'])){
-      dict[item['name']].add(MedicalEquipment.fromMap(item.data(), item.id));
+      dict[item['name']].add(item);
     }else{
-      dict[item['name']]=[MedicalEquipment.fromMap(item.data(), item.id)];
+      dict[item['name']]=[item];
     }
   }
   return dict;

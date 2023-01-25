@@ -10,10 +10,6 @@ class EquipmentTypePage extends StatefulWidget {
 }
 
 class _EquipmentTypePageState extends State<EquipmentTypePage> {
-    void equipmentTypePageSetState() {
-      setState(() {});
-    }
-
   Widget equipmentListBuilder(
       BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (snapshot.hasData) {
@@ -21,7 +17,7 @@ class _EquipmentTypePageState extends State<EquipmentTypePage> {
         if (snapshot.data?.docs != null) {
           final List<MedicalEquipment> equipment =
               getMedicalEquipmentListFromData(snapshot.data!.docs);
-          return EquipmentTypeList(equipment, equipmentTypePageSetState);
+          return EquipmentTypeList(equipment);
         }
       }
     }

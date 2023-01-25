@@ -1,15 +1,12 @@
 import '../header.dart';
 
 Widget Input(controller,   String text,
-    {hideFlag = false, numericFlag = false, errorText, validFlag = true, rtl=true,double width=300, onChanged, onTap}) {
+    {hideFlag = false, numericFlag = false, errorText, validFlag = true, rtl=true,double width=300}) {
   return Container(
       width: width,
       child: TextField(
-        obscureText: hideFlag,
         textDirection: TextDirection.rtl,
         controller: controller,
-        onChanged: onChanged,
-        onTap: onTap,
         
         decoration:  InputDecoration(
             labelText: text,
@@ -36,25 +33,5 @@ Widget Input(controller,   String text,
       //       hintText: text ?? "Type in your text",
       //       fillColor: Colors.transparent),
       // )
-  );
-}
-
-Widget editInputField(TextEditingController controller, fieldName, prevValue, {onChange, onSubmit, doneButton=true}){
-  return Directionality(
-    textDirection: TextDirection.rtl,
-    child: TextField(
-      controller: controller..text = prevValue,
-      autofocus: true,
-      onChanged: onChange,
-      onSubmitted: onSubmit,
-      textDirection: TextDirection.rtl,
-      decoration: InputDecoration(
-        suffixIcon: doneButton?IconButton(
-          icon: Icon(Icons.check,),
-          onPressed: ()=>onSubmit(controller.text),
-        ):null,
-        labelText: fieldName,
-      ),
-    ),
   );
 }

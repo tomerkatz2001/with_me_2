@@ -47,7 +47,51 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
       body: Center(
-        child: EquipmentSearch(),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) {
+                  filterSearchResults(value);
+                },
+                controller: editingController,
+                decoration: const InputDecoration(
+                    labelText: "Search",
+                    hintText: "Search",
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+              ),
+            ),
+            StreamBuilder(
+              stream: DB.getEquipmentStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  _equipment.value = snapshot.data!.docs;
+                  duplicateItems = snapshot.data!.docs;
+                  return ValueListenableBuilder(
+                      valueListenable: _equipment,
+                      builder: (BuildContext context, List equipment,
+                          Widget? child) {
+                        Map dict = getTypesMapFromEquipmentList(equipment);
+                        return ListView.builder(
+                            itemCount: dict.entries.length,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              var current = dict.keys.elementAt(index);
+                              return Center(
+                                  child: buildEquipmentRow(
+                                      context, current, dict[current].length));
+                            });
+                      });
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

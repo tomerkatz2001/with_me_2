@@ -1,13 +1,15 @@
 import 'package:happy_heart/header.dart';
 
+
 class SupplyPage extends StatefulWidget {
   const SupplyPage({super.key});
-
   @override
   State<SupplyPage> createState() => _SupplyPageState();
 }
 
 class _SupplyPageState extends State<SupplyPage> {
+  Pages _currentPage = Pages.supply;
+
   Widget typeListBuilder(context, snapshot) {
     if (snapshot.hasData) {
       List types = snapshot.data!.docs;
@@ -21,12 +23,21 @@ class _SupplyPageState extends State<SupplyPage> {
           itemBuilder: (BuildContext context, int index) {
             var current = types[index];
             return Center(
-                child: typeListTile(current.data()["name"],
+                child: ListTile(
+                    leading: GestureDetector(
+                      child: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 24.0,
+                      ),
+                      onTap: () {},
+                    ),
+                    title: Text(current.data()["name"],
+                        textDirection: TextDirection.rtl),
                     onTap: () => {
-                          Navigator.of(context).pushNamed('/equipment_type',
-                              arguments: EquipmentTypeArguments(
-                                  current.data()["name"]))
-                        }));
+                      Navigator.of(context).pushNamed('/equipment_type',
+                          arguments: EquipmentTypeArguments(
+                              current.data()["name"]))
+                    }));
           });
     }
     return const Center(child: CircularProgressIndicator());
@@ -41,6 +52,11 @@ class _SupplyPageState extends State<SupplyPage> {
     super.initState();
     typeListStreamBuilder =
         StreamBuilder(stream: typesStream, builder: typeListBuilder);
+  }
+  void changePageCallback(int index) {
+    setState(() {
+      _currentPage = Pages.values[index];
+    });
   }
 
   @override
@@ -75,9 +91,11 @@ class _SupplyPageState extends State<SupplyPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FloatingButton(() {
-              Navigator.of(context).pushNamed("/add_type");
-            }),
+                Navigator.of(context).pushNamed("/add_type");
+              }
+            ),
           ],
-        ));
+        )
+    );
   }
 }

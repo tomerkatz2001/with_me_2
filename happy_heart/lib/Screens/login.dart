@@ -114,7 +114,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                   validFlag:
                   widget.loginSignupFlag ? null : _validFields[0],
                   errorText: emptyFieldMessage),
-              VerticalSpacer(20),
               Input(emailController, "כתובת אימייל",
                   validFlag: widget.loginSignupFlag
                       ? _validFields[0]

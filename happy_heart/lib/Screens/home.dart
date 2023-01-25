@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import '../header.dart';
 
 class HomePage extends StatefulWidget {
@@ -69,14 +71,56 @@ class _HomePageState extends State<HomePage> {
             int perm = snapshot.data as int;
             print('user permissions are $perm');
             if(perm<0){
-              return Center(child: Column(children: const [
+              return Center(
+                child: Column(children: [
                 CircularProgressIndicator(),
-                Center(child: Text('חכה לאישור ממנהל ותפתח מחדש', textDirection: TextDirection.rtl,),)
+                VerticalSpacer(10),
+                Center(child:Image.asset('assets/lev-hedva.png')),
+                VerticalSpacer(50),
+                RichText(
+                  text: TextSpan(
+                    text: 'אנו מודים לכם על הצטרפותכם למשפחת לב חדווה!\n\n',
+                        style: TextStyle(color: Colors.black, fontSize: 25),
+                    children: [
+                      TextSpan(
+                        text: 'אנא המתינו לאישור מהמנהל ולאחר מכן פתחו מחדש את האפליקציה.',
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                      ),
+                    ]
+                  ),
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
+                ),
+                VerticalSpacer(80),
+                RichText(
+                  text: TextSpan(
+                    text: 'קצת עלינו:\n',
+                    children: [
+                      TextSpan(
+                        text: 'עמותת לב חדווה הוקמה בשנת 2021 על ידי אליהו אליוביץ בעיצומו של משבר הקורונה ומאז ועד היום, העמותה מספקת ציוד רפואי החל מפלסטרים ובדיקות קורונה ועד מחוללי חמצן.\n',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                      TextSpan(
+                        text: 'נכון להיום, מספר מתנדבי העמותה מונה מאות של אנשים מכל רחבי הארץ, אשר עוזרים לנו לספק את הציוד הרפואי הנדרש לאנשים באופן מיטבי ומהיר ככל הניתן ובכך מאפשרים לנו לעזור לכל מי שזקוק לנו. \n',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                    ],
+                    style: TextStyle(color: Colors.black, fontSize: 22),
+                  ),
+                  textDirection: TextDirection.rtl,
+                ),
               ],));
+            }
+            if(perm==Permissions.volunteer){
+              return Scaffold(
+                  bottomNavigationBar:
+                bottomNavigation(_currentPage, changePageCallback,false),
+                body: getPageUser(_currentPage),
+              );
             }
             return Scaffold(
               bottomNavigationBar:
-                  bottomNavigation(_currentPage, changePageCallback),
+                  bottomNavigation(_currentPage, changePageCallback,true),
               body: getPage(_currentPage),
             );
           }

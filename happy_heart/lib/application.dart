@@ -28,10 +28,13 @@ class Application extends StatelessWidget {
         '/add_equipment': (context) => const AddEquipmentPage(),
         '/add_type': (context) => const AddTypePage(),
         '/equipment_type': (context) => const EquipmentTypePage(),
+        //'/equipment': (context) => const EquipmentPage(),
         '/manage_volunteers': (context) => const ManageVolunteers(),
         '/volunteer_page': (context) => const VolunteerPage(),
         '/search_page' : (context) => const SearchPage(),
-        '/verify_user': (context) => const VerifyUsersPage()
+        '/verify_user': (context) => const VerifyUsersPage(),
+        '/deliveries': (context) => const DeliveriesPage(),
+        '/add_delivery':(context) => const AddDeliveryPage()
       },
     );
   }

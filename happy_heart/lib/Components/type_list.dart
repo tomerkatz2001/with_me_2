@@ -1,30 +1,29 @@
 import 'package:happy_heart/header.dart';
-Widget EquipmentTypeList(List<MedicalEquipment> equipment){
+
+Widget EquipmentTypeList(List<MedicalEquipment> equipment, Function setStateParent) {
   return ListView.builder(
       itemCount: equipment.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
-        var current=equipment[index];
-        return Center(child:ListTile(
-            leading:
-            GestureDetector(
-                child:
-                current.available?const Icon(
-                  Icons.check_box_outline_blank,
-                  color: Colors.amber,
-                  size: 24.0,
-                ):const Icon(
-                  Icons.check_box,
-                  color: Colors.amber,
-                  size: 24.0,
-                ),
-                onTap: (){
-                  current.setAvailable();
-                },
-            ),
-            title:Text(current.type, textDirection: TextDirection.rtl),
-            onTap: ()=>{}
-        ));
-      }
-  );
+        var current = equipment[index];
+        return Material(
+          child: GestureDetector(
+              child:Center(
+                child: Hero(tag:index.toString(), child: equipmentListTile(current, onTap: () {current.setAvailable();}))),
+              onTap: (){
+                // Navigator.of(context).pushNamed('/equipment',
+                //     arguments: EquipmentArguments(
+                //       equipment[index],
+                //       setStateParent,
+                //     ));
+                Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                  return Hero(tag: index.toString(), child: EquipmentPage(EquipmentArguments(
+                            equipment[index],
+                            setStateParent,
+                          )));
+                }));
+              },
+          ),
+        );
+      });
 }

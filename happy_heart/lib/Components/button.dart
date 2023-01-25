@@ -6,6 +6,6 @@ ElevatedButton Button(void Function() onPressed, String text){
       backgroundColor: Colors.amber[900]?.withOpacity(0.5),
     ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
     onPressed: onPressed,
-    child: Text(text),
+    child: Text(text,textDirection: TextDirection.rtl),
   );
 }

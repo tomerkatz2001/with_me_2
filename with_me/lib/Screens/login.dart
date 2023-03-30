@@ -99,63 +99,73 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       resizeToAvoidBottomInset: false,
 
       body: CircularAppBar(
-        "התחברות",
+          widget.loginSignupFlag ? "": "הרשמה",
           [Container(child:
             Padding(
             padding: const EdgeInsets.all(30.0),
-            child: Column(
-              children: <Widget>[
-                Container(height: 150,),
-                Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "איתי, חוויה חדשה למטופלים" : "ברוכים הבאים. אנא מלאו את הפרטים הבאים")),
-                VerticalSpacer(5),
-                widget.loginSignupFlag ? Center(child:Image.asset('assets/logo.png')):Container(),
-                VerticalSpacer(5),
-                widget.loginSignupFlag
-                    ? const SizedBox()
-                    : Input(userController, "שם",
-                    validFlag:
-                    widget.loginSignupFlag ? null : _validFields[0],
-                    errorText: emptyFieldMessage),
-                widget.loginSignupFlag ? Container() : VerticalSpacer(20),
-                Input(emailController, "כתובת אימייל",
-                    validFlag: widget.loginSignupFlag
-                        ? _validFields[0]
-                        : _validFields[1],
-                    rtl: false,
-                    errorText: emptyFieldMessage),
-                VerticalSpacer(20),
-                Input(passwordController, "סיסמא",
-                    hideFlag: true,
-                    validFlag: widget.loginSignupFlag
-                        ? _validFields[1]
-                        : _validFields[2],
-                    rtl: false,
-                    errorText: emptyFieldMessage),
-                VerticalSpacer(20),
-                Center(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          widget.loginSignupFlag ?
-                          Button( loginUser, "התחברות")
-                              :
-                          Button( signUpUser, "הרשמה")
-                        ]
-                    )
-                ),
-                VerticalSpacer(10),
-                Center(
-                    child: widget.loginSignupFlag ? TappableText("אין לך משתמש? לחץ כאן על מנת להרשם", (){
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/signup');
-                    }): const SizedBox()
-                )
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(height: 120,),
+                  widget.loginSignupFlag ? SizedBox(height: 125, width: 125, child:FittedBox(fit: BoxFit.fill,child: Image.asset('assets/logo.png'))):Container(),
+                  VerticalSpacer(5),
+                  Align(alignment: Alignment.center,child:Text(style: GoogleFonts.assistant(
+                      fontSize: widget.loginSignupFlag?26:16, fontWeight: FontWeight.w700), widget.loginSignupFlag ? "איתי, חוויה חדשה למטופלים" : "ברוכים הבאים. אנא מלאו את הפרטים הבאים")),
+                  VerticalSpacer(5),
+                  widget.loginSignupFlag? Container(height: 100,) : Container(),
+                  widget.loginSignupFlag
+                      ? const SizedBox()
+                      : Input(userController, "שם",
+                      validFlag:
+                      widget.loginSignupFlag ? null : _validFields[0],
+                      errorText: emptyFieldMessage),
+                  widget.loginSignupFlag ? Container() : VerticalSpacer(20),
+                  Input(emailController, "כתובת אימייל",
+                      validFlag: widget.loginSignupFlag
+                          ? _validFields[0]
+                          : _validFields[1],
+                      rtl: false,
+                      errorText: emptyFieldMessage),
+                  VerticalSpacer(20),
+                  Input(passwordController, "סיסמא",
+                      hideFlag: true,
+                      validFlag: widget.loginSignupFlag
+                          ? _validFields[1]
+                          : _validFields[2],
+                      rtl: false,
+                      errorText: emptyFieldMessage),
+                  VerticalSpacer(20),
+                  Center(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            widget.loginSignupFlag ?
+                            Button( loginUser, "התחברות")
+                                :
+                            Button( signUpUser, "הרשמה")
+                          ]
+                      )
+                  ),
+                  VerticalSpacer(10),
+                  Center(
+                      child: widget.loginSignupFlag ? TappableText("אין לך משתמש? לחץ כאן על מנת להרשם", (){
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/signup');
+                      }): TappableText("כבר רשום? לחץ כאן על מנת להתחבר", (){
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/login');
+                      }),
+                  ),
+                  widget.loginSignupFlag ? Container(): SizedBox(height: 220, child: FittedBox(child:Image.asset('assets/trampoline.png'),fit: BoxFit.fitWidth)),
+                ],
+              ),
             )
         ),
     ),],
         context,
-        back_arrow: Container()
+        back_arrow: Container(),
+        offset: widget.loginSignupFlag ? -200:0,
+        color: widget.loginSignupFlag ?Color(0x42cfc780):Color(0xffCBC3E3),
       ),
     );
   }

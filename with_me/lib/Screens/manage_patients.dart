@@ -34,6 +34,7 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
 
               for (var doc in snapshot.data!.docs) {
                 var data = doc.data() as Map<String, dynamic>;
+                print(data);
                 volunteers[index] = Patient.fromMap(data, doc.id);
                 index++;
               }
@@ -58,7 +59,8 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
   Widget? _volunteerCard(Patient volunteer) {
     TextEditingController textControllerplace = TextEditingController();
     TextEditingController textControllertime = TextEditingController();
-
+    TextEditingController textControllerStation = TextEditingController();
+    double pad=8;
     return Card(
       shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
@@ -71,13 +73,17 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
           Row(
             children: [
               Column(children: [
-                Input(textControllerplace, 'תחנה הבאה'),
-                Input(textControllertime, 'זמן'),
+                Padding(padding: EdgeInsets.all(pad), child: Input(textControllerStation, 'תחנה הבאה')),
+                Padding(padding: EdgeInsets.all(pad), child: Input(textControllertime, 'זמן')),
+                Padding(padding: EdgeInsets.all(pad), child:Input(textControllerplace, 'מיקום התחנה'))
               ]),
               Button((){
                 if (volunteer.dayTasks==null) volunteer.dayTasks=[];
-                volunteer.dayTasks!.add(textControllerplace.text+textControllertime.text);
-                DB.insertPatient(volunteer);},'שלח')
+                volunteer.dayTasks!.add(
+                    Station(textControllerStation.text==""?null:textControllerStation.text,
+                        textControllerplace.text==""?null:textControllerplace.text,
+                        textControllertime.text==""?null:textControllertime.text));
+                DB.insertPatient(volunteer);},'עדכן\n מטופל')
             ],
           )
         ],

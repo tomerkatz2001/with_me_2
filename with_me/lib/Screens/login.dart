@@ -100,13 +100,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             }
         ):Container(),
       ),
-      body: Padding(
+      body: Container(child:
+          Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
             children: <Widget>[
-              Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "התחברות ללב חדוֿה" : "הרשמה ללב חדוה")),
+              Align(alignment: Alignment.center,child:Text(widget.loginSignupFlag ? "איתי, חוויה חדשה למטופלים" : "ברוכים הבאים. אנא מלאו את הפרטים הבאים")),
               VerticalSpacer(5),
-              Center(child:Image.asset('assets/lev-hedva.png')),
+              widget.loginSignupFlag ? Center(child:Image.asset('assets/logo.png')):Container(),
               VerticalSpacer(5),
               widget.loginSignupFlag
                   ? const SizedBox()
@@ -114,6 +115,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                   validFlag:
                   widget.loginSignupFlag ? null : _validFields[0],
                   errorText: emptyFieldMessage),
+              widget.loginSignupFlag ? Container() : VerticalSpacer(20),
               Input(emailController, "כתובת אימייל",
                   validFlag: widget.loginSignupFlag
                       ? _validFields[0]
@@ -150,6 +152,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             ],
           )
       ),
+    ),
     );
   }
 }

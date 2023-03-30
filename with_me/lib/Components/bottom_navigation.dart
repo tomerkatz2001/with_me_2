@@ -1,4 +1,5 @@
 
+import 'package:with_me/Screens/discharge_notes.dart';
 import 'package:with_me/Screens/search.dart';
 import 'package:with_me/Screens/supply_page.dart';
 import 'package:with_me/Screens/visit_course.dart';
@@ -29,7 +30,7 @@ Widget getPage(Pages page){
     case Pages.search:
       return const SearchPage();
     case Pages.verify:
-      return const VerifyUsersPage();
+      return const  DischargePage();
     case Pages.listOfVolunteers:
       return const ManageVolunteers();
   }

@@ -136,4 +136,13 @@ class DB {
     await FirebaseFirestore.instance.collection("types").doc(type.name).set(
         type.toMap());
   }
+
+  static Stream<QuerySnapshot> getPatient(String patient_email){
+    print("hereee");
+    print(patient_email);
+    return FirebaseFirestore.instance.collection("patients").where(
+        "email", isEqualTo: patient_email).snapshots();
+
+
+  }
 }

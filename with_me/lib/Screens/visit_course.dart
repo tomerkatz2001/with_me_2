@@ -14,6 +14,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
   }
 
   Widget visitsCourse(List<Station> stations, int current_index) {
+
     var childs = [
       SizedBox(
         height: 30,
@@ -33,12 +34,12 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
     ];
     List<Widget> texts = [];
     texts.add(
-        Column(children: [Text(stations[0].name), Text(stations[0].time)]));
+        Column(children: [Text(stations[0].name??"אין שם"), Text(stations[0].time??"אין זמן מוערך")]));
     int c = 0;
     stations.forEach((station) {
       if (c != 0) {
         texts.add(Container(height: 90));
-        texts.add(Column(children: [Text(station.name), Text(station.time)]));
+        texts.add(Column(children: [Text(station.name??"אין שם"), Text(station.time??"אין זמן מוערך")]));
         childs.add(SizedBox(
           height: 100,
           child: VerticalDivider(
@@ -81,28 +82,50 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
         body: CircularAppBar(
             "הביקור שלי",
             [
-              Stack(
-                children: [
-                  Positioned(
-                      child: Container(
-                          width: 300,
-                          height: 700,
-                          child: SingleChildScrollView(
-                              child: Positioned(
-                                  child: Container(
-                                      child: visitsCourse([
-                                    Station("בדיקת דם", "באר שבע", "5:00"),
-                                    Station("MRI", "באר שבע", "5:00"),
-                                    Station("בדיקת ראש", "באר שבע", "5:00"),
-                                    Station("בדיקת דם", "באר שבע", "5:00"),
-                                    Station("MRI", "באר שבע", "5:00"),
-                                    Station("בדיקת ראש", "באר שבע", "5:00"),
-                                  ], 0)),
-                                  right: 20,
-                                  top: 200))),
-                      top: 150,
-                      right: -150),
-                 Align(
+
+              StreamBuilder<QuerySnapshot<Object?>>(
+                stream: DB.getPatient(context.read<FirebaseAuthMethods>().user.email!),
+                builder: (
+                    BuildContext context,
+                    AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+                    ) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.connectionState == ConnectionState.active
+                      || snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return const Text('Error');
+                    } else if (snapshot.hasData) {
+                      var x = snapshot.data!.docs.first.data() as Map<String, dynamic>;
+                      Patient p = Patient.fromMap(x , "tmp");
+                      List<Station> stations = p.dayTasks??[];
+                      if(stations.isEmpty)
+                      {
+                        print("empty!!!!!!!!!!!!!!!");
+                        return Column(
+                          children: [
+                            SizedBox(height: 350,),
+                            Center(child: Text("אין לך דברים לעשות!"),),
+                          ],
+                        );
+                      }
+
+                      return Stack(
+                      children: [
+                      Positioned(
+                        top: 150,
+                        right: -150,
+                        child: SizedBox(
+                            width: 300,
+                            height: 700,
+                            child: SingleChildScrollView(
+                                child: Positioned(
+                                    right: 20,
+                                    top: 200,
+                                    child: Container(
+                                        child: visitsCourse(stations, 0))))),
+                      ),
+                      Align(
                    child: Container(
                      width: MediaQuery.of(context).size.width*0.4,
                      height: MediaQuery.of(context).size.width*0.4,
@@ -111,7 +134,15 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
                              AvatarData(body: AvatarData.body_default))..hands='images/handsdown.png')),
                    alignment: Alignment.bottomLeft,
                  )
-                ],
+                      ]);
+                    } else {
+                      return const Text('Empty data');
+                    }
+                  } else {
+                    return Text('State: ${snapshot.connectionState}');
+                  }
+                },
+
               )
             ],
             context));

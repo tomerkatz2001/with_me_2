@@ -6,12 +6,15 @@ Widget Input(controller,   String text,
       width: width,
       child: TextField(
         textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
         controller: controller,
         
         decoration:  InputDecoration(
             labelText: text,
             hintText: text,
+
             hintTextDirection: TextDirection.rtl,
+
             suffixIcon: Icon(Icons.text_fields_outlined),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.0)))),

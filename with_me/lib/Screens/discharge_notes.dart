@@ -71,8 +71,8 @@ class _DischargePageState extends State<DischargePage> {
   void initState() {
     super.initState();
     final conf = OpenAIConfiguration(
-        organizationId:  "org-8milUH5uSaLbiWfpOZkaNGgp",
-        apiKey: "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"
+        organizationId:  "org-S1zDIfQUIOHMtiVR9PAWp6wR",
+        apiKey: "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"
     );
     client = OpenAIClient(configuration: conf,enableLogging: true);
     chatgpt();

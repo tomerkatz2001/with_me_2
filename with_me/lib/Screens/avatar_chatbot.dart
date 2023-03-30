@@ -3,22 +3,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openai_client/openai_client.dart';
 import 'package:openai_client/src/model/openai_chat/chat_message.dart';
+import 'package:with_me/header.dart';
 
 import '../Components/appbar.dart';
+import '../Components/input.dart';
 import '../Objects/station.dart';
 
 
-class DischargePage extends StatefulWidget {
-  const DischargePage({super.key});
+class ChatbotPage extends StatefulWidget {
+  const ChatbotPage({super.key});
   @override
-  State<DischargePage> createState() => _DischargePageState();
+  State<ChatbotPage> createState() => _ChatbotPageState();
 }
 
-class _DischargePageState extends State<DischargePage> {
+class _ChatbotPageState extends State<ChatbotPage> {
   @override
   late OpenAIClient client;
 
-  Future<List<String>> chatgpt() async{
+  Future<String> gptGetResponse(String message) async{
     // Fetch the models.
     final models = await client.models.list().data;
 
@@ -26,26 +28,10 @@ class _DischargePageState extends State<DischargePage> {
     final modelId = await client.models.byId(id: 'text-davinci-002').data;
     final completion = await client.chat.create(
         model: 'gpt-3.5-turbo',
-          messages:const [
+          messages: [
             ChatMessage(
               role: 'user',
-              content:  """
-  מכתב שחרור:
-המשך מעקב רופא מטפל
-
-יש לברר את התשובה הפתולוגית/תשובות מעבדה שנלקחו באשפוז
-
-טיפול מקומי - משחת פוסידין פעמיים ביוס, אגד אלסטי, הקפדה על רגל מורמת.
-חופש מחלה - 7 ימים
-
-ביקורת מרפאת פלסטיקה במוסדנו בעוד חודש
-
-לתשומת ליבך! בעת השחרור מאשפוז טרס התקבלו כל תוצאות הבדיקות, אשר בוצעו במהלך האישפוז. תוצאות הבדיקות ימסרו בעת הביקור
-במרפאה. במידה ולא תואס ביקור במרפאה, יש לפנות לרופא המטפל בקהילה לקבלת התוצאות.
-
-תיצור לי רשימת מטלות שאני צריך לעשות עם ציטוט מתאים עבור כל מטלה ממכתב השחרור
-  הרשימה בפורמט כך שבין כל שני משימות מפריד  &&
-     """,
+              content:message,
             )
           ],
     )
@@ -62,11 +48,8 @@ class _DischargePageState extends State<DischargePage> {
     //   String taskDescription = lines.first.substring(lines.first.indexOf('.') + 1).trim();
     //   return '$taskNumber. $taskDescription\n${lines.skip(1).join('\n')}';
     // }).toList();
+    return completion.choices[0].message.content;
 
-    List<String> lines=completion.choices[0].message.content.split("&&");
-    print(lines);
-    return lines;
-    print(lines);
   }
   void initState() {
     super.initState();
@@ -75,83 +58,22 @@ class _DischargePageState extends State<DischargePage> {
         apiKey: "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"
     );
     client = OpenAIClient(configuration: conf,enableLogging: true);
-    chatgpt();
-
     // Fetch the models.
   }
 
-  Widget visitsCourse(List<Station> stations, int current_index) {
-    var childs = [
-      SizedBox(
-        height: 30,
-        child: VerticalDivider(
-          width: 3,
-          color: Colors.grey,
-        ),
-      ),
-      Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: current_index == 0 ? Colors.red : Colors.amberAccent,
-        ),
-      )
-    ];
-    List<Widget> texts = [];
-    texts.add(
-        Column(children: [Text(stations[0].name), Text(stations[0].time)]));
-    int c = 0;
-    stations.forEach((station) {
-      if (c != 0) {
-        texts.add(Container(height: 90));
-        texts.add(Column(children: [Text(station.name), Text(station.time)]));
-        childs.add(SizedBox(
-          height: 100,
-          child: VerticalDivider(
-            width: 3,
-            color: Colors.grey,
-          ),
-        ));
-        childs.add(Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: c == current_index ? Colors.red : Colors.amber,
-          ),
-        ));
-      }
-      c += 1;
-    });
-    childs.add(SizedBox(
-      height: 30,
-      child: VerticalDivider(
-        width: 3,
-        color: Colors.grey,
-      ),
-    ));
-    return Row(children: [
-      Column(
-        children: texts,
-      ),
-      Container(width: 10),
-      Column(
-        children: childs,
-      ),
-    ]);
-  }
   List<Item> _data = generateItems(8);
+  var message ="";
 
 
-
+  TextEditingController inputMessageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: CircularAppBar(
             "הביקור שלי",
             [
-            Positioned(child:Container(
+            Positioned(
+                child:Container(
                 height: 700,
                 width:MediaQuery.of(context).size.width,
                 child: SingleChildScrollView(
@@ -159,18 +81,43 @@ class _DischargePageState extends State<DischargePage> {
                 child:
 
     FutureBuilder(
-    future: chatgpt(),
-    builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+    future: gptGetResponse(message),
+    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
       if(snapshot.hasData) {
-        _data = parseItems(snapshot.data!);
-        return _buildPanel();
+       if(message==""){
+         return Text("שלום, אני איתי, בוא ונדבר D:");
+       } else{
+         return Text(snapshot.data as String);
+       }
       }
-      return CircularProgressIndicator();
+      return Text("...");
     },
               ),
             ))),
               top:150
-            )
+            ),
+
+              Positioned(
+                  child:
+                  Row(children:[Input(
+                    inputMessageController,
+                    "input your message"
+                  ),
+                    Button(() {
+                      setState(() {
+                        message=inputMessageController.text;
+                      });
+                    }, "שלח")
+                  ]
+                  ),
+                  bottom:50
+              ),
+              Positioned(child:
+                Avatar(data:AvatarData.data, first: false,),
+              bottom: 100,
+                left:50,
+
+              )
             ],
             context));
 

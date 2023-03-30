@@ -65,7 +65,9 @@ class _LoadBar extends CustomPainter {
 }
 
 
-Widget CircularAppBar( String title,List<Widget> childs,BuildContext context,{double offset=0,Color color=const Color(0xffdee8f3)} ){
+Widget CircularAppBar( String title,List<Widget> childs,BuildContext context,{double offset=0,Color color=const Color(0xffdee8f3), Widget? back_arrow=null} ){
+  childs.add(Align(alignment: Alignment.topCenter,child:Padding(padding: EdgeInsets.only(top: 50),
+      child:Text(title,style: Theme.of(context).textTheme.titleLarge))));
   childs.add(Positioned(
       top: (-150)-offset,
       child: Container(
@@ -81,29 +83,34 @@ Widget CircularAppBar( String title,List<Widget> childs,BuildContext context,{do
             }),
         // color:Colors.green
       )));
-  childs.add(Align(
-    alignment: Alignment.topRight,
-    child: Container(
-      width: 50,
-      child: Column(
-        children: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_forward),
-          ),
-          Container(
-            height: 10,
-          ),
-        ],
-      ),
-      margin: EdgeInsets.all(30),
-    ),
-  ));
 
-  childs.add(Align(alignment: Alignment.topCenter,child:Padding(padding: EdgeInsets.only(top: 50),
-  child:Text(title,style: Theme.of(context).textTheme.titleLarge))));
-  return Stack(children: childs);
+  if(back_arrow==null) {
+    childs.add(Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        width: 50,
+        child: Column(
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_forward),
+            ),
+            Container(
+              height: 10,
+            ),
+          ],
+        ),
+        margin: EdgeInsets.all(30),
+      ),
+    ));
+  }
+  else{
+    childs.add(Align(alignment: Alignment.topRight,
+      child: back_arrow,));
+  }
+
+  return Stack(children: childs.reversed.toList());
 
 }

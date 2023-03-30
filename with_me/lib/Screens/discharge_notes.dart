@@ -100,12 +100,12 @@ class _DischargePageState extends State<DischargePage> {
     ];
     List<Widget> texts = [];
     texts.add(
-        Column(children: [Text(stations[0].name), Text(stations[0].time)]));
+        Column(children: [Text(stations[0].name??"אין שם"), Text(stations[0].time??"אין זמן מוערך")]));
     int c = 0;
     stations.forEach((station) {
       if (c != 0) {
         texts.add(Container(height: 90));
-        texts.add(Column(children: [Text(station.name), Text(station.time)]));
+        texts.add(Column(children: [Text(station.name??"אין שם"), Text(station.time??"אין זמן מוערך")]));
         childs.add(SizedBox(
           height: 100,
           child: VerticalDivider(

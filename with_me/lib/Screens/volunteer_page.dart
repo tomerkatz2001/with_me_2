@@ -1,7 +1,7 @@
 import '../header.dart';
 
 class VolunteerPageArguments {
-  final Volunteer volunteer;
+  final Patient volunteer;
   VolunteerPageArguments(this.volunteer);
 }
 
@@ -18,9 +18,9 @@ class _VolunteerPageState extends State<VolunteerPage> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as VolunteerPageArguments;
-    Volunteer volunteer = arguments.volunteer;
+    Patient volunteer = arguments.volunteer;
 
-    final Map volunteerData = volunteer.getVolunteerData();
+    final Map volunteerData = volunteer.toMap();
 
     return Scaffold(
       appBar: StyledAppBar(

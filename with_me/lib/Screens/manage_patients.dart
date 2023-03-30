@@ -1,4 +1,4 @@
-import 'package:with_me/Objects/volunteer.dart';
+import 'package:with_me/Objects/patient.dart';
 
 import '../header.dart';
 
@@ -15,7 +15,7 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
     return Scaffold(
       appBar: StyledAppBar(
         context,
-        "לב חדווה",
+        "איתי",
         actions: [
           GestureDetector(
             child: const Icon(Icons.logout),
@@ -26,16 +26,15 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: DB.getUsersByPermissions(Permissions.volunteer),
+          stream: DB.getPatients(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var volunteers = {};
               int index = 0;
 
               for (var doc in snapshot.data!.docs) {
-                var data = doc.data() as Map;
-                volunteers[index] = Volunteer(data["name"],
-                    "${data["name"]}@gmail.com"); // TODO: add email: data["email"]
+                var data = doc.data() as Map<String, dynamic>;
+                volunteers[index] = Patient.fromMap(data, doc.id);
                 index++;
               }
 
@@ -56,20 +55,41 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
     );
   }
 
-  Widget? _volunteerCard(Volunteer volunteer) {
+  Widget? _volunteerCard(Patient volunteer) {
+    TextEditingController textControllerplace = TextEditingController();
+    TextEditingController textControllertime = TextEditingController();
+
     return Card(
       shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: ListTile(
+      child: ExpansionTile(
         title: Text(volunteer.name),
         subtitle: Text(volunteer.email),
-        onTap: () {
-          Navigator.of(context).pushNamed('/volunteer_page',
-              arguments: VolunteerPageArguments(volunteer));
-        },
+        children: <Widget>[
+          Row(
+            children: [
+              Column(children: [
+                Input(textControllerplace, 'תחנה הבאה'),
+                Input(textControllertime, 'זמן'),
+              ]),
+              Button((){
+                if (volunteer.dayTasks==null) volunteer.dayTasks=[];
+                volunteer.dayTasks!.add(textControllerplace.text+textControllertime.text);
+                DB.insertPatient(volunteer);},'שלח')
+            ],
+          )
+        ],
       ),
+      // ListTile(
+      //   title: Text(volunteer.name),
+      //   subtitle: Text(volunteer.email),
+      //   onTap: () {
+      //     Navigator.of(context).pushNamed('/volunteer_page',
+      //         arguments: VolunteerPageArguments(volunteer));
+      //   },
+      // ),
     );
   }
 }

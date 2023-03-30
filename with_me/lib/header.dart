@@ -48,6 +48,7 @@ export 'Objects/type.dart';
 export 'Objects/medical_equipment.dart';
 export 'Objects/volunteer.dart';
 export 'Objects/permissions.dart';
+export 'Objects/station.dart';
 
 export 'application.dart';
 export 'constants.dart';

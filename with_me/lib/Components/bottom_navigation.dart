@@ -1,5 +1,6 @@
 import 'package:with_me/Screens/search.dart';
 import 'package:with_me/Screens/supply_page.dart';
+import 'package:with_me/Screens/visit_course.dart';
 import 'package:with_me/header.dart';
 
 /*The order of the pages in this enum determines the order in the bottom_navigation
@@ -22,7 +23,7 @@ enum Pages{
 Widget getPage(Pages page){
   switch(page){
     case Pages.supply:
-      return const SupplyPage();
+      return const VisitCoursePage();
     case Pages.search:
       return const SearchPage();
     case Pages.verify:
@@ -37,8 +38,8 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
   return BottomNavigationBar(
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-        icon: Icon(Icons.healing),
-        label: 'ציוד',
+        icon: Icon(Icons.accessibility),
+        label: 'הביקור שלי',
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.search),

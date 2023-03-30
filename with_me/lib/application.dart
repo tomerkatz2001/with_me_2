@@ -1,6 +1,7 @@
 import 'package:with_me/Screens/add_equipment.dart';
 import 'package:with_me/Screens/add_type.dart';
 import 'package:with_me/Screens/equipment_type.dart';
+import 'package:with_me/Screens/visit_course.dart';
 
 
 import 'Screens/search.dart';
@@ -34,7 +35,8 @@ class Application extends StatelessWidget {
         '/manage_volunteers': (context) => const ManageVolunteers(),
         '/volunteer_page': (context) => const VolunteerPage(),
         '/search_page' : (context) => const SearchPage(),
-        '/verify_user': (context) => const VerifyUsersPage()
+        '/verify_user': (context) => const VerifyUsersPage(),
+        '/my_visit': (context) => const VisitCoursePage()
       },
     );
   }

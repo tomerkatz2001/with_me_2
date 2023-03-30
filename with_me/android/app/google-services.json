@@ -1,77 +1,34 @@
 {
   "project_info": {
-    "project_number": "362178897948",
-    "project_id": "happy-heart-8b942",
-    "storage_bucket": "happy-heart-8b942.appspot.com"
+    "project_number": "497628399157",
+    "project_id": "with-me-f7f75",
+    "storage_bucket": "with-me-f7f75.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:362178897948:android:6f09484cb3a9e08ed197d9",
-        "android_client_info": {
-          "package_name": "com.happy.heart.with_me"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "362178897948-390v0fn7sr770jha7s08tdnve736n767.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBTdMB62TJ6N6UyXWrR4PkHjG7k4jiceOM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "362178897948-390v0fn7sr770jha7s08tdnve736n767.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "362178897948-0ja6bkcmpjn03bml709gks3ks3ipovl2.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.happy.heart.happyHeart"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:362178897948:android:dbb0ffdff8b5fd3dd197d9",
+        "mobilesdk_app_id": "1:497628399157:android:5ceb7b085cde1e0282d37c",
         "android_client_info": {
           "package_name": "com.technion.with_me"
         }
       },
       "oauth_client": [
         {
-          "client_id": "362178897948-390v0fn7sr770jha7s08tdnve736n767.apps.googleusercontent.com",
+          "client_id": "497628399157-eo82jd66seu0j8lbvtdnedbq4om2qca5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBTdMB62TJ6N6UyXWrR4PkHjG7k4jiceOM"
+          "current_key": "AIzaSyCqNn60sTA1ykGvUmOjL5q836W7FC3cK6A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "362178897948-390v0fn7sr770jha7s08tdnve736n767.apps.googleusercontent.com",
+              "client_id": "497628399157-eo82jd66seu0j8lbvtdnedbq4om2qca5.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "362178897948-0ja6bkcmpjn03bml709gks3ks3ipovl2.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.happy.heart.happyHeart"
-              }
             }
           ]
         }

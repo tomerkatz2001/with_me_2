@@ -17,8 +17,11 @@ class Application extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange),
         fontFamily: 'RaleWay',
-        useMaterial3: true
-      ),
+        useMaterial3: true,
+        textTheme: const TextTheme(
+            titleLarge: TextStyle(fontSize: 26.0,fontWeight: FontWeight.w800),
+          ),
+        ),
       initialRoute: '/' ,
       routes: {
         '/': (context) => const LoginWrapper(),

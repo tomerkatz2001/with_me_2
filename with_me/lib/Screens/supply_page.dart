@@ -8,7 +8,7 @@ class SupplyPage extends StatefulWidget {
 }
 
 class _SupplyPageState extends State<SupplyPage> {
-  Pages _currentPage = Pages.supply;
+  Pages _currentPage = Pages.verify;
 
   Widget typeListBuilder(context, snapshot) {
     if (snapshot.hasData) {

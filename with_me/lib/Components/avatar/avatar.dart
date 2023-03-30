@@ -6,58 +6,64 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tuple/tuple.dart';
 import '';
-
-class Avatar extends StatelessWidget {
-  // This widget is the root of your application.
-  Avatar({required this.first, this.data});
-
-  final bool first;
-  final Future<AvatarData>? data;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: (first)
-          ? AvatarPage(
-              title: "hey",
-              first: first,
-              data: AvatarData(body: AvatarData.body_default, money: 10))
-          : FutureBuilder(
-              future: data,
-              builder:
-                  (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
-                if (snapshot.hasData) {
-                  return AvatarPage(
-                      title: "hey",
-                      first: first,
-                      data: (snapshot.data ??
-                          AvatarData(
-                              body: AvatarData.body_default,
-                              hands: AvatarData.hand_default,
-                              body_color: AvatarData.color_default)));
-                } else
-                  return CircularProgressIndicator(
-                    color: Colors.green,
-                  );
-              }),
-    );
-  }
-}
+//
+// class Avatar extends StatelessWidget {
+//   // This widget is the root of your application.
+//   Avatar({required this.first, this.data});
+//
+//   final bool first;
+//   final Future<AvatarData>? data;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: (first)
+//           ? AvatarPage(
+//               title: "hey",
+//               first: first,
+//               data: AvatarData(body: AvatarData.body_default, money: 10))
+//           : FutureBuilder(
+//               future: data,
+//               builder:
+//                   (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
+//                 if (snapshot.hasData) {
+//                   return AvatarPage(
+//                       title: "hey",
+//                       first: first,
+//                       data: (snapshot.data ??
+//                           AvatarData(
+//                               body: AvatarData.body_default,
+//                               hands: AvatarData.hand_default,
+//                               body_color: AvatarData.color_default)));
+//                 } else
+//                   return CircularProgressIndicator(
+//                     color: Colors.green,
+//                   );
+//               }),
+//     );
+//   }
+// }
 
 class AvatarPage extends StatefulWidget {
   AvatarPage(
-      {Key? key, required this.title, required this.data, this.first = false})
-      : super(key: key);
+      {Key? key, required this.title})
+      : super(key: key){
+    // this.data = this.data ?? ;
+    this.data = AvatarData.currAvatar ?? this.data;
+    if(AvatarData.currAvatar!=null){
+      this.isLoaded=true;
+    }
+  }
   final String title;
-  bool first = false;
 
   @override
   _AvatarPageState createState() => _AvatarPageState();
-  final AvatarData data;
+  AvatarData data= AvatarData(body: AvatarData.body_default, money: 10);
+  bool isLoaded = false;
 }
 
 class _AvatarPageState extends State<AvatarPage> {
@@ -256,147 +262,168 @@ class _AvatarPageState extends State<AvatarPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
+    // if (widget.first) {
+    //   widget.first = false;
+    //   Future.delayed(Duration(milliseconds: 500), () {
+    //     showDialog<String>(
+    //         context: context,
+    //         builder: (BuildContext context) => build_money_alert(10));
+    //   });
+    // }
+    return Scaffold(
+      body: FutureBuilder<AvatarData?>(
+        future: Future(()async{
+          if (!widget.isLoaded){
+            widget.isLoaded=true;
+            AvatarData? loadedAvatar = await DB.getAvatar(context.read<FirebaseAuthMethods>().user.uid);
+            AvatarData.currAvatar = loadedAvatar ?? AvatarData.currAvatar;
+            widget.data=loadedAvatar ?? widget.data;
+          }
+
+        }),
+        builder: (context,snapshot){
+            return build_screen(context);
+
+        },
+      ),
+    );
+  }
+
+  Widget build_screen(BuildContext context){
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     double _min = min(_width, _height);
+    return Stack(children: [
+      Positioned(
+          left: -0.8 * MediaQuery.of(context).size.width,
+          top: -1.25 * MediaQuery.of(context).size.height,
+          child: Container(
+              width: 0.8125 * MediaQuery.of(context).size.height * 2,
+              height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: widget.data.body_color?.withOpacity(0.7)))),
+      Positioned(
+          right: 25,
+          top: 75,
+          child: Align(
+              alignment: Alignment.topRight,
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      "עיצוב השיבי שלך",
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.right,
+                      style: GoogleFonts.assistant(
+                        color: Colors.black,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ]))),
 
-    if (widget.first) {
-      widget.first = false;
-      Future.delayed(Duration(milliseconds: 500), () {
-        showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => build_money_alert(10));
-      });
-    }
-    return Scaffold(
-      body: Stack(children: [
-        Positioned(
-            left: -0.8 * MediaQuery.of(context).size.width,
-            top: -1.25 * MediaQuery.of(context).size.height,
-            child: Container(
-                width: 0.8125 * MediaQuery.of(context).size.height * 2,
-                height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
+      // Figma Flutter Generator Group304Widget - GROUP
+
+      Positioned(
+          left: 22,
+          top: 131.32,
+          child: build_money(widget.data.money.toString())),
+      Positioned(
+          right: MediaQuery.of(context).size.width * 0.08,
+          top: MediaQuery.of(context).size.height * 0.19,
+          child: Stack(
+            children: [
+              Container(
+                width: 192,
+                height: 29,
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: widget.data.body_color?.withOpacity(0.7)))),
-        Positioned(
-            right: 25,
-            top: 75,
-            child: Align(
-                alignment: Alignment.topRight,
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        "עיצוב השיבי שלך",
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 26,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ]))),
-
-        // Figma Flutter Generator Group304Widget - GROUP
-
-        Positioned(
-            left: 22,
-            top: 131.32,
-            child: build_money(widget.data.money.toString())),
-        Positioned(
-            right: MediaQuery.of(context).size.width * 0.08,
-            top: MediaQuery.of(context).size.height * 0.19,
-            child: Stack(
-              children: [
-                Container(
-                  width: 192,
-                  height: 29,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(88),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x19000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                    color: Color(0xffc4c4c4),
-                  ),
+                  borderRadius: BorderRadius.circular(88),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x19000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                  color: Color(0xffc4c4c4),
                 ),
-                Container(
-                  width: 96,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(88),
-                    color: Color(0xff35258a),
-                  ),
+              ),
+              Container(
+                width: 96,
+                height: 32,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(88),
+                  color: Color(0xff35258a),
                 ),
-                Positioned(
-                    child: Text('חנות',
-                        style: GoogleFonts.assistant(
-                            color: Colors.white, fontWeight: FontWeight.w700)),
-                    left: 30,
-                    top: 6),
-                Positioned(
-                    child: Text('המוצרים שלי',
-                        style: GoogleFonts.assistant(
-                            color: Colors.white, fontWeight: FontWeight.w700)),
-                    left: 105,
-                    top: 6)
-              ],
-            )),
-        Positioned(
-          left: 45,
-          top: 120,
-          child: IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () {},
-          ),
+              ),
+              Positioned(
+                  child: Text('חנות',
+                      style: GoogleFonts.assistant(
+                          color: Colors.white, fontWeight: FontWeight.w700)),
+                  left: 30,
+                  top: 6),
+              Positioned(
+                  child: Text('המוצרים שלי',
+                      style: GoogleFonts.assistant(
+                          color: Colors.white, fontWeight: FontWeight.w700)),
+                  left: 105,
+                  top: 6)
+            ],
+          )),
+      Positioned(
+        left: 45,
+        top: 120,
+        child: IconButton(
+          icon: const Icon(Icons.settings_outlined),
+          onPressed: () {},
         ),
+      ),
 
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(height: 200),
-              Flexible(
-                flex: 1,
-                child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    padding: EdgeInsets.only(left: 50, right: 50),
-                    child: AvatarStack(
-                      data: widget.data,
-                    )),
-              ),
-              Container(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xff35258a),
-                      shape: CircleBorder(),
-                      fixedSize: Size(55, 55),
-                    ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      DB.insertAvatar(widget.data,
-                          context.read<FirebaseAuthMethods>().user.uid);
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              ),
-              /* Row(
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Container(height: 200),
+            Flexible(
+              flex: 1,
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.only(left: 50, right: 50),
+                  child: AvatarStack(
+                    data: widget.data,
+                  )),
+            ),
+            Container(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(0xff35258a),
+                    shape: CircleBorder(),
+                    fixedSize: Size(55, 55),
+                  ),
+                  child: Icon(
+                    Icons.save,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    DB.insertAvatar(widget.data,
+                        context.read<FirebaseAuthMethods>().user.uid);
+                    AvatarData.currAvatar = widget.data;
+                  },
+                )
+              ],
+            ),
+            /* Row(
                   children: [
                     TextButton(
                       style: TextButton.styleFrom(
@@ -415,16 +442,15 @@ class _AvatarPageState extends State<AvatarPage> {
                     ),
                   ],
                 ),*/
-              AvatarBar(
-                  shop: widget.data.acquired ??
-                      AvatarShop(AvatarShop.empty().toString()),
-                  tap: choose,
-                  dtap: buy),
-            ],
-          ),
-        )
-      ]),
-    );
+            AvatarBar(
+                shop: widget.data.acquired ??
+                    AvatarShop(AvatarShop.empty().toString()),
+                tap: choose,
+                dtap: buy),
+          ],
+        ),
+      )
+    ]);
   }
 }
 
@@ -660,37 +686,37 @@ class AvatarStack extends StatelessWidget {
     }));
   }
 }
-
-class LoadAvatar extends StatefulWidget {
-  @override
-  _LoadAvatarState createState() => _LoadAvatarState();
-}
-
-class _LoadAvatarState extends State<LoadAvatar> {
-  Future<AvatarData>? _data;
-
-  @override
-  void initState() {
-    super.initState();
-    _data = DB.getAvatar(context.read<FirebaseAuthMethods>().user.uid);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _data,
-        builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
-          if (snapshot.hasData) {
-            return AvatarStack(
-                data: (snapshot.data ??
-                    AvatarData(
-                      body: AvatarData.body_default,
-                      hands: AvatarData.hand_default,
-                    )));
-          } else
-            return CircularProgressIndicator(
-              color: Colors.green,
-            );
-        });
-  }
-}
+//
+// class LoadAvatar extends StatefulWidget {
+//   @override
+//   _LoadAvatarState createState() => _LoadAvatarState();
+// }
+//
+// class _LoadAvatarState extends State<LoadAvatar> {
+//   Future<AvatarData>? _data;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _data = DB.getAvatar(context.read<FirebaseAuthMethods>().user.uid);
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder(
+//         future: _data,
+//         builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
+//           if (snapshot.hasData) {
+//             return AvatarStack(
+//                 data: (snapshot.data ??
+//                     AvatarData(
+//                       body: AvatarData.body_default,
+//                       hands: AvatarData.hand_default,
+//                     )));
+//           } else
+//             return CircularProgressIndicator(
+//               color: Colors.green,
+//             );
+//         });
+//   }
+// }

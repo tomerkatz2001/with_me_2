@@ -2,6 +2,7 @@ import '../header.dart';
 
 class VisitCoursePage extends StatefulWidget {
   const VisitCoursePage({super.key});
+
   @override
   State<VisitCoursePage> createState() => _VisitCoursePageState();
 }
@@ -81,6 +82,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
         body: CircularAppBar(
             "הביקור שלי",
             [
+
               StreamBuilder<QuerySnapshot<Object?>>(
                 stream: DB.getPatient(context.read<FirebaseAuthMethods>().user.email!),
                 builder: (
@@ -108,7 +110,9 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
                         );
                       }
 
-                      return Positioned(
+                      return Stack(
+                      children: [
+                      Positioned(
                         top: 150,
                         right: -150,
                         child: SizedBox(
@@ -120,7 +124,17 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
                                     top: 200,
                                     child: Container(
                                         child: visitsCourse(stations, 0))))),
-                      );
+                      ),
+                      Align(
+                   child: Container(
+                     width: MediaQuery.of(context).size.width*0.4,
+                     height: MediaQuery.of(context).size.width*0.4,
+                     child: AvatarStack(
+                         data: (AvatarData.currAvatar ??
+                             AvatarData(body: AvatarData.body_default))..hands='images/handsdown.png')),
+                   alignment: Alignment.bottomLeft,
+                 )
+                      ]);
                     } else {
                       return const Text('Empty data');
                     }
@@ -128,6 +142,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
                     return Text('State: ${snapshot.connectionState}');
                   }
                 },
+
               )
             ],
             context));

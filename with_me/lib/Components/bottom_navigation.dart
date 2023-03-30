@@ -10,10 +10,12 @@ import 'package:with_me/header.dart';
 * If you want to add more pages add the name of the page here and also add a case in
 * the getPage function below.*/
 enum Pages{
-  supply,
-  search,
+  dayTasks,
+  avatar,
+  gpt,
   verify,
-  listOfVolunteers,
+  listOfPatients
+
 }
 
 /*Add more case if you want to add a new page to the bottom_navigation
@@ -25,45 +27,104 @@ enum Pages{
 * */
 Widget getPage(Pages page){
   switch(page){
-    case Pages.supply:
+    case Pages.dayTasks:
       return const VisitCoursePage();
-    case Pages.search:
-      return const SearchPage();
+    case Pages.avatar:
+      return AvatarPage(title: 'כככ', );
     case Pages.verify:
-      return const  DischargePage();
-    case Pages.listOfVolunteers:
+      return const VerifyUsersPage();
+    case Pages.listOfPatients:
       return const ManageVolunteers();
+    case Pages.gpt:
+      return const ManageVolunteers();
+
+
   }
 }
 
 /* Also add the Icon and name in case you want to add more pages*/
 BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallback){
-  // return BottomNavigationBar(
-  //   items: const <BottomNavigationBarItem>[
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.accessibility),
-  //       label: 'הביקור שלי',
-  //     ),
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.search),
-  //       label: 'חיפוש',
-  //     ),
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.admin_panel_settings_outlined),
-  //       label: 'אישור משתמשים',
-  //     ),
-  //     BottomNavigationBarItem(
-  //       icon: Icon(Icons.people),
-  //       label: 'רשימת מטופלים',
-  //     ),
-  //   ],
-  //   currentIndex: page.index,
-  //   selectedItemColor: Colors.amber[600],
-  //   unselectedItemColor: Colors.grey,
-  //   showUnselectedLabels: true,
-  //   onTap: OnClickCallback ,
-  // );
+  List<BottomNavigationBarItem> icons = [];
+  if (Permissions.volunteer==Permissions.getUserPermissions()){
+    icons=[
+      BottomNavigationBarItem(
+        icon: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: (page.index != 0)
+                ? Color(0xff9e7fe0)
+                : Color(0xff35258a),
+          ),
+          child: Icon(Icons.map,color: Colors.white),
+        ),
+        label: 'הביקור שלי',
 
+      ),
+      BottomNavigationBarItem(
+        icon: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: (page.index != 1)
+                ? Color(0xff9e7fe0)
+                : Color(0xff35258a),
+          ),
+          child: Icon(Icons.accessibility,color: Colors.white),
+        ),
+        label: 'אווטאר',
+      ),
+      BottomNavigationBarItem(
+        icon: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: (page.index != 2)
+                ? Color(0xff9e7fe0)
+                : Color(0xff35258a),
+          ),
+          child: Icon(Icons.star,color: Colors.white),
+        ),
+        label: 'AI',
+      ),
+    ];
+  }else{
+    icons=[
+      BottomNavigationBarItem(
+        icon: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: (page.index != 0)
+                ? Color(0xff9e7fe0)
+                : Color(0xff35258a),
+          ),
+          child: Icon(Icons.shield_outlined,color: Colors.white),
+        ),
+        label: 'אישור',
+      ),
+      BottomNavigationBarItem(
+        icon: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: (page.index != 1)
+                ? Color(0xff9e7fe0)
+                : Color(0xff35258a),
+          ),
+          child: Icon(Icons.timelapse,color: Colors.white),
+        ),
+        label: 'נהל יום',
+      ),
+    ];
+  }
+  int start = (Permissions.manager==Permissions.getUserPermissions())? 3:0;
+  print()
   return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       fixedColor: Colors.black,
@@ -76,65 +137,7 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
           fontWeight:FontWeight.w900
       ),
       backgroundColor: Color(0xffCBC3E3),
-      currentIndex: page.index,
+      currentIndex: page.index-start,
       onTap: OnClickCallback,
-      items: [
-        BottomNavigationBarItem(
-          icon: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: (page.index != 0)
-                  ? Color(0xff9e7fe0)
-                  : Color(0xff35258a),
-            ),
-            child: Icon(Icons.map,color: Colors.white),
-          ),
-          label: 'הביקור שלי',
-
-        ),
-        BottomNavigationBarItem(
-          icon: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: (page.index != 1)
-                  ? Color(0xff9e7fe0)
-                  : Color(0xff35258a),
-            ),
-            child: Icon(Icons.accessibility,color: Colors.white),
-          ),
-          label: 'יומן',
-        ),
-        BottomNavigationBarItem(
-          icon: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: (page.index != 2)
-                  ? Color(0xff9e7fe0)
-                  : Color(0xff35258a),
-            ),
-            child: Icon(Icons.accessibility,color: Colors.white),
-          ),
-          label: 'פסיכוחינוך',
-        ),
-        BottomNavigationBarItem(
-          icon: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: (page.index != 3)
-                  ? Color(0xff9e7fe0)
-                  : Color(0xff35258a),
-            ),
-            child: Icon(Icons.accessibility,color: Colors.white),
-          ),
-          label: 'תרגילים',
-        ),
-      ]);
+      items: icons );
 }

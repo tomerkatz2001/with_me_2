@@ -172,6 +172,9 @@ class AvatarShop {
 }
 
 class AvatarData {
+  static AvatarData? currAvatar;
+
+
   AvatarData(
       {this.body,
         this.glasses,

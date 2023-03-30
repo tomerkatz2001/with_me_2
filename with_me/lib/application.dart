@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:with_me/Screens/add_equipment.dart';
 import 'package:with_me/Screens/add_type.dart';
 import 'package:with_me/Screens/equipment_type.dart';
@@ -13,6 +14,11 @@ class Application extends StatelessWidget {
   // This widget is the root of our application.
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       title: 'Happy Heart',
       theme: ThemeData(

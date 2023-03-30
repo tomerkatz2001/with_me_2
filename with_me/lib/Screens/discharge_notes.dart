@@ -72,12 +72,12 @@ class _DischargePageState extends State<DischargePage> {
     super.initState();
     final conf = OpenAIConfiguration(
         organizationId:  "org-S1zDIfQUIOHMtiVR9PAWp6wR",
-        apiKey: "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"
+        apiKey: "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"
     );
     client = OpenAIClient(configuration: conf,enableLogging: true);
     chatgpt();
 
-    // Fetch the models.
+    // Fetch the models.♦
   }
 
   Widget visitsCourse(List<Station> stations, int current_index) {

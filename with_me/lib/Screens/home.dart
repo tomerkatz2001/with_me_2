@@ -8,10 +8,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Pages _currentPage =
-      (Permissions.volunteer == Permissions.getUserPermissions())
-          ? Pages.dayTasks
-          : Pages.listOfPatients;
+  Pages _currentPage = Pages.dayTasks;
+  bool firstPage= true;
 
   Widget typeListBuilder(context, snapshot) {
     if (snapshot.hasData) {
@@ -75,6 +73,14 @@ class _HomePageState extends State<HomePage> {
     }), builder: (context, snapshot) {
       if (snapshot.hasData) {
         int perm = snapshot.data as int;
+        if(firstPage){
+          firstPage=false;
+          _currentPage =
+          (Permissions.volunteer == Permissions.getUserPermissions())
+              ? Pages.dayTasks
+              : Pages.listOfPatients;
+        }
+
         print('user permissions are $perm');
         if (perm < 0) {
           return Center(

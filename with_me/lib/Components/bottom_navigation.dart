@@ -1,4 +1,5 @@
 
+import 'package:with_me/Screens/avatar_chatbot.dart';
 import 'package:with_me/Screens/discharge_notes.dart';
 import 'package:with_me/Screens/search.dart';
 import 'package:with_me/Screens/supply_page.dart';
@@ -36,7 +37,7 @@ Widget getPage(Pages page){
     case Pages.listOfPatients:
       return const ManageVolunteers();
     case Pages.gpt:
-      return const ManageVolunteers();
+      return const DischargePage();
 
 
   }
@@ -124,7 +125,7 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
     ];
   }
   int start = (Permissions.manager==Permissions.getUserPermissions())? 3:0;
-  print()
+  print('page${page.index} , start${start}');
   return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       fixedColor: Colors.black,

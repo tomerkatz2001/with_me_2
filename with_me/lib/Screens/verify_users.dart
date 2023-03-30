@@ -27,7 +27,7 @@ class _VerifyUsersPageState extends State<VerifyUsersPage> {
           return Dismissible(
               key: Key(current['name']),
               onDismissed: (direction){
-                DB.setUserPermissions(current.id, currentChoices[current.id]!);
+                DB.setUserPermissions(Client.fromMap(current.data(), current.id), currentChoices[current.id]!);
               },
               child: Center(child:ListTile(
                 leading: DropdownButton<int>(

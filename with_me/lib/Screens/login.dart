@@ -86,7 +86,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           password: passwordController.text,
           context: context,
           name: userController.text);
-      DB.insertUser(context.read<FirebaseAuthMethods>().user.uid, userController.text);
+      // DB.insertUser(context.read<FirebaseAuthMethods>().user.uid, userController.text);
+      DB.insertUser(Client(userController.text,
+        context.read<FirebaseAuthMethods>().user.uid,
+        emailController.text,
+        -1
+      )
+      );
     }
 
     return Scaffold(

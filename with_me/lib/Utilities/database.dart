@@ -2,7 +2,7 @@ import '../header.dart';
 class DB {
 
   static insertAvatar(AvatarData data, String uid){
-    FirebaseFirestore.instance.collection("avatars").doc(uid).update({
+    FirebaseFirestore.instance.collection("avatars").doc(uid).set({
       'body': data.body,
       'glasses': data.glasses,
       'body_color':data.body_color.toString().split('(0x')[1].split(')')[0],
@@ -31,9 +31,12 @@ class DB {
         .set({'money':money}, SetOptions(merge: true));
   }
 
-  static Future<AvatarData> getAvatar(String uid) async{
+  static Future<AvatarData?> getAvatar(String uid) async{
     var v =
     (await FirebaseFirestore.instance.collection("avatars").doc(uid).get());
+    if (!v.exists){
+      return null;
+    }
     var a = AvatarData(
     money: v['money'],
     body: v['body'],

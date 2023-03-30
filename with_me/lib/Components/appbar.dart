@@ -65,7 +65,7 @@ class _LoadBar extends CustomPainter {
 }
 
 
-Widget CircularAppBar( String title,List<Widget> childs,BuildContext context,{double offset=0,Color color=const Color(0xffdee8f3), Widget? back_arrow=null} ){
+Widget CircularAppBar( String title,List<Widget> childs,BuildContext context,{double offset=0,Color color=const Color(0xffCBC3E3), Widget? back_arrow=null} ){
   childs.add(Align(alignment: Alignment.topCenter,child:Padding(padding: EdgeInsets.only(top: 50),
       child:Text(title,style: Theme.of(context).textTheme.titleLarge))));
   childs.add(Positioned(

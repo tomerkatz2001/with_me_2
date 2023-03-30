@@ -15,6 +15,8 @@ export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter/material.dart';
 export 'package:provider/provider.dart';
 export 'dart:math';
+export 'package:google_fonts/google_fonts.dart';
+
 
 export 'package:google_fonts/google_fonts.dart';
 

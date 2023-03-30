@@ -44,6 +44,8 @@ dependencies:
   google_fonts: any
   tuple: ^2.0.1
   image: 3.0.8
+  openai_client: any
+  dart_board_minesweeper: any
 
 dev_dependencies:
   flutter_test:

@@ -50,7 +50,7 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.people),
-        label: 'רשימת מתנדבים',
+        label: 'רשימת מטופלים',
       ),
     ],
     currentIndex: page.index,

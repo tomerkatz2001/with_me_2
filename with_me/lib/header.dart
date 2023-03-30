@@ -49,5 +49,4 @@ export 'Objects/volunteer.dart';
 export 'Objects/permissions.dart';
 
 export 'application.dart';
-export 'firebase_options.dart';
 export 'constants.dart';

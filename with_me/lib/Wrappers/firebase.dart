@@ -2,9 +2,7 @@ import '../header.dart';
 
 class FirebaseWrapper extends StatelessWidget {
 
-  final Future<FirebaseApp> _initialization=Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  final Future<FirebaseApp> _initialization=Firebase.initializeApp();
   final List<SingleChildWidget> firebaseProviders =
   [ Provider<FirebaseAuthMethods>(create: (_)
   => FirebaseAuthMethods(FirebaseAuth.instance)),

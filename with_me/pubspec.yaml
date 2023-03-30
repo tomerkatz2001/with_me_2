@@ -70,6 +70,78 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/logo.png
+     - images/pantssign.png
+     - images/skirtsign.png
+     - images/armypants.png
+     - images/bluepants.png
+     - images/pinkpants.png
+     - images/skirt.png
+     - images/skirt2.png
+     - images/hanger.png
+     - images/ass.png
+     - images/strings.png
+     - images/platform.png
+     - images/handsclosed.png
+     - images/handsbaloon.png
+     - images/handsdown.png
+     - images/handsopen.png
+     - images/legs.png
+     - images/poo.png
+     - images/glasses1.png
+     - images/glasses2.png
+     - images/glasses3.png
+     - images/glasses4.png
+     - images/glasses5.png
+     - images/World_1.jpg
+     - images/logo.png
+     - images/face.png
+     - images/color.png
+     - images/hands1.png
+     - images/color(ff6f6ca7).png
+     - images/color(ffa6d6c3).png
+     - images/color(ffdabfa0).png
+     - images/color(ffefb3e2).png
+     - images/body.png
+     - images/brows.png
+     - images/CoolBoi.png
+     - images/MiniMedi.png
+     - images/mouth.png
+     - images/eyes.png
+     - images/right_arrow.png
+     - images/left_arrow.png
+     - images/sheba.png
+     - images/World_1.jpg
+     - images/meditate1.png
+     - images/ColorSlider.png
+     - images/spotify.png
+     - images/apple-music.png
+     - images/youtube.png
+     - images/skater2.png
+     - images/skater.png
+     - images/talk.png
+     - images/cloud1.png
+     - images/cloud2.png
+     - images/needle.png
+     - images/boom1.png
+     - images/boom2.png
+     - images/Soldier1.png
+     - images/Soldier2.png
+     - images/Soldier3.png
+     - images/Soldier4.png
+     - images/Yellow_Star.png
+     - images/Blue_Star.png
+     - images/Green_Star.png
+     - images/Pink_Star.png
+     - images/thumbsup.png
+     - images/smiley.png
+     - images/human.png
+     - images/cloud.png
+
+     - images/coin.png
+     - images/staron.png
+     - images/staroff.png
+     - images/Shoola.png
+     - images/meditate9.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

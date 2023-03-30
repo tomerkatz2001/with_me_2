@@ -2,6 +2,7 @@ import '../header.dart';
 
 class VisitCoursePage extends StatefulWidget {
   const VisitCoursePage({super.key});
+
   @override
   State<VisitCoursePage> createState() => _VisitCoursePageState();
 }
@@ -80,25 +81,38 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
         body: CircularAppBar(
             "הביקור שלי",
             [
-              Positioned(
-                  child: Container(
-                      width: 300,
-                      height: 700,
-                      child: SingleChildScrollView(
-                          child: Positioned(
-                              child: Container(
-                                  child: visitsCourse([
-                                Station("בדיקת דם", "באר שבע", "5:00"),
-                                Station("MRI", "באר שבע", "5:00"),
-                                Station("בדיקת ראש", "באר שבע", "5:00"),
-                                Station("בדיקת דם", "באר שבע", "5:00"),
-                                Station("MRI", "באר שבע", "5:00"),
-                                Station("בדיקת ראש", "באר שבע", "5:00"),
-                              ], 0)),
-                              right: 20,
-                              top: 200))),
-                  top: 150,
-                  right: -150)
+              Stack(
+                children: [
+                  Positioned(
+                      child: Container(
+                          width: 300,
+                          height: 700,
+                          child: SingleChildScrollView(
+                              child: Positioned(
+                                  child: Container(
+                                      child: visitsCourse([
+                                    Station("בדיקת דם", "באר שבע", "5:00"),
+                                    Station("MRI", "באר שבע", "5:00"),
+                                    Station("בדיקת ראש", "באר שבע", "5:00"),
+                                    Station("בדיקת דם", "באר שבע", "5:00"),
+                                    Station("MRI", "באר שבע", "5:00"),
+                                    Station("בדיקת ראש", "באר שבע", "5:00"),
+                                  ], 0)),
+                                  right: 20,
+                                  top: 200))),
+                      top: 150,
+                      right: -150),
+                 Align(
+                   child: Container(
+                     width: MediaQuery.of(context).size.width*0.4,
+                     height: MediaQuery.of(context).size.width*0.4,
+                     child: AvatarStack(
+                         data: (AvatarData.currAvatar ??
+                             AvatarData(body: AvatarData.body_default))..hands='images/handsdown.png')),
+                   alignment: Alignment.bottomLeft,
+                 )
+                ],
+              )
             ],
             context));
   }

@@ -8,7 +8,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Pages _currentPage = Pages.supply;
+  Pages _currentPage =
+      (Permissions.volunteer == Permissions.getUserPermissions())
+          ? Pages.dayTasks
+          : Pages.listOfPatients;
 
   Widget typeListBuilder(context, snapshot) {
     if (snapshot.hasData) {
@@ -53,35 +56,47 @@ class _HomePageState extends State<HomePage> {
     typeListStreamBuilder =
         StreamBuilder(stream: typesStream, builder: typeListBuilder);
   }
+
   void changePageCallback(int index) {
     setState(() {
-      _currentPage = Pages.values[index];
+      int start = (Permissions.manager==Permissions.getUserPermissions())? 3:0;
+      _currentPage = Pages.values[start+index];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var perm_ = Permissions.getFirstUserPermissions(context);
-    return FutureBuilder<int>(
-        future: perm_,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            int perm = snapshot.data as int;
-            print('user permissions are $perm');
-            if(perm<0){
-              return Center(child: Column(children: const [
-                CircularProgressIndicator(),
-                Center(child: Text('חכה לאישור ממנהל ותפתח מחדש', textDirection: TextDirection.rtl,),)
-              ],));
-            }
-            return Scaffold(
-              bottomNavigationBar:
-                  bottomNavigation(_currentPage, changePageCallback),
-              body: getPage(_currentPage),
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
+    Future<int> perm_ = Permissions.getFirstUserPermissions(context);
+    return FutureBuilder<int>(future: Future(() async {
+      AvatarData.currAvatar =
+          (await DB.getAvatar(context.read<FirebaseAuthMethods>().user.uid)) ??
+              AvatarData(body: AvatarData.body_default, money: 10);
+      return perm_;
+    }), builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        int perm = snapshot.data as int;
+        print('user permissions are $perm');
+        if (perm < 0) {
+          return Center(
+              child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              Center(
+                child: Text(
+                  'חכה לאישור ממנהל ותפתח מחדש',
+                  textDirection: TextDirection.rtl,
+                ),
+              )
+            ],
+          ));
         }
-     );
+        return Scaffold(
+          bottomNavigationBar:
+              bottomNavigation(_currentPage, changePageCallback),
+          body: getPage(_currentPage),
+        );
+      }
+      return const Center(child: CircularProgressIndicator());
+    });
   }
 }

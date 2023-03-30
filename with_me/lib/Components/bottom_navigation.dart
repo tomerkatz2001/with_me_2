@@ -124,7 +124,6 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
     ];
   }
   int start = (Permissions.manager==Permissions.getUserPermissions())? 3:0;
-  print()
   return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       fixedColor: Colors.black,

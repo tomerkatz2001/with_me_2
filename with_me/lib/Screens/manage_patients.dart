@@ -13,19 +13,22 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StyledAppBar(
-        context,
-        "איתי",
-        actions: [
-          GestureDetector(
-            child: const Icon(Icons.logout),
-            onTap: () {
-              context.read<FirebaseAuthMethods>().signOut(context);
-            },
-          ),
-        ],
-      ),
-      body: StreamBuilder<QuerySnapshot>(
+      // appBar: StyledAppBar(
+      //   context,
+      //   "איתי",
+      //   actions: [
+      //     GestureDetector(
+      //       child: const Icon(Icons.logout),
+      //       onTap: () {
+      //         context.read<FirebaseAuthMethods>().signOut(context);
+      //       },
+      //     ),
+      //   ],
+      // ),
+
+      body: CircularAppBar("רשימת מטופלים", [
+
+        StreamBuilder<QuerySnapshot>(
           stream: DB.getPatients(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -45,14 +48,14 @@ class _ManageVolunteersState extends State<ManageVolunteers> {
               return _volunteersList(volunteers)!;
             }
             return const Center(child: CircularProgressIndicator());
-          }),
+          }),], context)
     );
   }
 
   Widget? _volunteersList(var volunteers) {
     return ListView.builder(
-      itemCount: volunteers.length,
-      itemBuilder: (context, index) => _volunteerCard(volunteers[index])!,
+      itemCount: volunteers.length+1,
+      itemBuilder: (context, index) => index==0? Container(height: 150,):_volunteerCard(volunteers[index-1])!,
     );
   }
 

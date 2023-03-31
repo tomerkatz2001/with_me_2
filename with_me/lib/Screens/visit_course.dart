@@ -14,7 +14,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
   }
 
   Widget visitsCourse(List<Station> stations, int current_index) {
-
+    current_index = stations.length;
     var childs = [
       SizedBox(
         height: 30,
@@ -28,7 +28,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
         height: 30,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: current_index == 0 ? Colors.red : Colors.amberAccent,
+          color: current_index == 0 ?  Colors.lightGreen:Colors.amber[200],
         ),
       )
     ];
@@ -38,8 +38,8 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
     int c = 0;
     stations.forEach((station) {
       if (c != 0) {
-        texts.add(Container(height: 90));
-        texts.add(Column(children: [Text(station.name??"אין שם"), Text(station.time??"אין זמן מוערך")]));
+        texts.add(Container(height: c==1 ? 90 : 100));
+        texts.add(Column(children: [Text(station.name??"אין שם"),]));
         childs.add(SizedBox(
           height: 100,
           child: VerticalDivider(
@@ -52,7 +52,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
           height: 30,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: c == current_index ? Colors.red : Colors.amber,
+            color: c == current_index ?  Colors.amber : Colors.lightGreen[100],
           ),
         ));
       }
@@ -105,7 +105,9 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
                         return Column(
                           children: [
                             SizedBox(height: 350,),
-                            Center(child: Text("אין לך דברים לעשות!"),),
+                            Center(child: Text("!אין לך דברים להמתין להם"),),
+                            Container(height: 40,),
+                            Image.asset('assets/green.png'),
                           ],
                         );
                       }
@@ -114,7 +116,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
                       children: [
                       Positioned(
                         top: 150,
-                        right: -150,
+                        right: -110,
                         child: SizedBox(
                             width: 300,
                             height: 700,
@@ -123,7 +125,7 @@ class _VisitCoursePageState extends State<VisitCoursePage> {
                                     right: 20,
                                     top: 200,
                                     child: Container(
-                                        child: visitsCourse(stations, 0))))),
+                                        child: visitsCourse(stations.reversed.toList(), 0))))),
                       ),
                       Align(
                    child: Container(

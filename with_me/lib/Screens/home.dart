@@ -84,17 +84,32 @@ class _HomePageState extends State<HomePage> {
         print('user permissions are $perm');
         if (perm < 0) {
           return Center(
-              child: Column(
-            children: const [
-              CircularProgressIndicator(),
-              Center(
-                child: Text(
-                  'חכה לאישור ממנהל ותפתח מחדש',
-                  textDirection: TextDirection.rtl,
-                ),
-              )
-            ],
-          ));
+            child: Container(
+
+              color: Colors.white,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'איזה כיף שהצטרפת למשפחת איתי!\n\nתכף תינתן הגישה לאפליקציה אנא המתן שהסגל הרפואי יאשר את הרשמתך.\n תוכל לצאת מהאפליקציה ולהיכנס לאחר שהצוות יאשר זאת.',
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.assistant(
+                                          color: Colors.black,
+                                          fontSize: 26,
+                                          fontWeight: FontWeight.w800,
+                                          decoration: TextDecoration.none
+                                        ),
+
+                      ),
+                      Container(height: 50,),
+                      Image.asset('assets/2.png')
+                    ],
+                  ),
+            )),
+          );
         }
         return Scaffold(
           bottomNavigationBar:

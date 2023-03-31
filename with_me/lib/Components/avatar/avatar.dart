@@ -297,6 +297,7 @@ class _AvatarPageState extends State<AvatarPage> {
     double _height = MediaQuery.of(context).size.height;
     double _min = min(_width, _height);
     return Stack(children: [
+
       Positioned(
           left: -0.8 * MediaQuery.of(context).size.width,
           top: -1.25 * MediaQuery.of(context).size.height,
@@ -449,7 +450,17 @@ class _AvatarPageState extends State<AvatarPage> {
                 dtap: buy),
           ],
         ),
-      )
+      ),
+      Positioned(
+        right: 0.05 * MediaQuery.of(context).size.width,
+        top: 0.05 * MediaQuery.of(context).size.height,
+        child:
+        GestureDetector(
+          child: const Icon(Icons.logout),
+          onTap: () {
+            context.read<FirebaseAuthMethods>().signOut(context);
+          },
+        ),),
     ]);
   }
 }

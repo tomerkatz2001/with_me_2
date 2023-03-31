@@ -68,22 +68,6 @@ class _LoadBar extends CustomPainter {
 Widget CircularAppBar( String title,List<Widget> childs,BuildContext context,{double offset=0,Color color=const Color(0xffCBC3E3), Widget? back_arrow=null} ){
   childs.add(Align(alignment: Alignment.topCenter,child:Padding(padding: EdgeInsets.only(top: 50),
       child:Text(title,style: Theme.of(context).textTheme.titleLarge))));
-  childs.add(Positioned(
-      top: (-150)-offset,
-      child: Container(
-        child:
-        TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 0, end: 0.7),
-            duration: Duration(seconds: 1),
-            builder:
-                (BuildContext context, double percent, Widget? child) {
-              return CustomPaint(
-                  painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size,color:color),
-                  size: MediaQuery.of(context).size);
-            }),
-        // color:Colors.green
-      )));
-
   if(back_arrow==null) {
     childs.add(Align(
       alignment: Alignment.topRight,
@@ -107,9 +91,27 @@ Widget CircularAppBar( String title,List<Widget> childs,BuildContext context,{do
     ));
   }
   else{
+    print("back arrow!!!!!!!!!!!!!");
     childs.add(Align(alignment: Alignment.topRight,
-      child: back_arrow,));
+      child: Padding(padding: EdgeInsets.fromLTRB(30,50,10,30), child: back_arrow,),));
   }
+  childs.add(Positioned(
+      top: (-150)-offset,
+      child: Container(
+        child:
+        TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: 0.7),
+            duration: Duration(seconds: 1),
+            builder:
+                (BuildContext context, double percent, Widget? child) {
+              return CustomPaint(
+                  painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size,color:color),
+                  size: MediaQuery.of(context).size);
+            }),
+        // color:Colors.green
+      )));
+
+
 
   return Stack(children: childs.reversed.toList());
 

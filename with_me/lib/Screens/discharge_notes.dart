@@ -76,6 +76,71 @@ class _DischargePageState extends State<DischargePage> {
   }
 
 
+  Widget visitsCourse(List<Station> stations, int current_index) {
+    var childs = [
+      SizedBox(
+        height: 30,
+        child: VerticalDivider(
+          width: 3,
+          color: Colors.grey,
+        ),
+      ),
+      Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: current_index == 0 ? Colors.red : Colors.amberAccent,
+        ),
+      )
+    ];
+    List<Widget> texts = [];
+    texts.add(
+        Column(children: [Text(stations[0].name??"אין שם"), Text(stations[0].time??"הזמן לא נקבע")]));
+    int c = 0;
+    stations.forEach((station) {
+      if (c != 0) {
+        texts.add(Container(height: 90));
+        texts.add(Column(children: [Text(station.name??"אין שם"), Text(station.time??"הזמן לא נקבע")]));
+        childs.add(SizedBox(
+          height: 100,
+          child: VerticalDivider(
+            width: 3,
+            color: Colors.grey,
+          ),
+        ));
+        childs.add(Container(
+          width: 30,
+          height: 30,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: c == current_index ? Colors.red : Colors.amber,
+          ),
+        ));
+      }
+      c += 1;
+    });
+    childs.add(SizedBox(
+      height: 30,
+      child: VerticalDivider(
+        width: 3,
+        color: Colors.grey,
+      ),
+    ));
+    return Row(children: [
+      Column(
+        children: texts,
+      ),
+      Container(width: 10),
+      Column(
+        children: childs,
+      ),
+    ]);
+  }
+  List<Item> _data = generateItems(8);
+
+
+
   List<Item> _data = generateItems(8);
 
   @override

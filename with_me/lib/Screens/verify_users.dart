@@ -27,31 +27,41 @@ class _VerifyUsersPageState extends State<VerifyUsersPage> {
           return Dismissible(
               key: Key(current['name']),
               onDismissed: (direction){
-                DB.setUserPermissions(Client.fromMap(current.data(), current.id), currentChoices[current.id]!);
+                DB.setUserPermissions(Client.fromMap(current.data(), current.id), -2);
               },
+              background: Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text("הסר בהחלקה", style: GoogleFonts.assistant(
+                color: Colors.red[200],
+                    fontSize: 26,
+                    fontWeight: FontWeight.w800,
+                    decoration: TextDecoration.none
+                ),),
+              ),
               child: Center(child:ListTile(
-                leading: DropdownButton<int>(
-                  value:  currentChoices[current.id]!,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  onChanged: (int? value) {
-                    // This is called when the user selects an item.
+                leading: Button(
+                  () {DB.setUserPermissions(Client.fromMap(current.data(), current.id), 0);},
+                  'אשר'
+              ),
+                // DropdownButton<int>(
+                //   value:  currentChoices[current.id]!,
+                //   icon: const Icon(Icons.arrow_downward),
+                //   elevation: 16,
+                //   onChanged: (int? value) {
+                //     // This is called when the user selects an item.
+                //
+                //     setState(() {
+                //       currentChoices[current.id]=value!;
+                //     });
+                //   },
+                //   items: choices.map<DropdownMenuItem<int>>((List value) {
+                //     return DropdownMenuItem<int>(
+                //       value: value[1],
+                //       child: Text(value[0]),
+                //     );
+                //   }).toList(),
+                // ),
 
-                    setState(() {
-                      currentChoices[current.id]=value!;
-                    });
-                  },
-                  items: choices.map<DropdownMenuItem<int>>((List value) {
-                    return DropdownMenuItem<int>(
-                      value: value[1],
-                      child: Text(value[0]),
-                    );
-                  }).toList(),
-                ),
-                // Button(
-                //   () {},
-                //   'בצע'
-                // )
                 title:Text(current['name'], textDirection: TextDirection.rtl),
               ))
           );
@@ -63,21 +73,24 @@ class _VerifyUsersPageState extends State<VerifyUsersPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: StyledAppBar(context, 'לב חדווה',
-        actions: [
-          GestureDetector(
-            child: const Icon(Icons.logout),
-            onTap: () {
-              context.read<FirebaseAuthMethods>().signOut(context);
-            },
-          ),
-        ],
-      ),
-      body: Center(
+      // appBar: StyledAppBar(context, 'אישור מטופלים חדשים',
+      //   actions: [
+      //     GestureDetector(
+      //       child: const Icon(Icons.logout),
+      //       onTap: () {
+      //         context.read<FirebaseAuthMethods>().signOut(context);
+      //       },
+      //     ),
+      //   ],
+      // ),
+      body: CircularAppBar(
+          "אישור מטופלים חדשים", [
+            Center(
         child: Column(
+
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            VerticalSpacer(50),
+            Container(height: 150),
             Expanded(child: StreamBuilder<QuerySnapshot>(
                 stream: DB.getUsersByPermissions(-1),
                 builder: (context, snapshot){
@@ -89,7 +102,15 @@ class _VerifyUsersPageState extends State<VerifyUsersPage> {
             ))
           ],
         ),
-      ),
+      )],
+          context,
+          back_arrow: GestureDetector(
+        child: const Icon(Icons.logout),
+        onTap: () {
+          context.read<FirebaseAuthMethods>().signOut(context);
+        },
+      ))
+      ,
     );
   }
 }

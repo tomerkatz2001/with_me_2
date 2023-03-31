@@ -145,4 +145,19 @@ class DB {
 
 
   }
+  static Stream<QuerySnapshot> getMissions(String uid){
+    print("hereee");
+    print(uid);
+    return FirebaseFirestore.instance.collection("missions").where(
+        "uid", isEqualTo: uid).snapshots();
+  }
+
+  static setMissionDone(String missionId,int left) async {
+    print("Donezo!");
+    print(missionId);
+    print(left);
+    await FirebaseFirestore.instance.collection("missions")
+        .doc(missionId)
+        .update({"amount":left});
+  }
 }

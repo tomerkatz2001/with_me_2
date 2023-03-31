@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openai_client/openai_client.dart';
@@ -50,7 +49,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
     super.initState();
     final conf = OpenAIConfiguration(
         organizationId: "org-S1zDIfQUIOHMtiVR9PAWp6wR",
-        apiKey: "fuck the police you wont get me bitches");
+        apiKey: "ur mom");
     client = OpenAIClient(configuration: conf, enableLogging: true);
     // Fetch the models.
   }

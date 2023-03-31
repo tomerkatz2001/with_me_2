@@ -1,6 +1,7 @@
 
 import 'package:with_me/Screens/avatar_chatbot.dart';
 import 'package:with_me/Screens/discharge_notes.dart';
+import 'package:with_me/Screens/patient_tasks.dart';
 import 'package:with_me/Screens/search.dart';
 import 'package:with_me/Screens/supply_page.dart';
 import 'package:with_me/Screens/visit_course.dart';
@@ -14,8 +15,9 @@ enum Pages{
   dayTasks,
   avatar,
   gpt,
+  tasks,
   verify,
-  listOfPatients
+  listOfPatients,
 
 }
 
@@ -38,6 +40,8 @@ Widget getPage(Pages page){
       return const ManageVolunteers();
     case Pages.gpt:
       return const ChatbotPage();
+    case Pages.tasks:
+      return const TasksPage();
 
 
   }
@@ -91,6 +95,20 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
         ),
         label: 'AI',
       ),
+      BottomNavigationBarItem(
+        icon: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: (page.index != 2)
+                ? Color(0xff9e7fe0)
+                : Color(0xff35258a),
+          ),
+          child: Icon(Icons.star,color: Colors.white),
+        ),
+        label: 'AGI',
+      ),
     ];
   }else{
     icons=[
@@ -124,7 +142,7 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
       ),
     ];
   }
-  int start = (Permissions.manager==Permissions.getUserPermissions())? 3:0;
+  int start = (Permissions.manager==Permissions.getUserPermissions())? 4:0;
   print('page${page.index} , start${start}');
 
   return BottomNavigationBar(

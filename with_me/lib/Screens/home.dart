@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   void changePageCallback(int index) {
     setState(() {
-      int start = (Permissions.manager==Permissions.getUserPermissions())? 3:0;
+      int start = (Permissions.manager==Permissions.getUserPermissions())? 4 :0;
       _currentPage = Pages.values[start+index];
     });
   }

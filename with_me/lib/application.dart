@@ -42,7 +42,8 @@ class Application extends StatelessWidget {
         '/volunteer_page': (context) => const VolunteerPage(),
         '/search_page' : (context) => const SearchPage(),
         '/verify_user': (context) => const VerifyUsersPage(),
-        '/my_visit': (context) => const VisitCoursePage()
+        '/my_visit': (context) => const VisitCoursePage(),
+        '/make_weekly_tasks': (context)=> MakeTaskPage()
       },
     );
   }

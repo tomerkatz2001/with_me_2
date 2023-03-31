@@ -36,6 +36,8 @@ export 'Screens/verify_users.dart';
 export 'Screens/equipment_type.dart';
 export 'Screens/manage_patients.dart';
 export 'Screens/volunteer_page.dart';
+export 'Screens/discharge_notes.dart';
+export 'Screens/task_page.dart';
 
 export 'Components/tappable_text.dart';
 export 'Components/input.dart';

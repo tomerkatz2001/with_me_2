@@ -101,13 +101,13 @@ BottomNavigationBar bottomNavigation(Pages page, void Function(int) OnClickCallb
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: (page.index != 2)
+            color: (page.index != 3)
                 ? Color(0xff9e7fe0)
                 : Color(0xff35258a),
           ),
-          child: Icon(Icons.star,color: Colors.white),
+          child: Icon(Icons.task,color: Colors.white),
         ),
-        label: 'AGI',
+        label: 'המשימות שלי',
       ),
     ];
   }else{

@@ -34,9 +34,9 @@ class _TasksPageState extends State<TasksPage> {
             print(dat.keys);
             print(dat["task"]);
             tiles.add(
-              ListTile(title:Text(dat["task"]), subtitle: Text(dat["amount"].toString()),trailing: GestureDetector(child: Icon(Icons.check),onTap: (){
-                DB.setMissionDone(element.id, dat["amount"]-1);
-              },),)
+              ListTile(title:Text(dat["task"]), subtitle: Text(dat["amount"].toString()),trailing: Button((){
+                DB.setMissionDone(element.id, dat["amount"]-1,context.read<FirebaseAuthMethods>().user.uid,context);
+              },"סיימתי"),)
             );
           });
         return ListView(children: tiles);

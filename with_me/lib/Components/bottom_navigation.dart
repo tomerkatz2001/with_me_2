@@ -39,7 +39,7 @@ Widget getPage(Pages page){
     case Pages.listOfPatients:
       return const ManageVolunteers();
     case Pages.gpt:
-      return const ChatbotPage();
+      return const DischargePage();
     case Pages.tasks:
       return const TasksPage();
 

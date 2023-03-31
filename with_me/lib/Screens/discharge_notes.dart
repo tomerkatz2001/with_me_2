@@ -71,9 +71,8 @@ class _DischargePageState extends State<DischargePage> {
   void initState() {
     super.initState();
     final conf = OpenAIConfiguration(
-        organizationId:  "org-S1zDIfQUIOHMtiVR9PAWp6wR",
-        apiKey: "not this time you silly goose"
-    );
+        organizationId: "org-S1zDIfQUIOHMtiVR9PAWp6wR",
+        apiKey: "ur mom");
     client = OpenAIClient(configuration: conf,enableLogging: true);
     chatgpt();
 
@@ -194,10 +193,10 @@ class _DischargePageState extends State<DischargePage> {
     const Text("סיכום למטלה:\n\nטיפול מקומי דורש הקפדה על רגל מורמת ולמרוח משחת פוסידין או סטפידרם ביוס לטיפול בזיהומי עור שכיחים כמו חתכים, עקיצות מזוהמות ואימפטיגו. פוסידין וסטפידרם מכילים אנטיביוטיקה שכיחה לטיפול בזיהומי עור וכדאי להתחשב בהבדלים בין הצורות השונות של התכשיר. כדאי להשתמש במשחת פוסידין או סטפידרם לטיפול מקומי לפני שהגישה לאנטיביוטיקה דרך הפה."),
     onTap: () {
     setState(() {
-    _data.removeWhere((Item currentItem) => item == currentItem);
+    _data.removeWhere((Item currentItem) => _data[0] == currentItem);
     });
     }),
-    isExpanded: item.isExpanded,
+    isExpanded: _data[0].isExpanded,
     ),
         ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -211,10 +210,10 @@ class _DischargePageState extends State<DischargePage> {
               const Text("Loading..."),
               onTap: () {
                 setState(() {
-                  _data.removeWhere((Item currentItem) => item == currentItem);
+                  _data.removeWhere((Item currentItem) => _data[1] == currentItem);
                 });
               }),
-          isExpanded: item.isExpanded,
+          isExpanded: _data[1].isExpanded,
         ),
         ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -228,10 +227,10 @@ class _DischargePageState extends State<DischargePage> {
               const Text("Loading..."),
               onTap: () {
                 setState(() {
-                  _data.removeWhere((Item currentItem) => item == currentItem);
+                  _data.removeWhere((Item currentItem) => _data[2] == currentItem);
                 });
               }),
-          isExpanded: item.isExpanded,
+          isExpanded: _data[2].isExpanded,
         ),
         ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -245,10 +244,10 @@ class _DischargePageState extends State<DischargePage> {
               const Text("Loading..."),
               onTap: () {
                 setState(() {
-                  _data.removeWhere((Item currentItem) => item == currentItem);
+                  _data.removeWhere((Item currentItem) => _data[3] == currentItem);
                 });
               }),
-          isExpanded: item.isExpanded,
+          isExpanded: _data[3].isExpanded,
         ),
         ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -262,10 +261,10 @@ class _DischargePageState extends State<DischargePage> {
               const Text("Loading..."),
               onTap: () {
                 setState(() {
-                  _data.removeWhere((Item currentItem) => item == currentItem);
+                  _data.removeWhere((Item currentItem) => _data[4] == currentItem);
                 });
               }),
-          isExpanded: item.isExpanded,
+          isExpanded: _data[4].isExpanded,
         ),
       ]
     );

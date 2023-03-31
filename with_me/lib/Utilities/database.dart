@@ -152,6 +152,14 @@ class DB {
         "uid", isEqualTo: uid).snapshots();
   }
 
+  static setMission(String uid, String name, int amount ){
+    FirebaseFirestore.instance.collection("missions").doc(uid+name).set({
+      'task':name,
+      'amount': amount,
+      'uid': uid
+    });
+  }
+
   static setMissionDone(String missionId,int left) async {
     print("Donezo!");
     print(missionId);

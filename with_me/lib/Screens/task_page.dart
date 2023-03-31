@@ -53,7 +53,7 @@ class _MakeTaskPageState extends State<MakeTaskPage> {
     String reply;
     int amount=0;
     for(String line in widget.lines){
-      reply = (await chatgpt('$line \nis this a repeating action? Answer only with yes or no.')).toLowerCase();
+      reply = (await chatgpt('$line \nis this a daily repeating action? Answer only with yes or no.')).toLowerCase();
       if (!reply.contains('yes')){
         continue;
       }
@@ -86,32 +86,48 @@ class _MakeTaskPageState extends State<MakeTaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    List res = [];
     return Scaffold(
         body: CircularAppBar(
             "המשימות:",
             [
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(child: Text('שמור'),onPressed: (){
+                  for(var l in res){
+                    DB.setMission(context.read<FirebaseAuthMethods>().user.uid,
+                        l[0], l[2]);
+                  }
+                  Navigator.pop(context);
+                },),
+              ),
               Positioned(
                   top: 150,
                   child: Container(
                       height: 700,
                       width: MediaQuery.of(context).size.width,
-                      child: FutureBuilder(
-                        future: makeTasks(),
+                      child: FutureBuilder<List>(
+                        future: Future(()async{res=await makeTasks();
+                          return res;}),
                         builder:
                         (context, snapshot){
                           if(snapshot.hasData){
-                            return Text(snapshot!.data.toString());
+                            return ListView.builder(itemCount: res.length,
+                                itemBuilder: (BuildContext context, int index){
+                                var task = res[index];
+                                return ListTile(isThreeLine:true,title: Text(task[0], textDirection: TextDirection.rtl,textAlign: TextAlign.right,) ,subtitle: Text(task[1]+"\n"+task[2].toString(),textDirection: TextDirection.rtl, textAlign: TextAlign.right), leading: IconButton(icon: Icon(Icons.info_rounded),
+                                  onPressed:(){
+
+                                  } ,),);
+                                });
+
+                              Text(snapshot!.data.toString());
                           }else{
                             return CircularProgressIndicator();
                           }
                         }
                       ))),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(child: Text('שמור'),onPressed: (){
-                  Navigator.pop(context);
-                },),
-              )
+
             ],
             context));
   }

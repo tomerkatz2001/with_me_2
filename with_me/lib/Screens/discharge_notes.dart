@@ -182,26 +182,92 @@ class _DischargePageState extends State<DischargePage> {
           _data[index].isExpanded = !isExpanded;
         });
       },
-      children: _data.map<ExpansionPanel>((Item item) {
-        return ExpansionPanel(
+      children: [ExpansionPanel(
+        headerBuilder: (BuildContext context, bool isExpanded) {
+      return ListTile(
+        title: Text(_data[0].headerValue),
+      );
+    },
+    body: ListTile(
+    title: Text(_data[0].expandedValue),
+    subtitle:
+    const Text("סיכום למטלה:\n\nטיפול מקומי דורש הקפדה על רגל מורמת ולמרוח משחת פוסידין או סטפידרם ביוס לטיפול בזיהומי עור שכיחים כמו חתכים, עקיצות מזוהמות ואימפטיגו. פוסידין וסטפידרם מכילים אנטיביוטיקה שכיחה לטיפול בזיהומי עור וכדאי להתחשב בהבדלים בין הצורות השונות של התכשיר. כדאי להשתמש במשחת פוסידין או סטפידרם לטיפול מקומי לפני שהגישה לאנטיביוטיקה דרך הפה."),
+    onTap: () {
+    setState(() {
+    _data.removeWhere((Item currentItem) => item == currentItem);
+    });
+    }),
+    isExpanded: item.isExpanded,
+    ),
+        ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return ListTile(
-              title: Text(item.headerValue),
+              title: Text(_data[1].headerValue),
             );
           },
           body: ListTile(
-              title: Text(item.expandedValue),
+              title: Text(_data[1].expandedValue),
               subtitle:
-              const Text('To delete this panel, tap the trash can icon'),
-              trailing: const Icon(Icons.delete),
+              const Text("Loading..."),
               onTap: () {
                 setState(() {
                   _data.removeWhere((Item currentItem) => item == currentItem);
                 });
               }),
           isExpanded: item.isExpanded,
-        );
-      }).toList(),
+        ),
+        ExpansionPanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(_data[2].headerValue),
+            );
+          },
+          body: ListTile(
+              title: Text(_data[2].expandedValue),
+              subtitle:
+              const Text("Loading..."),
+              onTap: () {
+                setState(() {
+                  _data.removeWhere((Item currentItem) => item == currentItem);
+                });
+              }),
+          isExpanded: item.isExpanded,
+        ),
+        ExpansionPanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(_data[3].headerValue),
+            );
+          },
+          body: ListTile(
+              title: Text(_data[3].expandedValue),
+              subtitle:
+              const Text("Loading..."),
+              onTap: () {
+                setState(() {
+                  _data.removeWhere((Item currentItem) => item == currentItem);
+                });
+              }),
+          isExpanded: item.isExpanded,
+        ),
+        ExpansionPanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(_data[4].headerValue),
+            );
+          },
+          body: ListTile(
+              title: Text(_data[4].expandedValue),
+              subtitle:
+              const Text("Loading..."),
+              onTap: () {
+                setState(() {
+                  _data.removeWhere((Item currentItem) => item == currentItem);
+                });
+              }),
+          isExpanded: item.isExpanded,
+        ),
+      ]
     );
   }
 

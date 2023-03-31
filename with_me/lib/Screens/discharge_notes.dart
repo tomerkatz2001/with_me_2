@@ -72,12 +72,12 @@ class _DischargePageState extends State<DischargePage> {
     super.initState();
     final conf = OpenAIConfiguration(
         organizationId:  "org-S1zDIfQUIOHMtiVR9PAWp6wR",
-        apiKey: "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"
+        apiKey: "not this time you silly goose"
     );
     client = OpenAIClient(configuration: conf,enableLogging: true);
     chatgpt();
 
-    // Fetch the models.
+    // Fetch the models.♦
   }
 
   Widget visitsCourse(List<Station> stations, int current_index) {
@@ -100,12 +100,12 @@ class _DischargePageState extends State<DischargePage> {
     ];
     List<Widget> texts = [];
     texts.add(
-        Column(children: [Text(stations[0].name??"אין שם"), Text(stations[0].time??"אין זמן מוערך")]));
+        Column(children: [Text(stations[0].name), Text(stations[0].time)]));
     int c = 0;
     stations.forEach((station) {
       if (c != 0) {
         texts.add(Container(height: 90));
-        texts.add(Column(children: [Text(station.name??"אין שם"), Text(station.time??"אין זמן מוערך")]));
+        texts.add(Column(children: [Text(station.name), Text(station.time)]));
         childs.add(SizedBox(
           height: 100,
           child: VerticalDivider(

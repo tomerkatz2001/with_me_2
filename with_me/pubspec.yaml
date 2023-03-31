@@ -74,8 +74,10 @@ flutter:
      - assets/2.png
 
      - assets/trampoline.png
+
      - assets/green.png
      - images/pantssign.png
+     - images/money.png
      - images/skirtsign.png
      - images/armypants.png
      - images/bluepants.png

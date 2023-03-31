@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openai_client/openai_client.dart';
@@ -49,8 +48,8 @@ class _ChatbotPageState extends State<ChatbotPage> {
   void initState() {
     super.initState();
     final conf = OpenAIConfiguration(
-        organizationId: "org-vyZNcstcBoWSWWe9pOLvCzWC",
-        apiKey: "not this time you silly goose");
+        organizationId: "org-S1zDIfQUIOHMtiVR9PAWp6wR",
+        apiKey: "ur mom");
     client = OpenAIClient(configuration: conf, enableLogging: true);
     // Fetch the models.
   }
@@ -68,35 +67,29 @@ class _ChatbotPageState extends State<ChatbotPage> {
               Positioned(
                       child: SingleChildScrollView(
                           child: Container(
-                        child: FutureBuilder(
+                        child: message!=""?FutureBuilder(
                           future: gptGetResponse(message),
                           builder: (BuildContext context,
                               AsyncSnapshot<String> snapshot) {
                             if (snapshot.hasData) {
                               if (message == "") {
-                                return Text("שלום, אני איתי, בוא ונדבר D:");
+                                return Text("שלום, אני איתי, בוא ונדבר D:",
+                                );
                               } else {
                                 return Text(snapshot.data as String);
                               }
                             }
                             return Text("...");
                           },
-                        ),
+                        ):Text("שלום, אני איתי, בוא ונדבר D:"),
                       )),
                   top: 150,
-                  left: 50
+                  left: 30,
+                  right:30
               ),
               Positioned(
                   child: Column(
                     children: [
-                      Row(children: [
-                        Input(inputMessageController, "input your message"),
-                        Button(() {
-                          setState(() {
-                            message = inputMessageController.text;
-                          });
-                        }, "שלח")
-                      ]),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.4,
                           height: MediaQuery.of(context).size.width * 0.4,
@@ -104,10 +97,22 @@ class _ChatbotPageState extends State<ChatbotPage> {
                               data: (AvatarData.currAvatar ??
                                   AvatarData(body: AvatarData.body_default))
                                 ..hands = 'images/handsdown.png')),
+                      Container(height: 50,),
+                      Column(children: [
+                        Input(inputMessageController, "input your message"),
+
+                        Container(height: 50,),
+                        Button(() {
+                          setState(() {
+                            message = inputMessageController.text;
+                          });
+                        }, "שלח")
+                      ]),
+
                     ],
                   ),
                   bottom: 50,
-                  right: 10),
+                  right: 10,left:10),
             ],
             context));
   }

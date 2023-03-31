@@ -14,21 +14,83 @@ class DB {
     });
   }
 
-  static addAvatarCash(int extra, String uid) async{
-    var v =
-    (await FirebaseFirestore.instance.collection("avatars").doc(uid).get());
-    int money=0;
-    if(v.data()==null){
-    money=0;}
-    else {
-    money = v['money'];
+  static addAvatarCash(int extra, String uid,BuildContext context) async{
+    Future.delayed(Duration(milliseconds: 500),(){showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertDialog(
+                backgroundColor: Colors.transparent,
+                content: Container(
+                    width:MediaQuery.of(context).size.width*0.8,
+                    height:MediaQuery.of(context).size.height*0.7,
+                    decoration: BoxDecoration(
+                      // color: Colors.green,
+
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(color:  Color(0xff35258a), width: 3, ),
+                      color: Color(0xfff4f4f4),
+                    ),
+
+                    child:Stack(children: [
+                      Align(
+                        alignment: FractionalOffset.bottomRight,
+                        child: Container(
+                          child: FittedBox(
+                            child: Image.asset('images/money.png'),
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                      ), Positioned(
+                          bottom: 0.5*0.65* MediaQuery.of(context).size.height,
+                          left: 0,
+                          right:0,
+                          top:0,
+                          child:Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+                              children:[  Text(
+                                "יאייייי!",
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.right,
+                                style: GoogleFonts.assistant(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
+                                ),),Text(
+                                " זכית ב-"+extra.toString()+" "+" מטבעות",
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.right,
+                                style: GoogleFonts.assistant(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                ),),Text(
+                                "השתמשו בהם בחוכמה ;]",
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.right,
+                                style: GoogleFonts.assistant(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),)
+
+                              ]
+                          )
+                      )
+                    ]
+                      ,)
+                )
+            )
+    );
     }
-    print(money);
-    money+=extra;
-    await FirebaseFirestore.instance
-        .collection("avatars")
-        .doc(uid)
-        .set({'money':money}, SetOptions(merge: true));
+    );
+    var docRef= (await FirebaseFirestore.instance.collection("avatars").doc(uid));
+
+    DocumentSnapshot documentSnapshot = await docRef.get();
+
+    Map<String, dynamic> data = documentSnapshot.data()! as Map<String, dynamic>;
+    data['money'] += 10;
+
+    await docRef.update(data);
   }
 
   static Future<AvatarData?> getAvatar(String uid) async{
@@ -144,5 +206,34 @@ class DB {
         "email", isEqualTo: patient_email).snapshots();
 
 
+  }
+  static Stream<QuerySnapshot> getMissions(String uid){
+    print("hereee");
+    print(uid);
+    return FirebaseFirestore.instance.collection("missions").where(
+        "uid", isEqualTo: uid).snapshots();
+  }
+
+  static setMission(String uid, String name, int amount ){
+    FirebaseFirestore.instance.collection("missions").doc(uid+name).set({
+      'task':name,
+      'amount': amount,
+      'uid': uid
+    });
+  }
+
+  static setMissionDone(String missionId,int left,String uid, BuildContext context) async {
+    print("Donezo!");
+    print(missionId);
+    print(left);
+    if(left<=0){
+      addAvatarCash(10, uid, context);
+      await FirebaseFirestore.instance.collection("missions")
+          .doc(missionId).delete();
+    }else {
+      await FirebaseFirestore.instance.collection("missions")
+          .doc(missionId)
+          .update({"amount": left});
+    }
   }
 }
